@@ -10,15 +10,23 @@ Currently I am PhD student in the lab of [LSV](https://www.lsv.fr) in ENS Paris 
 [xsasd asd asd](Teaching)
 <a href="#opening">Take me to the opening paragraph.</a>
 
-# Talks
+# Research
+## Talks
 
-# Publications
+1.  "A Tool for the Coverability Problems in Petri Nets" - Tool demonstration in MSR'19, Angers France. <a href="/presentations/msr19.pdf
+"><img src="pictures/presentation.png" alt="drawing" width="25"/> 
+2. Coverability and Termination in Recursive Petri Nets - Petri nets 2019, Aachen Germany.  <a href="/presentations/petrinet19.pdf
+"><img src="pictures/presentation.png" alt="drawing" width="25"/></a>
+
+## Publications
 
 # Teaching
 <p id="opening"> </p>
 - ####  2019-2020:
   * [Architecture and Systems](http://www.lsv.fr/~finkel)
   * [Discrete mathematics](http://www.lsv.fr/~haddad)
-- ####  2019-2020:
+- ####  2018-2019
+:
+  * [Combinatorial algorithms - in Hebrew](http:/www.lsv.fr~finkel)
 
 <!-- ![](myphoto.jpg)  -->
