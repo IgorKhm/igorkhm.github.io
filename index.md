@@ -14,10 +14,10 @@ Currently I am PhD student in the lab of [LSV](https://www.lsv.fr) in ENS Paris 
 
 # Publications
 
-# Teaching <p id="opening"> </p>
+# Teaching 
+<p id="opening"> </p>
 - ####  2019-2020:
   * [Architecture and Systems](http://www.lsv.fr/~finkel)
   * [Discrete mathematics](http://www.lsv.fr/~haddad)
 - ####  2019-2020:
 
-<!-- ![](myphoto.jpg)  -->
