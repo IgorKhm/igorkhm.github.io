@@ -13,10 +13,10 @@ Currently I am PhD student in the lab of [LSV](https://www.lsv.fr) in ENS Paris 
 # Research
 ## Talks
 
-1.  "A Tool for the Coverability Problems in Petri Nets" - Tool demonstration in MSR'19, Angers France. <a href="/presentations/msr19.pdf
-"><img src="pictures/presentation.png" alt="drawing" width="25"/> 
-2. Coverability and Termination in Recursive Petri Nets - Petri nets 2019, Aachen Germany.  <a href="/presentations/petrinet19.pdf
-"><img src="pictures/presentation.png" alt="drawing" width="25"/></a>
+1. "A Tool for the Coverability Problems in Petri Nets" - Tool demonstration in MSR'19, Angers France. <a href="/presentations/msr19.pdf
+"><img src="pictures/pdf.png" alt="drawing" width="25"/> </a> <br /><br />
+2. "Coverability and Termination in Recursive Petri Nets - Petri nets 2019, Aachen Germany.""  <a href="/presentations/petrinet19.pdf
+"><img src="pictures/pdf.png" alt="drawing" width="25"/></a>
 
 ## Publications
 
