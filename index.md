@@ -17,7 +17,7 @@ Currently I am PhD student in the lab of [LSV](https://www.lsv.fr) in ENS Paris 
 ### Conference:
 + 2020
    +  A. Finkel, S. Haddad, and I. Khmelnitsky. Minimal coverability tree construction made complete and efficient, FoSSaCS'20
-   <a href="/tobeadded.md"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
+   <a href="/tobeadded"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
 
 
 + 2019
