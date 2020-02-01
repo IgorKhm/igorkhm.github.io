@@ -9,7 +9,7 @@ I am a PhD student in the lab [LSV](https://www.lsv.fr) in ENS Paris Saclay, und
 
 # Research
 ## Publications
-### Conference:
+### Conference
 #### 2020
    +  A. Finkel, S. Haddad, and I. Khmelnitsky. Minimal coverability tree construction made complete and efficient, FoSSaCS'20
    <a href="/tobeadded"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
@@ -20,7 +20,7 @@ I am a PhD student in the lab [LSV](https://www.lsv.fr) in ENS Paris Saclay, und
    + Alain Finkel, Serge Haddad et Igor Khmelnitsky. Réification des accélérations pour la construction de Karp et Miller,MSR'19, Angers
    <a href="https://hal.archives-ouvertes.fr/hal-02431913"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>(in French)
 
-### Thesis:
+### Thesis
   + Master thesis. D-collapsibility and its applications, under the supervision of professor R. Meshulam. <a href="/papers/thesis.pdf"><img src="pictures/pdf.png" alt="drawing" width="20"/> </a>
 
 ## Talks
@@ -30,19 +30,19 @@ I am a PhD student in the lab [LSV](https://www.lsv.fr) in ENS Paris Saclay, und
 "><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
 
 
-# Tools:
+# Tools
  + [MinCov](https://github.com/IgorKhm/MinCov)- Python implementation of a decision procedure for the Petri net coverability set problem. Based on the work from <a href="/tobeadded"> "Minimal coverability tree construction made complete and efficient"</a>.
 
 
 # Teaching
 <p id="opening"> </p>
 
-###  2019-2020:
-  * [Architecture and Systems](/tobeadded)
-  * [Discrete mathematics](/tobeadded)
+###  2019-2020
+  * [Architecture and Systems](http://www.lsv.fr/~finkel)
+  * [Discrete mathematics](http://www.lsv.fr/~haddad)
 
-### 2018-2019:
-  * [Combinatorial algorithms(in Hebrew)](/tobeadded)
+### 2018-2019
+  * [Combinatorial algorithms(in Hebrew)](http:/www.lsv.fr~finkel)
 
 
 # Stuff
