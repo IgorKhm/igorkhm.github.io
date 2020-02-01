@@ -15,10 +15,11 @@ Currently I am PhD student in the lab of [LSV](https://www.lsv.fr) in ENS Paris 
 
 ## Publications
 ### Conference:
-+ 2020
+#### 2020
    +  A. Finkel, S. Haddad, and I. Khmelnitsky. Minimal coverability tree construction made complete and efficient, FoSSaCS'20
    <a href="/tobeadded"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
-+ 2019
+   
+#### 2019
    +  A. Finkel, S. Haddad, and I. Khmelnitsky. Coverability and Termination in Recursive Petri Nets, Petri Nets'19
    <a href="https://hal.inria.fr/hal-02081019"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>   
    + Alain Finkel, Serge Haddad et Igor Khmelnitsky. Réification des accélérations pour la construction de Karp et Miller,MSR'19, Angers
