@@ -30,12 +30,6 @@ I am a PhD student in the lab [LSV](https://www.lsv.fr) in ENS Paris Saclay, und
 2. "Coverability and Termination in Recursive Petri Nets" - Petri nets 2019.  <a href="/presentations/petrinet19.pdf
 "><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
 
-
-# Tools
-<p id="Tools"> </p>
- + [MinCov](https://github.com/IgorKhm/MinCov)- Python implementation of an algorithm solving the coverability set problem for the Petri nets. Based on the work in <a href="/tobeadded"> "Minimal coverability tree construction made complete and efficient"</a>.
-
-
 # Teaching
 <p id="Teaching"> </p>
 
@@ -45,6 +39,12 @@ I am a PhD student in the lab [LSV](https://www.lsv.fr) in ENS Paris Saclay, und
 
 ### 2018-2019
   * [Combinatorial algorithms(in Hebrew)](/tobeadded)
+
+
+# Tools
+<p id="Tools"> </p>
+ + [MinCov](https://github.com/IgorKhm/MinCov)- Python implementation of an algorithm solving the coverability set problem for the Petri nets. Based on the work in <a href="/tobeadded"> "Minimal coverability tree construction made complete and efficient"</a>.
+
 
 
 # Stuff
