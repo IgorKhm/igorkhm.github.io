@@ -1,5 +1,5 @@
 body {
-    margin: 15px auto;
+    margin: 10px auto;
     width: 60%;
 }
 @media screen and (max-width: 800px){
@@ -82,7 +82,7 @@ ul.posts li {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: #F0F8FF;
   display: block;
 }
 
