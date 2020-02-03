@@ -31,6 +31,7 @@ I am a PhD student in the lab [LSV](https://www.lsv.fr) in ENS Paris Saclay, und
 "><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
 
 <p id="Teaching"> </p>
+
 # Teaching
 
 ###  2019-2020
@@ -42,6 +43,7 @@ I am a PhD student in the lab [LSV](https://www.lsv.fr) in ENS Paris Saclay, und
 
 
 <p id="Tools"> </p>
+
 # Tools
  + [MinCov](https://github.com/IgorKhm/MinCov)- Python implementation of an algorithm solving the coverability set problem for the Petri nets. Based on the work in <a href="/tobeadded"> "Minimal coverability tree construction made complete and efficient"</a>.
 
