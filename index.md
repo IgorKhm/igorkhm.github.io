@@ -8,6 +8,7 @@ I am a PhD student in the lab [LSV](https://www.lsv.fr) in ENS Paris Saclay, und
 
 
 # Research
+<p id="Research"> </p>
 ## Publications
 ### Conference
 #### 2020
@@ -31,11 +32,12 @@ I am a PhD student in the lab [LSV](https://www.lsv.fr) in ENS Paris Saclay, und
 
 
 # Tools
- + [MinCov](https://github.com/IgorKhm/MinCov)- Python implementation of a decision procedure for the Petri net coverability set problem. Based on the work from <a href="/tobeadded"> "Minimal coverability tree construction made complete and efficient"</a>.
+<p id="Tools"> </p>
+ + [MinCov](https://github.com/IgorKhm/MinCov)- Python implementation of an algorithm solving the coverability set problem for the Petri nets. Based on the work in <a href="/tobeadded"> "Minimal coverability tree construction made complete and efficient"</a>.
 
 
 # Teaching
-<p id="opening"> </p>
+<p id="Teaching"> </p>
 
 ###  2019-2020
   * [Architecture and Systems](/tobeadded)
