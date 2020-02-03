@@ -84,7 +84,7 @@ ul.posts li {
   color: #f1f1f1;
 }
 @media screen and (min-width: 800px){
-    .topnav {
+    .topnav, nav ul {
   height: 0px;
   width: 0px;
 }
