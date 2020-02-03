@@ -6,9 +6,8 @@ title: "Igor Khmelnitsky, personal website"
 # <img src="pictures/myphoto3.jpg" style="float: left;" alt="drawing" width="250"/> About
 I am a PhD student in the lab [LSV](https://www.lsv.fr) in ENS Paris Saclay, under the supervision of [Finkel Alain](http://www.lsv.fr/~finkel) and [Haddad Serge](http://www.lsv.fr/~haddad). My thesis is on Machine learning and verification of infinite-state systems.  <br /> <br /> <br />
 
-
-# Research
 <p id="Research"> </p>
+# Research
 ## Publications
 ### Conference
 #### 2020
@@ -30,8 +29,8 @@ I am a PhD student in the lab [LSV](https://www.lsv.fr) in ENS Paris Saclay, und
 2. "Coverability and Termination in Recursive Petri Nets" - Petri nets 2019.  <a href="/presentations/petrinet19.pdf
 "><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
 
-# Teaching
 <p id="Teaching"> </p>
+# Teaching
 
 ###  2019-2020
   * [Architecture and Systems](/tobeadded)
@@ -41,15 +40,16 @@ I am a PhD student in the lab [LSV](https://www.lsv.fr) in ENS Paris Saclay, und
   * [Combinatorial algorithms(in Hebrew)](/tobeadded)
 
 
-# Tools
 <p id="Tools"> </p>
+# Tools
  + [MinCov](https://github.com/IgorKhm/MinCov)- Python implementation of an algorithm solving the coverability set problem for the Petri nets. Based on the work in <a href="/tobeadded"> "Minimal coverability tree construction made complete and efficient"</a>.
 
 
-
+<!--
 # Stuff
   [xsasd asd asd](Teaching)
   <a href="#opening">Take me to the opening paragraph.</a>
+-->
 
 
 <!-- ![](myphoto.jpg)  -->
