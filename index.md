@@ -7,7 +7,7 @@ title: "Igor Khmelnitsky, personal website"
 I am a PhD student in the lab [LSV](https://www.lsv.fr) in ENS Paris Saclay, under the supervision of [Finkel Alain](http://www.lsv.fr/~finkel) and [Haddad Serge](http://www.lsv.fr/~haddad). My thesis is on Machine learning and verification of infinite-state systems.  <br /> <br /> <br />
 
 
-# Research1
+# Research
 ## Publications
 ### Conference
 #### 2020
