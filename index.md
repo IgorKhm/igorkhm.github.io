@@ -22,7 +22,7 @@ I am a PhD student in the lab [LSV](https://www.lsv.fr) in ENS Paris Saclay, und
    <a href="https://hal.archives-ouvertes.fr/hal-02431913"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>(in French)
 
 ### Thesis
-  + Master thesis. D-collapsibility and its applications, under the supervision of professor R. Meshulam. <a href="/papers/thesis.pdf"><img src="pictures/pdf.png" alt="drawing" width="20"/> </a>
+  + D-collapsibility and its applications. Master thesis, under the supervision of professor R. Meshulam. <a href="/papers/thesis.pdf"><img src="pictures/pdf.png" alt="drawing" width="20"/> </a>
 
 ## Talks
 
