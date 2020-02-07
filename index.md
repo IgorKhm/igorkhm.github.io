@@ -3,10 +3,12 @@ layout: default
 title: "Igor Khmelnitsky, personal website"
 ---
 
-# <img src="pictures/myphoto3.jpg" style="float: left;" alt="drawing" width="250"/> About
-I am a PhD student in the lab [LSV](https://www.lsv.fr) in ENS Paris Saclay, under the supervision of [Finkel Alain](http://www.lsv.fr/~finkel) and [Haddad Serge](http://www.lsv.fr/~haddad). My thesis is on Machine learning and verification of infinite-state systems.  <br /> <br /> <br />
+# <img src="pictures/myphoto3.jpg" style="float: left;" alt="drawing" width="300"/> Igor Khemelnitsky
+I am a PhD student in the [LSV](https://www.lsv.fr) in ENS Paris Saclay, under the supervision of [Finkel Alain](http://www.lsv.fr/~finkel) and [Haddad Serge](http://www.lsv.fr/~haddad).
+My research is currently mainly focused on verification of infinite state systems, such as Petri nets, recursive Petri nets, well structured transition systems, etc. Since these type of systems can be hard to verify using the classical algorithms, I began trying to introduce machine learning technique to the verification of theses systems.
 
-<p id="Research"> </p>
+
+<p id="Research"> </p>  
 
 # Research
 ## Publications
@@ -45,7 +47,7 @@ I am a PhD student in the lab [LSV](https://www.lsv.fr) in ENS Paris Saclay, und
 <p id="Tools"> </p>
 
 # Tools
- + [MinCov](https://github.com/IgorKhm/MinCov)- Python implementation of an algorithm solving the coverability set problem for the Petri nets. Based on the work in <a href="/tobeadded"> "Minimal coverability tree construction made complete and efficient"</a>.
+ + [MinCov](https://github.com/IgorKhm/MinCov)- Python implementation of an algorithm solving the coverability set problem for Petri nets. Based on the work in <a href="/tobeadded"> "Minimal coverability tree construction made complete and efficient"</a>.
 
 
 <!--
