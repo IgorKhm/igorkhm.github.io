@@ -1,0 +1,290 @@
+\documentclass[a4paper,11pt]{exam}
+%\printanswers % pour imprimer les réponses (corrigé)
+% \noprintanswers % Pour ne pas imprimer les réponses (nonc)
+% \addpoints % Pour compter les points
+% \noaddpoints % pour ne pas compter les points
+\qformat{\textbf{Exercice \thequestion \,:}\\} % Questions style
+\usepackage{color} % Define new colors
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{exercise}
+\usepackage{mathrsfs,amsmath,amssymb,latexsym,amsfonts,mathtools,stmaryrd}
+\usepackage{enumitem}
+\setitemize{label=\textbullet}
+% Bigger binomial in math mode
+\usepackage{nccmath}
+\renewcommand{\binom}{\mbinom}
+
+\usepackage[francais]{babel}
+
+\shadedsolutions % définit le style des réponses
+% \framedsolutions % définit le style des réponses 
+\definecolor{SolutionColor}{rgb}{0.8,0.9,1} % bleu ciel
+\renewcommand{\solutiontitle}{
+	\noindent\textbf{Solution:}\par\noindent} % Définit le titre des réponses
+\newcommand\eqdef[0]{\stackrel{\text{def}}{=}}
+
+\pagestyle{headandfoot}
+\headrule
+\header{L3 - 2019/2020 - TD1}{Weansday 18 septembre}{Mathématiques discrètes}
+\footer{S. Le Roux, I. Khmelnitsky}{\thepage}{E.N.S. Cachan}
+\footrule
+
+\renewcommand{\questionshook}{%
+	\setlength{\labelwidth}{0pt}%
+	\setlength{\itemsep}{1.7\baselineskip}
+}
+\newcommand{\N}{\mathcal N}
+\begin{document}
+	
+	~
+	\begin{questions}
+		
+		\setcounter{question}{-1}
+		\question % Preuves non faites en cours
+		~\vspace{-0.6cm}
+		\begin{enumerate}
+			\item Show that $ [n] $ has $ n! $ permutation. ($[n] = \{1,2,\ldots,n\}$)
+			
+			\begin{solution}
+				A permutation on $[n]$ is a 1-1 surjective function $\sigma :[n]\mapsto[n]$.
+				We show the exercise by induction on $n$, for $n=1$  it is clear.
+				
+				Look a permutation $\sigma$ on $n>1$ numbers. For the number $1$ there are $n$ options for $\sigma(1)$. Picking one of these options, we are left with mapping $\{2,3,\ldots n\}$ to the set $[n]\setminus\{\sigma(1)\}$, and by induction we know there are $(n-1)!$ options. Therefore, there are $n\cdot (n-1)!= n!$ permutations from $[n]$ to $[n]$.
+			\end{solution}
+			
+			\item Let $ n,m \in \N$ and $(x_i)_{i \in \llbracket 1,mn+1
+				\rrbracket}$ be a sequence of natural numbers. Show that the given sequence admits an non-decreasing sub-sequence of length $n+1$ or a non-increasing sub-sequence of length $m+1$.  
+			
+			\begin{solution}
+				For each $i$ denote by $c_i$ ($d_i$) the length of the longest increasing (decreasing) sub-sequence starting at $ x_i $. Assume for contradiction that $ c_i, d_i \leq n $ for all $i$. 
+				
+				The mapping $i\mapsto (c_i,d_i)$ is from $ [nm+1] $ to $ [m]\times [n] $, and therefore from the pigeonhole principle there are $ i<j $ for which $(c_i,d_i) = (c_j,d_j)$.  Now, either $ x_i \leq x_j $ or $ x_i \geq x_j $. Assume $ x_i\leq x_j $ and let $ \{a_k\}_{k=1}^{c_j} $ be the longest increasing sub-sequence starting at $ x_j $. Now, the sub-sequence $ x_i,a_1,a_2\ldots a_{c_j} $ is an increasing sub-sequence starting at $ x_i $ of length $c_j+1$, but this contradicts our assumption that $c_i = c_j$. 
+				For the case where  $ x_i\geq x_j $ the same argument with the decreasing series applies.
+				
+			\end{solution} 
+		\end{enumerate}
+		
+		\question 
+		Prove the following identities using combinatorial arguments:
+		\begin{enumerate}
+			\item $\sum_{0 \leq 2i \leq n} \binom{n}{2i} = 2^{n-1}$ et 
+			$\sum_{0 \leq 2i+1 \leq n} \binom{n}{2i+1} = 2^{n-1}$.
+			
+			\begin{solution}
+				First note that since $\sum_{0 \leq i \leq n} \binom{n}{i} = 2^{n}$, we are left with showing that the two sums are equal.
+				
+				On one hand, assume that $n$  is odd. From the symmetry of the binomial coefficients we get that:
+				\[
+					\sum_{0 \leq 2i \leq n} \binom{n}{2i} = \sum_{0 \leq 2i \leq n} \binom{n}{n-2i} = \sum_{0 \leq 2i+1 \leq n} \binom{n}{2i+1}	
+				\]
+				
+				On the other hand, assume that $n$ is even. The number of even sets that contain(odd) $n$ are the equal to the number of odd sets that don't contain(odd) $n$.
+				
+			\end{solution}
+			
+			\item $\sum_{i=0}^n i \binom{n}{i} = n2^{n-1}$.
+			
+			\begin{solution}
+				 Let $A = \{(x,F), x \in F ,F\subset [n]\}$. On one hand, the number of times that each $F$ appears in $A$ is $|F|$ times. Which gives us:
+				 \[
+				 	|A| = \sum_{i=0}^n i \binom{n}{i}
+				 \]  
+				 On the other hand, the number of times that each $x$ appears in $A$ is $2^{n-1}$. This is true since, the number of sets that contain it is equal to the number of sets that don't contain it. Summing on all the $x$'s, we get:
+				 \[
+				 |A| = n2^{n-1}
+				 \]  
+			\end{solution}
+			
+			\item $\binom{n}{l}\binom{l}{k} = \binom{n}{k}\binom{n-k}{l-k}$, 
+			for $0 \leq k \leq l \leq n$.
+			
+			\begin{solution}
+				\begin{align*}
+				\binom{n}{l}\binom{l}{k} & =\frac{n!}{(n-l)!l!}\cdot \frac{l!}{(l-k)!k!} = \frac{n!}{k!}\cdot \frac{1}{(n-l)!(l-k)!}=\\
+				& =\frac{n!}{(n-k)!k!} \cdot\frac{(n-k)!}{(n-l)!(l-k)!} = \binom{n}{k}\binom{n-k}{l-k}
+				\end{align*}
+
+				We can also compute the size of the set $A = \{ (K,L), K \subset L \subset \llbracket 1,n \rrbracket, |K| = k, |L| = l \}$ in two ways. First, choosing $L$ and then choosing the set $K$ inside $L$, which gives us $|A| = \binom{n}{l}\binom{l}{k}$. Second, choosing $K$ then choosing its completion $L\setminus K$ from what is left, which gives us $|A|=\binom{n}{k}\binom{n-k}{l-k}$
+			
+			\end{solution}
+			
+			\item Given $m,n\in \N$ such that $1 \leq m \leq n$.
+			\[
+			\sum_{i=m}^n \binom{n}{i}\binom{i}{m} = 2^{n-m}\binom{n}{m}
+			\]
+			
+			\begin{solution}
+				Count the size of $\{ (G,F), |G| = m, G \subset F \}$ in two ways. Choosing $ G $ and then finding $F$ that contains it would give us $ 2^{n-m}\binom{n}{m} $. Choosing $ F $, which needs to be bigger the $m$ and then counting all its  subsets of size $m$ would give us $\sum_{i=m}^n \binom{n}{i}\binom{i}{m}$
+				
+			\end{solution}
+			
+			\item For all $n \geq 2$ :
+			\[
+			\binom{2n}{2} = 2\binom{n}{2} + n^2
+			\]
+			
+			\begin{solution}
+				We do the counting in 2 steps. First, count only the couples of the same parity(odd or even), which gives us $ 2\binom{n}{2} $.  Next, count all the couples of different parity, which is equal to $n^2$ since for any even number there are $n$ odd options.
+			\end{solution}
+			
+			\item For all $n \geq 3$ :
+			\[
+			\sum_{k=3}^n k(k-1)(k-2)\binom{n}{k} = n(n-1)(n-2)2^{n-3}
+			\]
+			
+			\begin{solution}
+				Double count $\{(x, y, z, F ), x \in F, y \in F, z \in F \text{
+					and } x, y, z \text{ are all distinct} \}$.
+			\end{solution}
+		\end{enumerate}
+		
+		\question ~
+		Let $N>0$ be a natural number
+		\begin{enumerate}
+			\item Let $\mathcal{E}_2$ be the a family consisting  of all subsets of size $2$ of the set	$[N]$.
+			Partition the family $\mathcal{E}_2$ in a good manner in order to recover the equality:
+			\[
+			\sum_{j=1}^{N-1}j = \frac{N(N-1)}{2}
+			\]
+			
+			\begin{solution}
+				
+				Partition $\mathcal{E}$ according to the maximal element in the couple, these partitions are of sizes $1,2,\ldots,(N-1)$. On the other hand we know that $|\mathcal{E}_2| = \binom{N}{2} =
+				\frac{N(N-1)}{2}$.
+			\end{solution}
+			
+			\item By partitioning the set $[N]^3$ according to the maximal value of its items (i.e. $ (x,y,z)$ and  $ (x',y',z') $ are in the same partition if $\max(x,y,z) = \max(x',y',z')$), recover a the expression $\sum_{j=1}^{N-1}j^2$ as a function of $N$.
+			
+			\begin{solution}
+				Let $n \in [N]$.
+				\begin{itemize}
+					\item There are $3(n-1)^2$ triples $(x, y, z)$ such that
+					$\max(x, y, z) = n$ and the maximal value is obtained only by one of the components.
+					\item There are $3(n-1)$ triplets $(x, y, z)$ such that
+					$\max(x, y, z) = n$ and the maximal value is obtained only by two of the components.
+					\item There is one triplets $(x, y, z)$ such that
+					$\max(x, y, z) = n$ and the maximal value is obtained all of the components.
+				\end{itemize}
+				Therefore, $N^3 = 3 \sum_{j=1}^{N-1}j^2 + 3 \sum_{j=1}^{N-1}j + N$, 
+				by using the first part of the question we get: 
+				\[
+				\sum_{j=1}^{N-1}j^2 = \frac{N(N-1)(2N-1)}{6}
+				\]
+			\end{solution}
+		\end{enumerate}
+		
+		\question
+		Given $n_1, \dots, n_{12}$ a familly of $12$ integers.
+		Show there exist $i \neq j$ such that $n_i - n_j$ is a multiple of $11$ (i.e.  $(n_i - n_j)\mod11 = 0$).
+		
+		\begin{solution}
+			For any $x\in \N$, we get that $x\mod 11\in\{0,1,\ldots,10\}$. Hence, by the pigeonhole principle there are $i\neq j$ for which $n_i\mod 11=n_j\mod 11$, and $n_i-n_j$ is dividable by 11.
+		\end{solution}
+		
+		\question
+		Show that, in a group of 6 people there always exists either a sub-group of 3 people who don't know each other, or a sub-group of 3 people who all know each other.
+		
+		\begin{solution}
+			By the pigeonhole principal every a person either know at least 3 people or doesn't know at least 3 people. 
+			
+			Assume that he know 3 people. If those 3 people don't know each other we are done. But if there are 2 of them which know each other then with the first one we get 3 people that know each other. 
+			
+			The same proof also holds assuming that the first person doesn't know 3 people.
+			
+		\end{solution}
+		
+		\question
+		A  pass word is considered \emph{valid} if it satisfies the following conditions:
+		\begin{itemize}
+			\item It consists of $8$ characters taken from the $26$ letters
+			of the alphabet, the numbers 0 et 9, and the $7$
+			special characters !, ?, \%, \#, @, \&, \$.
+			\item It includes at least one letter from the alphabet.
+			\item It includes at least one number.
+			\item It includes at least one special character.
+		\end{itemize}
+		Determine the number of valid passwords.
+		
+		\begin{solution}
+			A priori there are $26 + 10 + 7 = 43$ characters which give us $43^8$ passwords of length 8.
+			
+			To get the valid passwords we are left with counting the invalid ones:
+			\begin{itemize}
+				\item The set $A$ is the set of passwords which don't contain letters from the alphabet; $|A| = 17^8$.
+				\item  The set $C$ is the set of passwords which don't contain numbers; $|B| = 33^8$.
+				\item  The set $C$ is the set of passwords which don't special characters; $|C| = 36^8$.
+			\end{itemize}
+			We want to use inclusion–exclusion principle to compute $|A \cup B \cup C|$. For this effort:
+			\begin{itemize}
+				\item $A \cap B$ is the set which doesn't contain letters  or numbers, hence $|A \cap B| = 7^8$.
+				\item $A \cap C$ is the set which doesn't contain letters  or special characters, hence $|A \cap C| = 10^8$.
+				\item $B \cap C$ is the set which doesn't contain numbers  or special characters, hence $|B \cap C| = 26^8$.
+				\item $A \cap B \cap C = \emptyset$, since password need characters.
+			\end{itemize}
+			Summing up we get: \[|A \cup B \cup C| = 17^8 +33^8 +36^8 −(7^8 +10^8 +26^8)\]
+			By a quick computation:
+			$43^8 −(17^8 +33^8 +36^8 )+(7^8 +10^8 +26^8 )(=7662638823840)$.
+		\end{solution}
+		
+		\question
+		Let $m,n\in\N$ . Denote by $s(m,n)$ the number of surjective function from the set $[m]$ to the set $[n]$.
+		\begin{enumerate}
+			\item What is $s(m,n)$ if $m < n$ ? and if $m = n$ ?
+			
+			\begin{solution}
+				$s(m,n)=0$ if $m < n$, and $s(m,n)=n!$ if $m=n$. 
+			\end{solution}
+			
+			\item Prove the following formula using the inclusion–exclusion principle:
+			\[
+			s(m,n) = n^m -n(n-1)^m + \binom{n}{2}(n-2)^m + \dots +
+			(-1)^k\binom{n}{k}(n-k)^m + \dots + (-1)^n n
+			\]
+			
+			\begin{solution}
+				First, there are $n^m$ functions from $[m]$ to $[n]$. To know how many surjective functions are there it would be enough to compute the how many none surjective function we have, denote this number by $\overline{s}(m,n)$. 
+				Let $I\subsetneq [n]$. Denote by $E_I$ the set of functions from $[m]$ to $[n]\setminus  I$. Note that $E_I\cap E_J = E_{I\cup J}$, moreover $|E_I|=(n-|I|)^m$. By using the inclusion–exclusion principle we get:
+				\[
+					\overline{s}(m,n) = \left| \cup_{i\in[n]}E_{\{i\}} \right|= 
+				\] 
+				
+				\begin{align*}
+				\overline{s}(m,n) & =\left|\cup_{i\in[n]}E_{\{i\}}\right|=\\
+				& =\sum_{i\in[n]}\left|E_{\{i\}}\right|+(-1)^{1}\cdot\sum_{I\in[n],|I|=2}\left|E_{\{I\}}\right|+\ldots+(-1)^{n}\cdot\sum_{I\in[n],|I|=n-1}\left|E_{\{I\}}\right|=\\
+				& =n(n-1)^{m}-\binom{n}{2}(n-2)^{m}+\dots+(-1)^{n}n
+				\end{align*}
+			\end{solution}
+		\end{enumerate}
+		
+		\qformat{\textbf{Exercice \thequestion~(\thequestiontitle):}\\}
+		\titledquestion{Ramsey's theorem}
+		~\vspace{-0.6cm}
+		\begin{enumerate}
+			\item Show that $\forall (n_r,n_b)\in\mathbb{N}^2, \exists N\in\mathbb{N}$
+			such that, for any $2$ (edge) coloring $\{r,b\}$ of the complete graph
+			$K_N$, there exists a color $c\in\{r,b\}$ for which there is a complete sub-graph $K_{n_c}$ which is monochromatic in the color $c$.
+			\\
+			(the smallest $N$ for which this property holds is denoted by $R(n_r,n_b)$).
+			
+			\begin{solution}
+				We show this by induction on $n_r + n_b$. First note that $R(n,1) = R(1,n)=1$.
+				To show that $R(n_r,n_b)$ exists we'll show that $R(n_r, n_b) \leq R(n_r-1, n_b) + R(n_r, n_b-1)$. 
+				
+				Consider the complete graph on $ R(n_r-1, n_b) + R(n_r, n_b-1) $ edges. Pick a vertex $v$. Partition the rest of the edges in to 2 sets $R$ and $B$, where for any $u\in R$ the edge $(u,v)$ is colored red and for any $u\in B$ the edge $(u,v)$ is colored blue. Now, since $ R(n_r-1, n_b) + R(n_r, n_b-1) = 1 + |R|+|B|$ either $|R|>R(n_r-1, n_b)$ or $|B|>R(n_r, n_b-1)$. First assume that $|R|>R(n_r-1, n_b)$. The sub-graph induced on the vertices of $ R $ either has a complete monochromatic blue sub-graph on $ n_b $ vertices and we are done, or it has a complete monochromatic red sub-graph on $ n_r-1 $ vertices and adding the vertex $v$ produces a complete monochromatic red sub-graph on $ n_r $ vertices and we are done. If $|B|>R(n_r, n_b-1)$, the same proof works by reversing the colors.
+			\end{solution}
+			
+			\item Show that $\forall k\in\mathbb{N},\forall (n_1, n_2, \dots,
+			n_k)\in\mathbb{N}^k, \exists N\in\mathbb{N}$ such that, for any $k$ (edge) coloring of the complete graph $K_N$, there exists a color $c\in\llbracket 1,k \rrbracket$ for which there is a complete sub-graph $K_{n_c}$ which is monochromatic in the color $c$.
+			\\ (the smallest $N$ for which this property holds is denoted by $R(n_1,\dots,n_k)$).
+			
+			\begin{solution}
+				By induction on $k$ We'll show that $R(n_1,\dots,n_k)\leq R(n_1,\dots,n_{k-2},R(n_{k-1},n_k)) $. For $k=2$ we've shown it in the previous exercise.
+				Let $k>2$ and take a graph of size $ R(n_1,\dots,n_{k-2},R(n_{k-1},n_k))$. Now, imagine that we became partially color blind and stop differentiating between the colors $n_{k-1}$ and $n_k$ and instead see a new color. By induction our graph either admits a complete monocromatic sub-graph in the color $c$ of size $n_c$ for $c\in [n-2]$ and we are done, or it admits a complete monocromatic sub-graph $ G $ in the new color of size $R(n_{k-1},n_k)$. Now, imagine our eyes can suddenly see the difference between the $n_{k-1},n_k$. We get a 2 colored graph of size $R(n_{k-1},n_k)$ and from what we have shown in the previous exercise we are done.
+			\end{solution}
+		\end{enumerate}
+	\end{questions}
+	
+\end{document}
+% vim: spell spelllang=fr

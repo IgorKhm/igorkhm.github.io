@@ -1,0 +1,757 @@
+\documentclass[a4paper,11pt]{exam}
+%\printanswers % pour imprimer les réponses (corrigé)
+ \noprintanswers % Pour ne pas imprimer les réponses (nonc)
+% \addpoints % Pour compter les points
+% \noaddpoints % pour ne pas compter les points
+\qformat{\textbf{Exercice \thequestion \,:}\\} % Questions style
+\usepackage{color} % Define new colors
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{exercise}
+\usepackage{mathrsfs,amsmath,amssymb,latexsym,amsfonts,mathtools,stmaryrd}
+\usepackage{enumitem}
+\setitemize{label=\textbullet}
+% Bigger binomial in math mode
+\usepackage{nccmath}
+\renewcommand{\binom}{\mbinom}
+
+\usepackage[francais]{babel}
+
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+\shadedsolutions % définit le style des réponses
+% \framedsolutions % définit le style des réponses 
+\definecolor{SolutionColor}{rgb}{0.8,0.9,1} % bleu ciel
+\renewcommand{\solutiontitle}{
+\noindent\textbf{Solution:}\par\noindent} % Définit le titre des réponses
+\newcommand\eqdef[0]{\stackrel{\text{def}}{=}}
+\newcommand{\binomial}[2]{\small{\left(\begin{array}{c} #1 \\ #2\end{array} \right)}}
+\pagestyle{headandfoot}
+\headrule
+\header{L3 - 2019/2020 - TD11}{Mercredi 11 December}{Mathématiques discrètes}
+\footer{S. Le Roux, I. Khmelnitsky}{\thepage}{E.N.S. Cachan}
+\footrule
+
+\renewcommand{\questionshook}{%
+  \setlength{\labelwidth}{0pt}%
+  \setlength{\itemsep}{0.9\baselineskip}
+}
+
+\definecolor{gris}{gray}{0.95}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\A}{\mathcal{A}}
+\renewcommand{\S}{\mathcal{S}}
+\newcommand{\RR}{\mathbin{\mathcal{R}}}
+\renewcommand{\P}{\mathrm{P}}
+\DeclareMathOperator{\pgcd}{pgcd}
+\DeclareMathOperator{\Fix}{Fix}
+\DeclareMathOperator{\fix}{Fix}
+
+\usepackage{tikz}
+% \usetikzlibrary{trees}
+\usetikzlibrary{automata, positioning, arrows}
+\tikzset{
+	->, % makes the edges directed
+	>=stealth, % makes the arrow heads bold
+	node distance=3cm, % specifies the minimum distance between two nodes.
+	every state/.style={thick, fill=gray!10},
+	% initial text=$ $, % sets the text that appears on the start arrow
+}
+
+\begin{document}
+
+\begin{questions}
+	
+
+\begin{EnvFullwidth}
+	\colorbox{gris}{
+		\begin{minipage}[c]{\textwidth}
+			Probability
+		\end{minipage}
+	}
+\end{EnvFullwidth}
+
+
+
+\titledquestion{Min, Max et comparaison}
+Let $ X $ and $ Y $ be two independent random variables defined on the same probability space of the same geometric distribution $p$  ($P(X = k) = p(1-p)^k$).
+\begin{enumerate}
+	
+	\item Calculate $P(Y \geq X)$, for $p=\frac{1}{2}$.
+	
+	\begin{solution}
+		\[
+		1= P(Y > X)+P(Y < X)+P(Y = X)
+		\]
+		\[
+		P(Y > X) = 1/2(1 -P(Y = X))
+		\]		
+		\[
+		P(Y \geq X) = P(Y > X) + P(Y = X) =  1/2(1 +P(Y = X))
+		\]
+		
+		
+		
+		\begin{align*}
+		P(X=Y)=& \sum_{n\in\N }P(Y = n) P(X = n)
+		= \sum_{n\in\N} p^2(1-p)^{2n}\\& =\frac{p^2}{1-(1-p)^2} = \frac{p}{2-p}
+		\end{align*}
+		
+		\[
+		P(Y \geq X) =  1/2(1 +\frac{p}{2-p}) = \frac{1}{2-p} 
+		\]
+		
+		
+		
+		Since $X$ and $Y$ independent, by denoting $q=(1-p)$ we have~:
+		
+		\begin{align*}
+		\sum_{n \geq 0} P(Y=n) \sum_{k \leq n} P(X=k)
+		&= \sum_{n \geq 0} q^n p \sum_{k \leq n} q^k p \\
+		&= \sum_{n \geq 0} q^n p^2 \frac{1-q^{n+1}}{1-q} \\
+		&= p \sum_{n \geq 0} q^n -q^{2n+1} \\
+		&= p \sum_{n \geq 0} q^{2n} \\
+		&= p \cdot \frac{1}{1-q^2} \\
+		&= (1-q) \frac{1}{(1-q)(1+q)} \\
+		&= \frac{1}{1+q} \\
+		&= \frac{1}{2-p}
+		\end{align*}
+		For $p=\frac{1}{2}$, we obtain $\frac{2}{3}$.
+	\end{solution}
+		
+	\item Calculate $P(Y = X)$, for $p=\frac{1}{2}$.
+	
+	\begin{solution}
+		\[
+		\sum_{n \geq 0} P(Y=n) P(X=n)
+		= \sum_{n \geq 0} p^2 q^{2n}
+		= p^2 \frac{1}{1-q^2}
+		= \frac{p^2}{2p-p^2}
+		= \frac{p}{2-p}
+		\]
+		For $p=\frac{1}{2}$, we have $\frac{1}{3}$.
+	\end{solution}
+	
+	
+	
+
+\end{enumerate}
+We define the random variables $U$ and $V$ by
+\[
+U = \max(X,Y) \mbox{ and } V = \min(X,Y)
+\]
+\begin{enumerate}[resume]
+	\item For all $u\leq v\in \mathbb N$ calculate $P(U\leq u,V\geq v)$.
+	
+	\begin{solution}
+		If $v \leq u$, then~:
+		\[
+		P(U\leq u,V\geq v)
+		= P( v \leq X \leq u, v\leq Y \leq u)
+		=\left(\sum_{n=v}^{u}pq^n \right)^2 =
+		\]
+		\[
+		=\left(pq^v\sum_{n=0}^{u-v}q^n \right)^2
+		=\left(pq^v\frac{1-q^{v-u+1}}{1-q} \right)^2
+		= (q^{v} -q^{u+1})^2
+		\]
+	\end{solution}
+	
+	\item Calculate the distribution of the random variable $U$.
+	
+	\begin{solution}
+		We have for $u\geq 0$,
+		$P(U\leq u ) = P(U\leq u , V \geq 0) = (1 -q^{u+1})^2$\\
+		and $P(U=u) = P(U\leq u) - P(U \leq u-1) = p(2q^u-q^{2u}(1+q))$.
+	\end{solution}
+	
+	% \item On définit la variable aléatoire $W=U-V$.
+	%   Déterminer la loi de $W$.
+\end{enumerate}
+
+%\qformat{\textbf{Exercice \thequestion \,:}\\}
+%\question
+%To graduate, a student must pass the $ N $ exams that are offered, and thereby obtain the corresponding $ N $ worth of credits.
+%It is assumed that the student has a probability $ p \in ]0,1[$ to pass each exam (all attempts are assumed to be independent).
+%From year to year, the student can postpone the units of values obtained, and then passes only the exams that he did not succeed.
+%
+%Pour avoir son diplôme, un étudiant doit réussir les examens des $N$ cours qui sont proposés, et obtenir ainsi les $N$ unités de valeur correspondantes.
+%On suppose que l'étudiant a une probabilité $p \in ]0,1[$ de réussir chacun des examens (toutes les tentatives sont supposées indépendantes).
+%D'année en année, l'étudiant peut reporter les unités de valeurs obtenues, et il ne passe alors que les examens qu'il n'a pas réussis.
+%\begin{enumerate}
+%	\item Pour $1 \leq i \leq N$, notons $G_{i}$ le nombre d'essais nécessaires
+%	pour réussir l'examen du $i$-ième cours.
+%	Quelle est la loi de $G_{i}$~?
+%	
+%	\begin{solution}
+%		$\forall n\in\N\setminus\{0\}, P(G_i=n)=(1-p)^{n-1}p$.
+%		
+%		Remarque~: on en déduit~:
+%		$\forall n\in\N\setminus\{0\}, P(G_i \leq n)
+%		=\sum_{j=1}^n (1-p)^{j-1}p = 1-(1-p)^n$.
+%	\end{solution}
+%	
+%	\item On note $X_{n}$ le nombre total d'unités obtenues pendant les $n$
+%	premières années (si $X_{n}=N$, alors $X_{m}=N$ pour $m \geq  n$).
+%	Quelle est la loi de $X_{n}$~?
+%	
+%	\begin{solution}
+%		$\forall m \in \llbracket 0,N \rrbracket$, l'évènement $(X_n=m)$
+%		correspond au fait qu'exactement $m$ examens ont été réussis et les
+%		autres non.
+%		Notons $E_i$ l'évènement ``l'examen $i$ a été réussi pendant les $n$
+%		premières années'' et $F_i$ l'évènement contraire.
+%		Ainsi~:
+%		\begin{align*}
+%		P(X_n=m)
+%		&= \sqcup_{1 \leq i_1 < i_2 < \cdots < i_m \leq N}
+%		P(E_{i_1} \cap \cdots \cap E_{i_m} \cap_{k \notin \{i_j\}} F_k) \\
+%		&= \sqcup_{1 \leq i_1 < i_2 < \cdots < i_m \leq N}
+%		P((G_{i_1} \leq n) \cap \cdots \cap (G_{i_m} \leq n)
+%		\cap_{k \notin \{i_j\}} (G_k > n)) \\
+%		&= \binom{N}{m}(1-(1-p)^n)^m(1-p)^{n(N-m)}
+%		\end{align*}
+%	\end{solution}
+%	
+%	\item On suppose que l'étudiant ne peut passer les examens qu'au plus
+%	pendant $5$ ans.
+%	\begin{enumerate}
+%		\item Quelle est la probabilité que l'étudiant n'obtienne pas son
+%		diplôme~?
+%		
+%		\begin{solution}
+%			L'évènement ``l'étudiant n'obtient pas son diplôme'' correspond à
+%			l'évènement $X_5 < N$.
+%			\begin{align*}
+%			P(X_5 < N)
+%			&= \sum_{m=0}^{N-1} P(X_5=m) \\
+%			&= 1-P(X_5=N) \\
+%			&= 1-\binom{N}{N}(1-(1-p)^5)^N(1-p)^{5(N-N)} \\
+%			&= 1-(1-(1-p)^5)^N
+%			\end{align*}
+%		\end{solution}
+%		
+%		\item Combien d'examens l'étudiant passera-t-il en moyenne~?
+%		
+%		\begin{solution}
+%			On recherche l'espérance de la variable $X_5$~:
+%			\begin{align*}
+%			E(X_5)
+%			&= \sum_{m=0}^N mP(X_5=m) \\
+%			&= \binom{N}{m}(1-(1-p)^5)^m(1-p)^{5(N-m)} \\
+%			&= N(1-(1-p)^5)
+%			\end{align*}
+%		\end{solution}
+%	\end{enumerate}
+%\end{enumerate}
+
+
+\titledquestion {Turán's theorem}
+{\bf Turán's theorem:} Let $G$ be any graph with $ n $ vertices, such that $G$ is $ K_{t+1}$-free. Then the number of edges in $G$ is at most:
+\[
+\left( 1- \frac{1}{t}\right)\frac{n^2}{2}
+\] 
+Denote by $d(v)$ the degree of the vertex $v$.
+\begin{enumerate}
+	\item Let $<$ be a uniformly chosen total order on $V$. Define:
+	\[
+	I=\{v\in V\mid \{v,u\}\notin E \Rightarrow v<u \}
+	\]
+	For $v\in V$, what is the probability that $v\in I$.
+	\begin{solution}
+		
+	\end{solution}
+	\item What is the expected value of $|I|$?
+	
+	\item Denote by $\omega(G)$ the size of largest complete sub graph of $G$. Show that $\omega(G)\geq~\sum_{v\in V}\frac{1}{n-d(v)}$.
+	\begin{solution}
+		Let $<$ be a uniformly chosen total order on $V$. Define:
+		\[
+		I=\{v\in V\mid \{v,u\}\notin E \Rightarrow v<u \}
+		\]
+		Let $X_v$ be the random variable such that $X_v=1$ if $ v\in I $, and $X = \sum_{v\in V} X_v = |I|$.
+		For $v\in V$ we have $P(X_v=1)=\frac{1}{n-d(v)}$, since we need to pick him before all of the vertices which are not his neighbors and therefore $E[x_v]=\frac{1}{n-d(v)}$. 
+		Using the linearity of the expected value we get that:
+		\[
+		E[X]=\sum_{v\in V} X_v=\sum_{v\in V}\frac{1}{n-d(v)}
+		\]
+		Note that $I$ is a complete subgraph of $G$ and therefore $\omega(G)\geq\sum_{v\in V}\frac{1}{n-d(v)}$
+	\end{solution}
+	
+	
+	
+	\item Recall, Cauchy–Schwarz inequality $(\sum a_ib_i)^2\leq(\sum a_i^2)(\sum b_i^2)$. 
+	Show that:
+	$$n^2 \leq \omega(G)\sum_{v\in V} (n-d(v)) $$ 
+	and conclude the theorem.
+	\begin{solution}
+		By using Cauchy–Schwarz we can get that:
+		$$n^2 \leq \left(\sum_{v\in V} \sqrt{(n-d(v))}^2\right)\left(\sum_{v\in V} \left(\sqrt{\frac{1}{n-d(v)}}^2\right)\right)\leq \omega(G)\sum_{v\in V} (n-d(v)) $$
+		
+		The sum of the degrees of all the edges is: $\sum d(v) = 2|E|$. We assume that $w(G)\geq t$, hence:
+		$$n^2 \leq t (n^2-2|E|)$$
+		and by moving things around:		
+		$$|E|\leq\left( 1- \frac{1}{t}\right)\frac{n^2}{2}$$
+		
+	\end{solution}
+	
+\end{enumerate}
+
+
+
+\question
+
+We suppouse that $P : \N \rightarrow [0,1]$ is a probability distribution.
+This equates to the having a sequence of positive numbers $(p_n)_{n\in \N} $
+such that $\sum_n p_n=1$, with  $p_n=P(n)$.
+
+
+\begin{enumerate}
+	\item Prove that there is no probability distribution on $ \N $ that makes the drawing of an integer equiprobable.
+	
+	\begin{solution}
+		Since then we would have:
+		
+		$\sum_{n\in \N} a = +\infty$
+	\end{solution}
+	
+	\item   Suppose  $p_n = \frac{1}{2^{n+1}} .$
+	\begin{enumerate}
+		\item  Demonstrate that we have a probability distribution on $\N$.
+		\begin{solution}
+			We recognize a geometric series :$\sum_n p_n =1$.
+		\end{solution}
+		\item Calculate the probability of the set of even numbers and the set of odd numbers. 
+		
+		\begin{solution}
+			$ P(2\N) = \sum_n p_{2n} = \sum_n \frac{1}{2^{2n+1}} = \frac{1}{2}  \sum_n \frac{1}{4^{n}} = \frac{2}{3}$.
+			hence $P(2\N +1) = \frac{1}{3}$, it is not équitable.
+		\end{solution}
+	\end{enumerate}
+	\item Assume we have a probability distribution on $\N$
+	satisfying the following properties~:
+	\[\forall a\in \N\setminus\{0\}, P(a\N) = \frac{1}{a} .\]
+	Prove that if $ a $ and $ b $ are co-prime, the events ``all multiples of $ a $'' and the event ``all multiple of $ b $'' are independent.
+	
+	\begin{solution}
+		$a\N \cap b\N = ab \N$ donc $P(a\N \cap b\N) = P(ab \N) = \frac{1}{ab} = P(a\N)P(b\N)$.
+	\end{solution}
+\end{enumerate}
+
+
+
+\question
+Information is transmitted in a population.
+Each individual transmits the correct information with probability $ p $, and the negation of the information with probability $ 1-p $.
+Let $ p_n $ be the probability that the information is correct after $ n $ repetitions.
+
+\begin{enumerate}
+	\item Calculate value $p_n$ as a function of $p$ and $n$.
+	
+	\begin{solution}
+		Denote $q_n=1-p_n$ the probability that the information will be false after
+		$n$ repetitions.
+		Using the total probabilities formula,
+		$p_n=pp_{n-1}+qq_{n-1} = p_{n-1}(2p-1)+(1-p)$.
+		\[
+			p_{n+1}-\frac{b}{1-a}=(2p-1)(p_n-\frac{b}{1-a})
+		\]
+		\[
+			p_{n+1}-\frac{b}{1-a}=(2p-1)^n(1-\frac{b}{1-a})
+		\]
+		By recurrence, we obtain ~:
+		$p_n = \frac{1}{2}( 1+ (2p-1)^n)$
+	\end{solution}
+	
+	\item Calculate $\lim_n p_n$.
+	
+	
+	\begin{solution}
+		If $p=1$, the information is transmitted perfectly ~: the limit is $1$.
+		
+		If $p=0$, the information is inverses at each transmission, it alternates between true and false ~: there is no limit (cyclic behavior).
+		
+		and if, $|2p-1|<1$, $\lim_n p_n = \frac{1}{2}$.
+		Ultimately, there is equiprobability between information and its opposite.
+	\end{solution}
+\end{enumerate}
+
+
+
+\question
+We consider the Markov chain on $ 5 $ states $ 1,2,3,4,5$ with a transition matrix $P$~:
+
+$$P=\left( \begin{array}{ccccc}1/2&0&1/2&0&0\\1/3&2/3&0&0&0\\0&1/4&1/4&1/4&1/4\\0&0&0&3/4&1/4\\0&0&0&1/5&4/5 \end{array} \right). $$
+
+\begin{enumerate}
+	\item Draw the Markov Chain.
+	\begin{solution}
+
+	\end{solution}
+	\item Classify the states.
+	\begin{solution}
+		1-3 transient
+		
+		4-5 recurrent
+	\end{solution}
+	\item What is the probability to start at state $ 1 $ and after $ 3 $ steps to arrive to the state $ 5 $~?
+	\begin{solution}
+		$P(3,5,5) = 1/2\cdot1/4\cdot4/5=1/10$
+		
+		$P(3,4,5) = 1/2\cdot1/4\cdot1/4=1/32$
+		
+		$P(1,3,5) = 1/2\cdot1/2\cdot1/4=1/16$ 
+		
+		$P(3,3,5) = 1/2\cdot1/4\cdot1/4=1/32$
+		
+		$P = 1/5+1/32 + 1/16 +1/10 = 9/40$
+	\end{solution}
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\bigskip
+
+\question
+% ancien 6
+
+We consider the Markov chain with two states~:
+
+\begin{center}
+	\begin{tikzpicture}[->, >=stealth',shorten >=1pt, node distance=28mm,
+	state/.style={
+		% The shape:
+		circle,minimum size=8mm,rounded corners=3mm,
+		% The rest
+		draw=black}]
+	
+	
+	\node[state] (A) {$0$};
+	\node[state] (B) [ right of= A] {$1$};
+	\path (A) edge [loop left] node[left] {$p$} (A)
+	edge[out=45, in=135] node[  anchor=center, above]       {$1-p$}(B)
+	(B) edge [loop right] node[right] {$q$} (B)
+	edge [out=225, in=315] node[ anchor=center, below]       {$1-q$}(A);
+	\end{tikzpicture}
+\end{center}
+
+with $p$ and $q$ in $[0,1]$
+
+\begin{enumerate}
+	\item What is the transition matrix for this chain.
+	\begin{solution}
+		$$\left(\begin{array}{cc}
+		p & 1-p\\
+		1-q & q
+		\end{array}\right)$$
+	\end{solution}
+	\item Is it aperiodic? irreducible? Given $v\geq 0$ what is $\lim_{n\rightarrow\infty}v\cdot P^n$? What are the stationary distributions?
+	\begin{solution}
+		If $p$ or $q=1$: Then not irreducible, aperiodic if both equal 1. If $q\neq 1$ then stationary dist $(1,0)$ and the $\lim$ is $ (1,0)$.
+		If $q = 1$ then the stationary dist is a convex combination of $(1,0)$ and $(0,1)$ and no $\lim$.
+		
+		Hence from now on $p,q<1$:
+		
+		If $p =0$ and $q=0$: it is irreducible but not aperiodic. $\lim$ does not exists,  and the stationary dist is $ (1/2,1/2) $ 
+		
+		Otherwise:		
+		If $p,q\in (0,1)$. 
+		Irreducible,  since $ P>0 $ to reach any state from any state.
+		Aperiodic, since $0$ is reachable by one move from it self, and we know that all state of the same component have the same period.
+		
+		
+		
+		
+		If $p$ or $q=1$ then not irreducible.
+	\end{solution}
+
+	\begin{solution}
+		\begin{align*}
+		\left(1-p\right)x+\left(q-1\right)y & =0\\
+		x&=  \frac{1-q}{1-p}y
+		\end{align*}
+		Hence $ x=a(1-q) $, $ y=a(1-p) $ and by normalizing we get:
+		
+		\[
+		\left(\frac{1-q}{2-p-q},\frac{1-p}{2-p-q}\right)
+		\left(\begin{array}{cc}
+		p & 1-p\\
+		1-q & q
+		\end{array}\right)=\left(\frac{1-q}{2-p-q},\frac{1-p}{2-p-q}\right)
+		\]
+		
+	\end{solution}
+\end{enumerate}
+
+%\bigskip
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\question
+
+We have a biased coin that returns heads with the probability  $ p\in(0,1)$.
+\begin{enumerate}
+	\item We can simulate an unbiased die with an unbiased coin in the following way:
+	
+	The coin is first thrown: heads denotes $ 1,2,3 $, and tail denotes $ 4,5,6 $. 
+	\\
+	Then we throw the coin twice : if we get heads, heads, then we say $ 1 $ (or $ 4 $), if we get heads, tail we say $ 2 $ (or $ 5 $), if we get tail, heads we say $ 3 $ (or $ 6 $) and if we get tail, tail we start again from the first throw.
+	
+	\begin{enumerate}
+		\item Draw the underlying Markov chain and justify that it simulates a balanced die.
+		\item What is the average number of coin rolls for this simulation of a die?
+	\end{enumerate}
+
+	\begin{solution}
+		Draw the chain.
+		
+		$P(1)=\frac{1}{8}\sum_{n=0}\left(2\cdot\frac{1}{8}\right)^n = \frac{1}{8}\left(\frac{4}{3}\right) = 1/6$
+		
+		The probability of ending a specific round is $3/4$. Therefore we get a geometric RV $X$ with $p=3/4$. Hence $E(X) = \frac{1}{p}=4/3$ is the average number of rounds. and every time we flip 3 coins therefore $ 4 / 3 \cdot 3 = 4 $
+		
+		
+	\end{solution}
+	
+	\item Find in the same spirit an algorithm to simulate an unbiased die by casting the biased coins several times. Present it in the form of a Markov chain.
+	
+	\begin{solution}
+		Denote by $p'=p^3$ and $q'=(1-p)^3$ and we get:
+		\[
+			p^3(1-p)^3\sum_{n\in\N}(1-6p^3(1-p)^3)^n=p'q'\sum_{n\in\N}(1-6p'q')^n=p'q'\frac{1}{6p'q'}=\frac{1}{6}
+		\]
+	\end{solution}
+	
+\end{enumerate}
+
+\question
+
+A rectangular image is formed of $ m \times n $ square pixels, $ m $ representing the number of pixels in
+width and $ n $ in length.
+We consider the following algorithm:
+At each step, a pixel is chosen uniformly, and then an immediate neighbor is chosen
+(if it is not on an edge, it has $ 8 $ immediate neighbors) with a uniform probability
+and it takes his color.
+Demonstrate that with probability $ 1 $, the image becomes monochromatic.
+
+\begin{solution}
+	Model the problem as an absorbing Markov chain, and get that the monochromatic pictures are the absorbing states. 
+\end{solution}
+
+\question
+Two players $A$ and $B$ play heads or tails, where head occurs with probability $0\leq p\leq1$. Each time head(resp. tail) occurs player $A$(resp. $B$) gives 1 coin to player $B$(resp .$A$). They play till one of them runs out of money. Given that $A$ starts with $a$ coins and $B$ with $b$, what is the probability that $A$ wins?
+
+\begin{solution}
+	Let $c=a+b$, and denote by $u(i)=P(X_T=c|X_0=i)$ the probability that $A$ wins given that $A$ had $i$ in the first turn. We get that ($q=1-p$)
+	\[
+		u(i) = pu(i-1)+qu(i+1)
+	\]
+	
+	The characteristic equation associated with this linear recurrences is $qx^2-x+p=0$, with the roots being $x=1$,$x=p/q$. Therefore:
+	\[
+		u(i) = \lambda1^n + \gamma(p/q)^i
+	\]
+	or if $p=q$
+	\[
+		u(i) = \lambda1^n + \gamma i1^n
+	\]
+	Using the fact that $ u(0)=1 $ and $ u(1)=0 $ we get that 
+	\[
+		u(i) = \frac{1-(\frac{q}{p})^i}{1-(\frac{q}{p})^c}
+	\]
+	and if $ p=q $
+	\[
+		u(i) = \frac{i}{c}
+	\]
+\end{solution}
+
+
+
+
+%\question Let $0\leq p,q\leq1$ such that $p=1-q$. A simple random walk on $\Z$ is a Markov chain defined by:
+%\[
+%X_{n+1} =\begin{cases}
+%X_n +1 & \text{with probabilty }p\\
+%X_n -1 & \text{with probabilty }q\\
+%\end{cases}
+%\]
+%For $a,b\in\R $ and $n\in \N$, recall Stirling's approximation :
+%\[
+%a\sqrt n(n/e)^n\leq n! \leq b\sqrt n(n/e)^n
+%\]
+%
+%\begin{enumerate}
+%	\item Is it irreducible?
+%	\begin{solution}
+%		Yes, for any the probability to get from any state to any state is higher then zero.
+%	\end{solution}
+%	\item Is the state $0$ recurrent/transient?
+%	\begin{solution}
+%		Let $p^n_{00}$ be the probability returning to $ 0 $ after $n$ steps. We know that we cannot return after odd number of steps, therefore we will only consider even steps. 
+%		\[
+%		p^{2n}_{00} = \binom{2n}{n}p^nq^n=\frac{2n!}{n!^2}p^nq^n\leq \frac{b\sqrt{2n}(2n/e)^{2n}}{a^2 n(n/e)^{2n}}p^nq^n = c_1\frac{(4pq)^n}{\sqrt{n}}
+%		\] 
+%		in the same way:
+%		\[
+%		p^{2n}_{00} \geq c_2\frac{(4pq)^n}{\sqrt{n}}
+%		\]
+%		If $ p=q $ then
+%		\[
+%		\sum_{n\in\N} p_{00}^{2n} \geq \sum_{n\in\N} c_2\frac{1}{\sqrt{n}}=\infty
+%		\]
+%		on the other hand if $p\neq q$, then $k=4pq<1$:
+%		\[
+%		\sum_{n\in\N} p_{00}^{2n} \leq \sum_{n\in\N} c_1\frac{k}{\sqrt{n}}< \infty
+%		\]
+%	\end{solution}
+%\end{enumerate}
+%The simple {\bf symmetrical} random walk on $\Z^n$ is defined as follows. Given $X_n = (x_1,x_2,\ldots,x_n)\in~\Z^n$ then:
+%\[
+%X_{n+1} =\begin{cases}
+%(x_1+1,x_2,\ldots,x_n) & \text{with probabilty } \frac{1}{2n}\\
+%(x_1-1,x_2,\ldots,x_n) & \text{with probabilty } \frac{1}{2n}\\
+%(x_1,x_2+1,\ldots,x_n) & \text{with probabilty } \frac{1}{2n}\\
+%&\vdots\\
+%(x_1,x_2,\ldots,x_n-1) &\text{with probabilty }\frac{1}{2n}\\
+%\end{cases}
+%\]
+%\begin{enumerate}[resume]
+%	\item Is the chain recurrent for $n=2$?
+%	\begin{solution}
+%		Yes. Let $X_n^-$ and $X_n^+$ the projection of $X_n$ on the diagonal lines $y=\pm x$. $X_n^+$ and $X_n^-$ are independent simple symetric random walks on $\frac{1}{2}\Z$, and $X_n=0$ iff $X^+_n = 0=X_n^-$. Hence we get by the previous question that:
+%		\[
+%		p_{00}^2n=\left(\binom{2n}{n}\left(\frac{1}{2}\right)^{2n}\right)^{2}\geq c_{2}^2\frac{1}{n}
+%		\]
+%		Therefore we get that $\sum p^n_{00}=\infty$.
+%	\end{solution}
+%	\item And for $n=3$?
+%	\begin{solution}
+%		first we get that we need to compute th probability of all the even paths, where we go the total 0 in each of the indeces, i.e.:
+%		\[
+%		p^{2n}_{00}=\sum_{\begin{array}{c}
+%			i,j,k\geq0\\
+%			i+j+k=n
+%			\end{array}}\frac{\left(2n\right)!}{\left(i!j!k!\right)^{2}}\left(\frac{1}{6}\right)^{2n}=\binom{2n}{n}1/2^{2n}\sum_{\begin{array}{c}
+%			i,j,k\geq0\\
+%			i+j+k=n
+%			\end{array}}\binom{n}{i,j,k}^2\left(\frac{1}{3}\right)^{2n}
+%		\]
+%		we note that:
+%		\[
+%		\sum_{\begin{array}{c}
+%			i,j,k\geq0\\
+%			i+j+k=n
+%			\end{array}}\binom{n}{i,j,k}\left(\frac{1}{3}\right)^{n} = 1
+%		\]
+%		as the total probability of punting $n$ balls in 3 containers. Moreover for $n=3m$ we get that:
+%		\[
+%		\binom{n}{i,j,k}\leq \binom{n}{m,m,m}
+%		\]  
+%		summing both of these results and using Stirlings approximation we get : 
+%		\[
+%		p_{00}^{2n}=\binom{2n}{n}1/2^{2n}\binom{n}{m,m,m}\left(\frac{1}{3}\right)^{n}\leq c'\left(\frac{6}{n}\right)^{3/2}
+%		\]
+%		Hence $\sum_{m=0}^\infty p^{6m}_{00} < \infty$. Moreover we know that $p^{6m}_{00}\geq (1/6)^2 p^{6m-2}_{00}$ and $p^{6m}_{00}\geq (1/6)^4 p^{6m-4}_{00}$ hence we get 
+%		\[
+%		\sum_{n=0}^\infty p^{2n}_{00} < \infty
+%		\]
+%	\end{solution}
+%	
+%\end{enumerate}
+
+\question
+Let $\mathcal{C}$ be a Markov chain on $N$ states with a transition matrix $P$.
+We assume that $P$ is \textrm{Doubly stochastic}, i.e.
+$\forall i \in \llbracket 1, N\rrbracket, \sum_j p_{i,j} = \sum_j p_{j,i} =1 $
+(the sum of each column and each row is $1$).
+
+\begin{enumerate}
+	\item Give meaning to $\sum_j p_{j,i}$ in general.
+	\item We suppose that the chain $ \mathcal{C} $ is irreducible and aperiodic.
+	Given $v\geq0$, what is the value of $\lim_{n\rightarrow\infty}v\cdot P^n$
+	\begin{solution}
+		${\bf 1}P={\bf 1}$, therefore $\frac{1}{N}\cdot{\bf 1}P=\frac{1}{N}\cdot{\bf 1}$. Since its irreducible and aperiodic it is unique.
+	\end{solution}
+\end{enumerate}
+%
+\question
+A board game consists of a ring of $ N $ squares numbered from $ 0 $ to $ N-1 $.
+At each stage, the player rolls a balanced die and advances the corresponding number of squares.
+We denote by $ X_n $ the player's position at the $n$th step.
+\begin{enumerate}
+	\item Draw the Markov chain, give $N=7$.
+	\item What are the properties of this chain~? Justify that the chain has a stationary distribution.
+	\begin{solution}
+		irreducible, aperiodic, doubly stochastic.
+	\end{solution}
+	\item Determine without calculation this stationary distribution.
+\end{enumerate}
+
+
+\question
+$ N $ objects are evenly distributed in cereal boxes.
+A collector seeks to get them all and is interested in the average number of cereal boxes he needs to purchase on order to get the entire collection. We denote this number by $e_N$.
+
+
+Let $i \in \llbracket 1,N\rrbracket .$
+$ N_i $ is the number of boxes purchased between the acquisition of the $ i-1 $-th object (if $ i> 0 $) until the $ i $-th object is obtained.
+
+\begin{enumerate}
+	\item What is the probability of getting a new object in a cereal box, knowing that we already have $i-1$ of them.
+	\begin{solution}
+		$P=\frac{n-(i-1)}{n}$
+	\end{solution}
+	\item What is the distribution of $N_i$.
+	\begin{solution}
+		Geometric distribution, 
+		$P(N_i=k)=\frac{n-(i-1)}{n}\cdot(\frac{i-1}{n})^{k-1} $
+	\end{solution}
+	\item Calculate $E(N_i)$
+	\begin{solution}
+		$E(N_i)=\frac{n}{n-(i-1)}$
+	\end{solution}
+	\item  Deduce the exact expression of $ e_N $ for any $N$, and show that
+	$e_N \sim N\ln{N}$.
+	\begin{solution}
+		$e_N=\sum_{i\in[n]} E(N_i)=\sum_{i\in[n]} \frac{n}{n-(i-1)}=n\sum_{i\in[n]} \frac{1}{i}$  
+		
+		\[
+			\ln(n+1)=\int_1^{n+1}\frac{1}{s}ds\leq \sum_{i=1}^n \frac{1}{i}\leq 1+ \int_1^{n}\frac{1}{s}ds =1 + \ln(n)
+		\]
+		
+		\[
+		n\ln(n+1)\leq n\sum_{i=1}^n \frac{1}{i}\leq n + n\ln(n)
+		\]
+	Dividing both sides by $n\ln$ and taking the limit of $n$ we get that:
+	\[
+		\lim_{n\rightarrow\infty}\frac{n\ln(n+1)}{n\ln(n)} = 1 = \lim_{n\rightarrow\infty}\frac{n+n\ln(n)}{n\ln(n)}
+	\] 
+	therefore $\lim_{n}\frac{e_n}{n\ln(n)}=1$
+		
+		
+	\end{solution}
+\end{enumerate}
+
+We now assume that the distribution of objects is no longer uniform. We suppose that there is an object which is rarer than the others. We denote $ \varepsilon $ its probability of occurrence.
+The others are distributed evenly.
+\begin{enumerate}\setcounter{enumi}{4}
+	\item Justify that $\lim_{\varepsilon \to 0} e_n = +\infty .$
+	\item Model the problem with a Markov chain.
+	
+\end{enumerate}
+
+
+
+
+
+\end{questions}
+\end{document}
+
+% vim: spell spelllang=fr

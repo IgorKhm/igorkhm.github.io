@@ -1,0 +1,593 @@
+\documentclass[a4paper,11pt]{exam}
+%\printanswers % pour imprimer les réponses (corrigé)
+\noprintanswers % Pour ne pas imprimer les réponses (nonc)
+% \addpoints % Pour compter les points
+% \noaddpoints % pour ne pas compter les points
+\qformat{\textbf{Exercice \thequestion \,:}\\} % Questions style
+\usepackage{color} % Define new colors
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{exercise}
+\usepackage{mathrsfs,amsmath,amssymb,latexsym,amsfonts,mathtools,stmaryrd}
+\usepackage{enumitem}
+\setitemize{label=\textbullet}
+% Bigger binomial in math mode
+\usepackage{nccmath}
+\renewcommand{\binom}{\mbinom}
+
+\usepackage[francais]{babel}
+
+\shadedsolutions % définit le style des réponses
+% \framedsolutions % définit le style des réponses 
+\definecolor{SolutionColor}{rgb}{0.8,0.9,1} % bleu ciel
+\renewcommand{\solutiontitle}{
+\noindent\textbf{Solution:}\par\noindent} % Définit le titre des réponses
+\newcommand\eqdef[0]{\stackrel{\text{def}}{=}}
+
+\pagestyle{headandfoot}
+\headrule
+\header{L3 - 2019/2020 - TD2}{Mercredi 02 Octobre}{Mathématiques discrètes}
+\footer{S. Le Roux, I. Khmelnitsky}{\thepage}{E.N.S. Cachan}
+\footrule
+
+\renewcommand{\questionshook}{%
+  \setlength{\labelwidth}{0pt}%
+  \setlength{\itemsep}{0.9\baselineskip}
+}
+
+\definecolor{gris}{gray}{0.95}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\A}{\mathcal{A}}
+\renewcommand{\S}{\mathcal{S}}
+\newcommand{\RR}{\mathbin{\mathcal{R}}}
+
+\begin{document}
+ \colorbox{gris}{
+\begin{minipage}[c]{15cm}
+Equivalence relations.
+\end{minipage}
+}\\
+
+\begin{questions}
+  \question 
+  Can we do without one of the three properties required to define equivalence relations ~?
+
+  \begin{solution}
+    No (exhibit counter-examples). One could nevertheless do without reflexivity if there is no isolated point.
+  \end{solution}
+
+  \question 
+  Let $ f $ be an involution (i.e. $f\circ f = Id $) on a finite set $ E $.
+  \begin{enumerate}
+    \item Show that the cardinality of all the fixed points of $ E $ is of the same parity as the cardinal of $ E $.
+
+      \begin{solution}
+        We introduce the relationship $\RR$ s.t $E$~:
+        $x \RR y \iff x=y \text{ or } x=f(y)$.
+        It is an equivalence relation.
+        The equivalence classes are ~:
+        \begin{itemize}
+          \item $\{x\}$ for $x$ fixed points of $f$.
+          \item $\{x,f(x)\}$,of cardinality $2$, sif $x$ isn't a fixed point of $f$.
+        \end{itemize}
+        Since $ E $ is the disjoint union of equivalence classes, 
+        \[
+          |E| = \sum_{\omega \in\RR } |w| \equiv_2
+          \sum_{\begin{array}{c}\omega \in  \RR \\ |w|=1\end{array}} 1
+          \equiv_2 |\{\text{fixed points of } f\}|
+        \]
+      \end{solution}
+
+    \item Deduce that if $ E $ is of an odd cardinal, $ f $ has (at least) a fixed point.
+
+      \begin{solution}
+       If $ f $ does not have a fixed point, its classes are of cardinality $ 2 $, hence $ E $ is of an even cardinality.
+      \end{solution}
+
+%    \item {\bf An application for the above:} Let $ P $ be a polynomial with real coefficients of an odd degree. Prove that the number of roots of $ P $ (counted with their multiplicities) is of the same parity as the degree of $P$.
+%
+%      \begin{solution}
+%      	Make the complex conjugation act on the family of roots of $ P $.
+%      	
+%        Faire agir la conjugaison complexe sur la famille des racines de $P$.
+%      \end{solution}
+  \end{enumerate}
+
+  \question
+  A relationship is given by a matrix $ T \in \{0,1\}^{N\times N}$. Where if $T[i,j] =1$ then $i \RR j$, and $T[i,j] = 0$, otherwise.
+  What conditions does the matrix needs to exhibit in order for the relationship to be  an equivalence relation.
+  
+  \begin{solution}
+    \begin{itemize}
+      \item reflexive: read the diagonal
+      \item symmetry: symmetry with respect to the diagonal
+      \item transitive: it is necessary to check the relation of circularity : 
+        for $ i $ from $ 1 $ to $ n-1 $, for $ j $ from $ i + 1 $ to $ n $, for $ k $ from $ 1 $ to
+        $n$, if $T[i,j]=1$ and $T[j,k]=1 \Rightarrow T[i,k]=1$.
+    \end{itemize}
+  \end{solution}
+
+  \question
+  Show that the following relation  $\sim$ on $(\Z \times(\N\setminus\{0\}))$ :
+  \[
+    (m,n) \sim (p,q) \Leftrightarrow mq = np
+  \]
+  is an equivalence relation and show that the following operations respect the equivalence relation:
+  \begin{enumerate}
+  	\item $(m,n) \oplus(p,q) = (mq+np,nq) $
+  	\item $(m,n) \cdot(p,q) = (mp,nq) $
+  \end{enumerate}
+
+  \begin{solution}
+just do it
+  \end{solution}
+  \bigskip
+
+  \qformat{\textbf{Exercice \thequestion~(\thequestiontitle):}\\}
+  \titledquestion{Équivalence de Nérode}
+  Let $\A = (Q, \Sigma,\delta, i_o, F )$ a deterministic automaton, where $ Q $ represents the set of states, $\Sigma$ the alphabet, $\delta$ the transition function, $i_o$ the initial state and $F$ the set of final states.
+
+  Let $\sim$ be an equivalence relation on $ Q $ s.t.~:
+  \begin{itemize}
+    \item For all states $p,q\in Q$, if $p \sim q$, then for all $a$ in $\Sigma$, $\delta(p,a) \sim \delta(q,a)$.
+    \item If $p\in F$, for all $q$ in $\A$ s.t. $p\sim q$, then
+      $q$ is also in $F$.
+  \end{itemize}
+
+  For all states $p$, denote their  equivalence class by $C(p)$.
+  \begin{enumerate}
+    \item 
+      \begin{enumerate}
+        \item Demonstrate that the following is a deterministic automaton~:
+          \[
+          \A_\sim = (Q/\sim, \Sigma,\delta_\sim, C(i_o), F/\sim )
+          \]
+          where $Q/\sim$ is the set of the equivalence classes,
+          $\delta_\sim(C(p), a) = C(\delta(p,a))$,
+          $F/\sim$ is the set of equivalence classes of the states of $F$.
+
+          \begin{solution}
+            Let $C$ be an equivalence class. If $p,q \in C$, $p \sim q$ then for all $a \in \Sigma$, $\delta(p,a) \sim \delta(q,a)$.
+            We can therefore define $\delta_\sim(C,a)=\delta(p,a)$ independent of the choice of $p \in C$.
+            
+            The rest is straightforward.
+          \end{solution}
+
+        \item Demonstrate that $L(\A) = L(\A_\sim)$.\\
+
+          \begin{solution}
+            Let $i_0 \xrightarrow{a_0} i_1 \xrightarrow{a_1} i_2 \cdots \xrightarrow{a_n} f$ a path in $\A$.
+            We get that, $C(i_0) \xrightarrow{a_0} C(i_1) \xrightarrow{a_1} C(i_2)
+            \cdots \xrightarrow{a_n} C(f)$ is also a path $\A_\sim$.
+
+            Conversely, by definition of $\A_\sim$, all paths in $\A_\sim$ can be translated to a paths in $\A$. In addition, the path $i_0 \xrightarrow{a_0} i_1 \xrightarrow{a_1} i_2 \cdots\xrightarrow{a_n} f$ is accepting if and only if $f \in F$, which is equivalent to $C(f) \in F_\sim$, which is equivalent to the fact that the path $C(i_0) \xrightarrow{a_0} C(i_1) \xrightarrow{a_1} C(i_2)
+            \cdots \xrightarrow{a_n} C(f)$ is accepted.
+          \end{solution}
+      \end{enumerate}
+
+
+    \item We define for all integers $ n $, an equivalence relation on $Q$~:
+     For all states $p$ and $q$ of $\A$, $p \sim_n q$ if for all the words $|w|\leq n$, $\delta(p,w) \in F \Leftrightarrow
+      \delta(q,w) \in F$.
+      Show that :
+      \begin{enumerate}
+        \item For all the states $p$ and $q$ of $\A$, $ p\sim_{n+1} q \Rightarrow p \sim_{n} q $.
+
+          \begin{solution}
+            Evry word of length $\leq n$ is also a word of length $\leq n+1$.
+          \end{solution}
+
+        \item There exists $n$ s.t. $\sim_{n+1} = \sim_{n}$.
+
+          \begin{solution}
+            Denote by $C_n(p)$ the equivalence class of the state $p$ for the relation $\sim_n$.
+            The classes $C_n(p)\subset C_{n+1}(p)$ and they are finite ($C_n(p)\subset Q$ and $Q$ is finite).
+            Therefore there exists an $n$ s.t., $\forall p \in Q,\forall m \geq n,~ C_m(p) = C_{m+1}(p)$. 
+            For such an $n$,  we get that $\sim_{n+1} = \sim_n$.
+          \end{solution}
+      \end{enumerate}
+   
+  \end{enumerate}
+%\bigskip
+%\colorbox{gris}{
+%	\begin{minipage}[c]{15cm}
+%		Infinite Ramsey.
+%	\end{minipage}
+%}
+%\question
+%Let $ E $ be an infinite subset of $\N^2$. There is either a straight line or a strictly increasing and convex(or concave) function passing through an infinite number of points of $E$.
+%
+%\begin{solution}
+%	Let's first look at the case $E \subseteq \llbracket 0,k \rrbracket \times \N$ for some $k \in \N$. since $E$ is  infinit, there exists $i \in \llbracket 0,k \rrbracket$ s.t. $E \cap (\{i\} \times \N)$ is infinit. (Note that $\{i\} \times \N$ is a line.)
+%	
+%	The same holds if $E \subseteq \N \times \llbracket 0,k \rrbracket$ for some $k \in\N$.
+%	
+%	Consider the case where $E \not\subseteq (\llbracket 0,k
+%	\rrbracket \times \N) \cup (\N \times \llbracket 0,k \rrbracket)$ for all $k \in \N $. Therefor there exists a $(x_n,y_n)_{n \in \N}$ in $E$
+%	s.t $x_n < x_{n+1}$ and $y_n < y_{n+1}$ for all $n \in \N$. Let $F
+%	:= \{(x_n,y_n)| n \in \N\}$, and let
+%	\begin{align*}
+%	f : {F \choose 3} \to \{-1,0,1\}\\
+%	i<j<k ,\qquad& \{(x_i,y_i),(x_j,y_j),(x_k,y_k)\} \mapsto
+%	\begin{cases}
+%	0 \mbox{ if the three points are aligned }\\
+%	1 \mbox{ if }\frac{y_j - y_i}{x_j - x_i} < \frac{y_k - y_j}{x_k - x_j}\\
+%	-1 \mbox{ if }\frac{y_j - y_i}{x_j - x_i} > \frac{y_k - y_j}{x_k - x_j}
+%	\end{cases}
+%	\end{align*}
+%	According to Ramsey's theorem, there exists $ Y $ an infinite part of $F$ and $c \in \{-1,0,1\}$ s.t. $f[Y] = \{c\}$.
+%	\begin{itemize}
+%		\item If $c = 0$, then there is a line containing $Y$.
+%		\item If $c = 1$, then $\frac{y_j - y_i}{x_j - x_i} < \frac{y_k -
+%			y_j}{x_k - x_j}$ for all $\{(x_i,y_i),(x_j,y_j),(x_k,y_k)\} \in Y$.
+%		The function whose graph is the union of the line segments
+%		$[(x_i,y_i),(x_{i+1},y_{i+1})]$ is therefore strictly increasing and convex (and can be modified into a strictly convex function).
+%		\item same.
+%	\end{itemize}
+%\end{solution}
+
+  \bigskip
+  \colorbox{gris}{
+    \begin{minipage}[c]{15cm}
+      Order relations.
+    \end{minipage}
+  }
+
+  \qformat{\textbf{Exercice \thequestion \,:}\\}
+  \question
+  Show that~:
+  \begin{enumerate}
+    \item Every asymmetrical relationship($aRb \rightarrow \neg(bRa)$) is anti-symmetric and irreflexive.
+
+      \begin{solution}
+        If $xRx$ then $\neg(xRx)$, because $\neg(xRx)$. If $xRy$ and $yRx$, it cant be, therefore $x = y$.
+        
+        anti-symmetric: if R(a, b) with a ≠ b, then R(b, a) must not hold,
+      \end{solution}
+
+    \item Every strict order is asymmetrical.
+
+      \begin{solution}
+        if $xRy$ and $yRx$ then $xRx$ by transitivity, which contradicts irreflexivity.
+      \end{solution}
+
+    \item Every trichotomous relation(one of the following holds $xRy, yRx$ or $x=y$) is asymmetrical.
+
+      \begin{solution}
+        If $xRy$ and $yRx$, this directly contradicts the trichotomy.
+      \end{solution}
+%
+%    \item Tout ordre total strict est un ordre strict.
+%
+%      \begin{solution}
+%      En combinant les lemmes ci-dessus.
+%      \end{solution}
+  \end{enumerate}
+
+  \bigskip
+  Let $(E,\leq)$ an ordered set, i.e. $\leq$ is an order on $E$.
+  \begin{itemize}
+    \item $x \in E$ is the \textbf{greatest element} of $E$ if
+      $\forall y \in E, y \leq x$.
+    \item $x \in E$ is a \textbf{maximal element} of $E$ if
+      $\forall y \in E,\,x \leq y\Rightarrow x = y$.
+    \item the \textbf{minimal element} and the  \textbf{least element} are defined analogously.
+  \end{itemize} 
+Let $F \subseteq E$.
+  \begin{itemize}
+    \item $x \in E$ is a \textbf{upper bound} of $F$ if
+      $\forall y \in F,~y \leq x$.
+    \item $x \in E$ is a \textbf{lower bound} of $F$ if
+      $\forall y \in F,~x \leq y$.
+  \end{itemize}
+
+  \question
+  Let $(E,\leq)$ an ordered set.
+
+  What is the upper bound of $\emptyset$?
+  what is the lower bound of $\emptyset$? 
+
+  \begin{solution}
+    All the elements of $E$ are the upper and lower bound of $ \emptyset $.
+  \end{solution}
+
+  \question
+  ~\vspace{-0.6cm}
+  \begin{enumerate}
+    \item We consider the set of numbers whose representation in base $2$ has exactly $n$ numbers. Describe precisely using this representation the $\texttt{Successeur}$ function.
+
+      \begin{solution}
+        \renewcommand{\succ}{\texttt{succ}}
+        A number $n$ is represented with $n_1 n_2 \cdots n_p$, where $n_1=1$, $n_i \in
+        \{0,1\}$ for $i \geq 2$ and $p \in \N \setminus \{0\}$ (sauf pour n=0).
+        \begin{itemize}
+          \item If, for all $i$, $n_i=1$,  we have~:
+            $\succ(n) = 1 \underbrace{0 \dots 0}_{p}$
+          \item otherwise, we determine $i$ for which $\forall j>i,~n_j=1$ and
+            $n_i=0$.
+            the Successeur of $n$ is~:
+            $n_1 n_2 \cdots n_{i-1} 1 \underbrace{0 \cdots 0}_{p-i}$
+        \end{itemize}
+      \end{solution}
+
+    
+
+    \item Denote $\S_n$ the set of bijections of $\{1,...,n\}$
+      to itself. Recall that the cardinality of $\S_n$ is $n!$.
+
+      A bijection $f$ of the set $\{1,...,n\}$ to itself is coded by  $n$ numbers in base $n$ : $f(1)f(2)\cdots f(n)$.
+
+      The lexicographic order thus defines a total order on $\S_n$.
+
+      \begin{enumerate}
+        \item Show the entire order for the cases $n=2$ and $n=3$ exhaustively.
+
+          \begin{solution}
+           For $n = 2$, $12 < 21$. 
+
+           For $n = 3$, $123 < 132 < 213 < 231 < 312 < 321$.
+          \end{solution}
+
+        \item What is the smallest element of $\S_n$~?
+
+          \begin{solution}
+            the smallest element is $1 2 \cdots n$ which corresponds to the identity.
+          \end{solution}
+
+        \item What is the biggest element of $\S_n$~?
+
+          \begin{solution}
+            The biggest element is $n(n-1)(n-2) \cdots 1$ that corresponds to
+            $(i \mapsto n+1-i)$.
+          \end{solution}
+
+        \item Give an algorithm that from the representation of a bijection, that calculates its position in the order.
+
+          \begin{solution}
+            Let $m_1 \cdots m_n$ the representation of the bijection $f$.
+            There are $(m_1-1)(n-1)!$ bijections $g$ s.t. $g(1) < m_1$.
+            For all bijections that $g(1)=m_1$, $g < f$ if
+            $g(2) g(3) \cdots g(n) < f(2) f(3) \cdots f(n)$.
+            So we are brought back to the same problem as on the whole set
+            $\llbracket 1,n \rrbracket \setminus \{m_1\}$.
+            This allows to define its position recursively~:
+            \[
+              \texttt{numero}(m_1 m_2 \cdots m_n, \llbracket 1,n \rrbracket) = 
+              (m_1-1)(n-1)! + \texttt{numero}(m_2 \cdots m_n,
+              \llbracket 1,n \rrbracket \setminus \{m_1\})
+            \]
+            It is initialized by letting $\texttt{numero}(m,\{m\})=1$.
+          \end{solution}
+
+        \item Describe the precisely $\texttt{Successeur}$ function.
+
+          \begin{solution}
+            \renewcommand{\succ}{\texttt{succ}}
+            Let's analyze the problem~:
+            Given $f \in \S_n$, and $g=\succ(f)$.
+            Pick $k$ s.t. ${\forall i < k,}~f(i) = g(i)$ and $f(k) \neq g(k)$.
+            Let $I = \{ f(1), \dots, f(k-1) \}$.
+            \begin{enumerate}
+              \item $\succ(f(k) \cdots f(n)) = g(k) \cdots g(n)$ in
+                $\S(I^c)$. Hence 
+                $$ f(k+1) > f(k+2) > \cdots > f(n). $$ 
+                This is true since, if  $f(i+1) > f(i)$  for $ i\geq k+1$ then $$f<f(1)f(2)\cdots f(i+1)f(i)f(i+2) \cdots f(n)<g.$$
+              \item $f(k) <f(k+1)$ since $g(k)=f(i)$ for $i>k$ and $g(k)>f(k)$
+              \item $g(k)$ is the successor of $f(k)$ in $I^c$ (for the similar reason as i).
+              \item $g(k+1) < \cdots < g(n)$ (for the similar reason as i).
+            \end{enumerate}
+           But this defines a single element, and we obtain a algorithm for calculating the successor~:
+            \begin{itemize}
+              \item We go through $f(n), f(n-1),\cdot$ as long as if increases.
+              \item Let $k$ be the index where we stop~:
+                so, $f(k+1) > f(k+2) > \cdots > f(n)$ and $f(k) < f(k+1)$. We calculate the successor $m$ of $f(k)$ in the set
+                $\{ f(k), \cdots, f(n) \}$.
+              \item We order the elements of $\{ f(k), \cdots, f(n) \}
+                \setminus \{ m \}$~: $m_1 < m_2 < \cdots < m_{n-k}$.
+            \end{itemize}
+            The successor of $f$ is then
+            $f(1) \cdots f(k-1) m m_1 \cdots m_{n-k}$.
+          \end{solution}
+      \end{enumerate}
+  \end{enumerate} 
+
+  \question
+  Let $E$ be a set with a partial order $\leq$.
+  Recall that an \textit{ antichain} is a subset of $E$ in which all the elements are incomparable.
+
+  \begin{enumerate}
+    \item We consider $ \N^2 $ with the product order ($(a,b)\leq(x,y) \iff a\leq x \wedge b \leq y$)
+      \begin{enumerate}
+        \item Show an  antichain of cardinality $n$, for any $n >1$.
+
+          \begin{solution}
+            $(0,n), (1,n-1), \cdots, (n,0)$ is an antichain of length $n+1$.
+          \end{solution}
+
+        \item Can we find an infinite  antichain?
+
+          \begin{solution}
+            No.
+            Let $(v_i = (x_i, y_i))_{i \in \N}$ a series of distinct elements in $\N^2$.
+            \begin{itemize}
+              \item If the set $\{ x_i, i \in \N \}$ is finite, by the pigeonhole principle there exist $i<j$ s.t. $x_i = x_j$ and the vectors $v_i$ et $v_j$ are comparable.
+              \item On the other hand, we have an infinitely increasing infinite sequence on the first component and it is not possible that the corresponding sequence on the second component is strictly decreasing.
+            \end{itemize}
+          \end{solution}
+      \end{enumerate}
+
+    \item Show that the set $\Sigma^* $ with the sub-string order ($w_1<w_2 $ iff $ \exists u,v\in\Sigma^* $ s.t. $ w_2 = uw_1v$), has an infinite chain.
+   
+      \begin{solution}
+        Take $\Sigma = \{ a,b \}$,
+		the family $ab^na,~ n \geq 1$ is an antichain.
+      \end{solution}
+  \end{enumerate}
+
+%  In the following, $ E $ is the family of subsets of a finite $ X $ set of cardinal $n$ ($E= \mathcal{P}(X)$).
+\question Given $A,B\in\mathcal{P}([n])$ we say that $A<B$ iff $A\subset B$. 
+
+
+
+  \begin{enumerate}
+    \item Assume that $n>1$. 
+      Show that~:
+      \[
+        1 < \binom{n}{1} < \binom{n}{2} < \cdots <
+        \binom{n}{\lfloor \frac{n}{2}\rfloor} \geq \cdots >
+        \binom{n}{n-2} > \binom{n}{n-1} > 1
+      \]
+
+      \begin{solution}
+        $\binom{n}{k} = \frac{n-(k-1)}{k}\binom{n}{k-1}$ and
+        $\frac{n-(k-1)}{k} < 1 \iff k > \lfloor \frac{n}{2} \rfloor$.
+      \end{solution}
+
+    \item For $k \in\{1,...,\frac{n}{2}\}$ find an antichain of cardinality $\binom{n}{k}$ in $ \mathcal{P}([n])$.
+
+      \begin{solution}
+       The family of all sets of size $k$ are an antichain of cardinality
+        $\binom{n}{k}$.
+      \end{solution}
+
+    \item Let $A$ be an anti chain in $ \mathcal{P}([n])$. For $k$ in $\llbracket 0,n\rrbracket$, we denote by $ a_k $ the number of sets of cardinality $k$ in $ A $.
+      We will now show the Lubell-Yamamoto-Meshalkin inequality~:
+      \[
+        \sum_{k=0}^n \frac{a_k}{\binom{n}{k}} \leq 1
+      \]
+
+      \begin{enumerate}
+        \item Demonstrate that there are exactly $ n! $ Strictly increasing sequences in $ \mathcal{P}([n])$, of the form $X_0 = \emptyset \subsetneq X_1
+          \subsetneq X_2 \subsetneq \cdots \subsetneq X_n=X$.
+           
+          \begin{solution}
+            The chain $X_0 = \emptyset \subsetneq X_1 \subsetneq X_2 \subsetneq
+            \cdots \subsetneq X_n=X$ being strictly growing, each $X_i$
+            is of cardinality $i$. 
+            There are $n$ for the unique element $x_1$ of $X_1$, by recurrence there  are $n-i+1$ choices for the unique  element of $X_i \setminus
+            X_{i-1}$.
+            Therefore $n!$ in total.
+          \end{solution}
+
+        \item Let $ S $ be a subset of $ X $ of cardinality $ s $. Show that there are exactly $ s! (n-s)!$ strictly increasing sequences in $ \mathcal{P}([n])$, of the form $X_0 = \emptyset \subsetneq X_1 \subsetneq X_2
+          \subsetneq \cdots \subsetneq X_n=X$, where $X_s = S$.
+
+          \begin{solution}
+            Such a strictly increasing sequence is completely determined by ~:
+            $$X_0 = \emptyset \subsetneq X_1 \subsetneq X_2 \subsetneq
+            \cdots \subsetneq X_s=S,$$
+            a strictly increasing sequence in $S$, and 
+            $$Y_0 = X_s \setminus X_s = \emptyset \subsetneq Y_1 =
+            X_{s+1} \setminus X_s \subsetneq \cdots \subsetneq Y_{n-s} =
+            X \setminus X_s = S^c,$$
+            strictly increasing sequence in $S^c$.
+
+            There are $s!$ choices for the first and $(n-s)!$ choices for the second, therefore $s!(n-s)!$ en tout.
+          \end{solution}
+
+        \item Let $X_1 \subsetneq X_2 \subsetneq \cdots \subsetneq X_r$ a strictly increasing sequence in $  \mathcal{P}([n]) $.
+          Then there is at most one $X_i$ in $A$(the antichain). By partitioning all the strictly increasing sequences $X_0 = \emptyset \subsetneq X_1
+          \subsetneq X_2 \subsetneq \cdots \subsetneq X_n=X$, according to their possible intersection with $ A $, demonstrate the Lubell-Yamamoto-Meshalkin inequality.
+
+          \begin{solution}
+            For $S$ in $A$, we denote by $SCM_S$ the set of strictly increasing sequences $X_0 = \emptyset \subsetneq X_1 \subsetneq X_2
+            \subsetneq \cdots \subsetneq X_n=X$ for which there exists $i$ s.t. $X_i=S$.
+            It's a set of cardinality $|S|!(n-|S|)!$ according to the previous question.
+
+            If a strictly increasing sequence  $X_0 = \emptyset
+            \subsetneq X_1 \subsetneq X_2 \subsetneq \cdots \subsetneq X_n=X$
+            is such that there exists a $ i $ such that $ X_i \in A $, then such $ i $ is unique since the elements of $ A $ are incomparable; so the sets $ SCM_S $ are disjoint, when $ S $ goes through $ A $.
+
+            So~: $\sum_{S \in A} (|S|!(n-|S|)!) \leq n!$ and 
+            \[
+              \sum_{k=0}^n \frac{a_k}{\binom{n}{k}} = 
+              \sum_{S \in A} \frac{1}{\binom{n}{k}} = 
+              \sum_{S \in A} \frac{|S|!(n-|S|)!}{n!} =
+              \frac{1}{n!} \sum_{S \in A} |S|!(n-|S|)! \leq 1
+            \]
+          \end{solution}
+      \end{enumerate}
+
+    \item Deduce the maximal cardinality of an antichain in $ \mathcal{P}([n])$.
+
+      \begin{solution}
+        Pick $A$ an antichain. 
+        With the previous notations,
+        \[
+          |A| \leq \sum_{k=0}^n a_k \leq
+          \binom{n}{\frac{n}{2}} \sum_{k=0}^n \frac{a_k}{\binom{n}{k}} \leq
+          \binom{n}{\frac{n}{2}}
+        \]
+        In addition, all the cardinal parts $\frac{n}{2}$ is an
+        antichain  of cardinality $\binom{n}{\frac{n}{2}}$, so the maximum is exactly $\binom{n}{\frac{n}{2}}$.
+      \end{solution}
+  \end{enumerate}
+
+  \colorbox{gris}{
+	\begin{minipage}[c]{15cm}
+		Bonus question.
+	\end{minipage}
+}
+
+
+ \question Using Équivalence de Nérode deduce an algorithm for calculating the minimum automaton of $\A $.
+
+\begin{solution}
+	Let $\sim$ the equivalence relations  on $Q$ s.t.~: $p \sim q$ if the language recognized by automata $\A_p = (Q,\Sigma,\delta,p,F)$
+	and $\A_q = (Q,\Sigma,\delta,q,F)$ are equal.
+	The above is equivalent to ~:
+	\[
+	\forall w \in \Sigma^*, \delta(p,w) \in F \iff \delta(q,w) \in F
+	\]
+	With the previous notations, we have $\sim = \sim_n$.
+	
+	The algorithm for calculating $\A_\sim$ is done according to the following~:
+	\begin{itemize}
+		\item We separate the elements of $F$ from those of $Q \setminus F$.
+		\item If two states $q_1$ and $q_2$ are marked differently, so for everything $a \in \Sigma$, and for all $p_1$ and $p_2$ s.t. $\delta(p_1,a)=q_1$ and $\delta(p_2,a)=q_2$, $p_1$ and $p_2$ must be marked differently. This procedure is done recursively until it becomes fixed.
+	\end{itemize}
+\end{solution}
+
+
+
+%
+%  \question
+%  On munit $\{0,1\}$ de l'ordre lexicographique.
+%
+%  Soit $\mathcal{MF}_n$ l'ensemble des fonctions croissantes de
+%  $\mathcal{P}(\{1,...,n\})$ dans $\{0,1\}$.  On appelle $n$-ième nombre de
+%  Dedekind et on note $D_n$ son cardinal.
+%  \begin{enumerate}
+%    \item Établir une bijection entre $\mathcal{MF}_n$
+%      et l'ensemble des antichaines de $\mathcal{P}(\{1,...,n\})$.
+%
+%      \begin{solution}
+%        On associe à une fonction $f$ croissante de $\{0,1\}^n$ dans $\{0,1\}$
+%        l'ensemble des parties maximales de 
+%        $\{ X \mid X \subset \llbracket 1,n \rrbracket,~f(X)=0 \}$.
+%      \end{solution}
+%
+%    \item Calculer $D_1,D_2$ et $D_3$.
+%
+%      \begin{solution}
+%        Il faut compter l'antichaine $\emptyset$.
+%        Donc $D_1=2$ et $D_2=1+4+1=6$, en ayant partitionné les antichaines
+%        selon leur nombre d'éléments.
+%
+%        Pour $D_3$ ça demande un peu de travail~: dessiner d'abord le diagramme
+%        de Hasse. Partitionner les antichaines selon leur réunion (seule le cas
+%        $\{ 1,2,3 \}$ est non trivial) puis le nombre d'éléments.
+%        On trouve $D_3=20$.
+%      \end{solution}
+%  \end{enumerate}
+%
+\end{questions}
+
+\end{document}
+% vim: spell spelllang=fr

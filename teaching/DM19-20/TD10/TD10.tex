@@ -1,0 +1,747 @@
+\documentclass[a4paper,11pt]{exam}
+%\printanswers % pour imprimer les réponses (corrigé)
+% \noprintanswers % Pour ne pas imprimer les réponses (nonc)
+% \addpoints % Pour compter les points
+% \noaddpoints % pour ne pas compter les points
+\qformat{\textbf{Exercice \thequestion \,:}\\} % Questions style
+\usepackage{color} % Define new colors
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{exercise}
+\usepackage{mathrsfs,amsmath,amssymb,latexsym,amsfonts,mathtools,stmaryrd}
+\usepackage{enumitem}
+\setitemize{label=\textbullet}
+% Bigger binomial in math mode
+\usepackage{nccmath}
+\renewcommand{\binom}{\mbinom}
+
+\usepackage[francais]{babel}
+
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+\shadedsolutions % définit le style des réponses
+% \framedsolutions % définit le style des réponses 
+\definecolor{SolutionColor}{rgb}{0.8,0.9,1} % bleu ciel
+\renewcommand{\solutiontitle}{
+\noindent\textbf{Solution:}\par\noindent} % Définit le titre des réponses
+\newcommand\eqdef[0]{\stackrel{\text{def}}{=}}
+\newcommand{\binomial}[2]{\small{\left(\begin{array}{c} #1 \\ #2\end{array} \right)}}
+\pagestyle{headandfoot}
+\headrule
+\header{L3 - 2019/2020 - TD7}{Mercredi 04 December}{Mathématiques discrètes}
+\footer{S. Le Roux, I. Khmelnitsky}{\thepage}{E.N.S. Cachan}
+\footrule
+
+\renewcommand{\questionshook}{%
+  \setlength{\labelwidth}{0pt}%
+  \setlength{\itemsep}{0.9\baselineskip}
+}
+
+\definecolor{gris}{gray}{0.95}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\A}{\mathcal{A}}
+\renewcommand{\S}{\mathcal{S}}
+\newcommand{\RR}{\mathbin{\mathcal{R}}}
+\renewcommand{\P}{\mathrm{P}}
+\DeclareMathOperator{\pgcd}{pgcd}
+\DeclareMathOperator{\Fix}{Fix}
+\DeclareMathOperator{\fix}{Fix}
+
+\begin{document}
+
+\begin{questions}
+	
+
+\begin{EnvFullwidth}
+	\colorbox{gris}{
+		\begin{minipage}[c]{\textwidth}
+			Probability
+		\end{minipage}
+	}
+\end{EnvFullwidth}
+
+
+\question
+Let $(\Omega,\mathcal{T},\P)$ be a probability space.
+
+Show that for all sequences $(A_n)_{n \in \N}$ of events we have
+$
+\P(\cup_{n \in \N}A_n) \leq \sum_{n \in \N}\P(A_n)
+$
+where the right sum can diverge.
+
+\begin{solution}
+	For all $n \in \N$, let $B_n := A_n \setminus \cup_{k = 0}^{n-1}A_k$.
+	We show by recurrences on $n$ that $\cup_{k = 0}^nB_k = \cup_{k = 0}^nA_k$.
+	We deduce that $B_n \cap \cup_{k = 0}^{n-1}B_k = \emptyset$.
+	
+	Hence $\P(\cup_{n \in \N}A_n) = \P(\cup_{n \in \N}B_n)
+	= \sum_{n \in \N}\P(B_n) \leq \sum_{n \in \N}\P(A_n)$,
+	because $B_n \subseteq A_n$.
+\end{solution} 
+
+\question
+Let $(\Omega,\mathcal{T},\P)$ be a probability space.
+\begin{enumerate}
+	\item Show that for all sequences $(A_n)_{n \in \N}$ of growing events by inclusion, the sequence of $\P(A_n)$ converges and
+	$
+	\lim_{n \to \infty} \P(A_n) = \P(\cup_{n \in \N}A_n)
+	$
+	
+	
+	\begin{solution}
+		$\cup_{n \in \N}A_n = A_0 \sqcup \sqcup_{n \in \N}A_{n+1}\setminus A_n$,
+		hence $\P(\cup_{n \in \N}A_n)
+		= \P(A_0) + \sum_{n \in \N}\P(A_{n+1} \setminus A_n)$ therefore
+		$\sum_{i = n}\P(A_{i+1}\setminus A_i) \to_{n \to \infty}0$.
+		
+		We get that $\P(\cup_{n \in \N}A_n)
+		= \P(A_k) + \sum_{n = k}^{+\infty}\P(A_{n+1} \setminus A_n)$, therefore
+		$\P(A_n) \to_{} \P(\cup_{n \in \N}A_n)$
+	\end{solution}
+	
+	\item Show for all decreasing sequences  (by inclusion) $(A_n)_{n \in \N}$ of events, the sequence $\P(A_n)$ converges and
+	$
+	\lim_{n \to \infty} \P(A_n) = \P(\cap_{n \in \N}A_n)
+	$
+	
+	\begin{solution}
+		If the sequence is decreasing, then $A_0 \setminus A_n$ is increasing.
+		$\P(A_n) + \P(A_0 \setminus A_n) = \P(A_0)
+		= \P(\cap_{n}A_n) + \P(\cup_{n}A_0\setminus A_n)$.
+		Since $\P(A_0 \setminus A_n) \to \P(\cup_{n}A_0\setminus A_n)$ by the previous results we get $\P(A_n) \to \P(\cap_{n}A_n)$.
+	\end{solution} 
+\end{enumerate}
+
+\question
+Let $\{B_1,\dots,B_n\}$ be a partition of $\Omega$ such that for all $i$,
+$\P(B_i) > 0$.
+Show that for all events $A$ we have
+$
+\P(A) = \sum_{i = 1}^n \P(A \mid B_i) \P(B_i)
+$. 
+Keeping $B_i$'s disjoint but not a partition of $\Omega$, what condition condition can we add for this to remain true?
+\begin{solution}
+	$\P(A)
+	= \P(A \cap \sqcup_iB_i)
+	= \P(\sqcup_i(A \cap B_i))
+	= \sum_{i} \P(A \cap B_i)
+	= \sum_{i} \P(A \mid B_i)\P(B_i)$.
+\end{solution} 
+
+\question
+An urn contains $ b $ black balls, $ w $ white balls and $ r $ red balls.
+We pick two balls, what is the probability of the event ``the second ball drawn is
+black'' ~?
+
+\begin{solution}
+	Let $S = b + w + r$, let $SB$ the event ``the second ball is black'', and $B$, $W$, $R$ for the first ball.
+	\begin{align*}
+	\P(SB)
+	&= \P(SB \mid B)\cdot\P(B) + \P(SB \mid W)\cdot\P(W)
+	+ \P(SB \mid R)\cdot\P(R)\\
+	&= \frac{b-1}{S - 1} \cdot \frac{n}{S}
+	+ \frac{b}{S - 1} \cdot \frac{w}{S} + \frac{b}{S - 1} \cdot \frac{r}{S}\\
+	&= \frac{b(b+w+r) - b}{S(S-1)} = \frac{b(S-1)}{S(S-1)} = \frac{b}{S}
+	\end{align*}
+\end{solution} 
+
+
+\question
+We consider two six-sided dice, one is balanced, the other is rigged(loaded dice).
+We denote $ p_i $ the probability that the rigged die falls on the face  $i$ ($i\in\{1,2,3,4,5,6\}$).
+\begin{enumerate}
+	\item Describe the probability space.
+	
+	\begin{solution}
+		The sample space,:
+		\[
+		\Omega = \{1,2,3,4,5,6\} ×\{1,2,3,4,5,6\}
+		\]
+		The set of events $\mathcal P(\Omega)$ because $\Omega$ is countable.
+		the probability $P$ est:
+		\[
+		\forall (i,j) \in \Omega,\;  P(i,j) = \frac{p_j}{6}
+		\]
+		With $p_j$ the probability that the rigged  one returns the number $j$.
+		We also have equality $p_1+p_2+p_3+p_4+p_5+p_6 = 1$.
+	\end{solution}
+	
+	\item
+	\begin{enumerate}
+		\item What is the probability of rolling a double ?
+		
+		\begin{solution}
+			The probability of rolling a double is the sum of the probabilities of each double:
+			\[
+			\sum_{i=1}^6 Pr(i,i) = \frac{1}{6} \sum_{i=1}^6 p_i = \frac{1}{6}
+			\]
+		\end{solution}
+		
+		\item What is the probability that the sum of the dice is equal to $7$~?
+		
+		\begin{solution}
+			The probability of making the sum of the dice equal to 7 is:
+			\[
+			\sum_{i=1}^6 Pr(i,7-i) = \frac{1}{6} \sum_{i=6}^1 p_i
+			= \frac{1}{6}
+			\]
+		\end{solution}
+	\end{enumerate}
+\end{enumerate}
+
+\question
+Let $\{B_1,\dots,B_n\}$ be a partition of $\Omega$ such that $\P(B_i) > 0$ for all $i$.
+Then for every event $A$ such that $\P(A) > 0$ we have
+\[
+\P(B_i \mid A)
+= \frac{\P(A \mid B_i)\P(B_i)}{\sum_{j = 1}^n \P(A \mid B_j) \P(B_j)}
+\]
+
+\begin{solution}
+	$\P(B_i \mid A) \P(A) = \P(A \cap B_i) = \P(A \mid B_i)\P(B_i)$ by the definition of conditional probability.
+	Hence
+	\[
+	\P(B_i \mid A) = \frac{\P(A \mid B_i)\P(B_i)}{\P(A)}
+	\]
+	
+	Now, according to the formula of total probabilities, we have
+	$\P(A) = \sum_{i = 1}^n \P(A \mid B_i) \P(B_i)$.
+\end{solution} 
+
+\titledquestion {Monty Hall problem}
+"Suppose you're on a game show, and you're given the choice of three doors: Behind one door is a car; behind the others, goats. You pick a door, say No. 1, and the host, who knows what's behind the doors, opens another door, say No. 3, which has a goat. He then says to you, "Do you want to pick door No. 2?" Is it to your advantage to switch your choice?" -Parade magazine in 1990
+
+\begin{solution}
+	$P(1)=P(2)=P(3)=1/3$\\
+	The probability opening  door number $III$ given the prize is in $i$:  
+	\[P(III\mid1)=1/2  ;  P(III\mid2)=1 ; P(III\mid3)=0\]
+	The probability that the prize is behind door number 2  is:
+	\[
+	\P(B_i \mid A)
+	= \frac{\P(A \mid B_i)\P(B_i)}{\sum_{j = 1}^n \P(A \mid B_j) \P(B_j)}
+	\]
+	
+	\[
+	P(2\mid III)=\frac{P(III\mid 2)P(2)}{P(III\mid 1)P(1)+P(III\mid 2)P(2)+P(III\mid 3)P(3)} = 2/3
+	\]
+\end{solution}
+
+
+
+ \question
+We throw three balanced dice.
+\begin{enumerate}
+	\item What is the most likely sum of the three dice~?
+	
+	\begin{solution}
+		The random variable $ S $ sum of the three dice takes values between $ 3 $ and $ 18 $.
+		We note that the involution $ (x, y, z) \mapsto (7-x, 7-y, 7-z) $ exchanges with the same probabilities the values $ s $ and $ 21-s $ taken by $ S $ .
+		So just calculate the probabilities of $ (S = s) $ for $ 3 \leq s \leq $ 10.
+		We denote by $ [x, y, z] $ the set of triplets that are defined by the family $x,y,z$.
+		
+		\begin{align*}
+		P(S=3) &= P([1,1,1]) = \frac{1}{6^3} = \frac{1}{216} \\
+		P(S=4) &= P([1,1,2]) = \frac{3}{6^3} = \frac{1}{72} \\
+		P(S=5) &= P([1,1,3]) + P([1,2,2]) = \frac{6}{6^3} = \frac{1}{36} \\
+		P(S=6) &= P([1,1,4]) + P([1,2,3]) + P([2,2,2]) = \frac{3+6+1}{6^3}
+		= \frac{10}{216} \\
+		P(S=7) &= P([1,1,5]) + P([1,2,4]) + P([1,3,3]) + P([2,2,3])
+		= \frac{3+6+3+3}{6^3} = \frac{15}{216} = \frac{5}{72} \\
+		P(S=8)
+		&= P([1,1,6]) + P([1,2,5]) + P([1,3,4]) + P([2,2,4]) + P([2,3,3]) \\
+		&= \frac{3+6+6+3+3}{6^3} = \frac{21}{216} = \frac{7}{72} \\
+		P(S=9)
+		&= P([1,2,6]) + P([1,3,5]) + P([1,4,4]) + P([2,2,5]) + P([2,3,4])
+		+ P([3,3,3]) \\
+		&= \frac{6+6+3+3+6+1}{6^3} = \frac{25}{216} \\
+		P(S=10)
+		&= P([1,3,6]) + P([1,4,5]) + + P([2,2,6]) + P([2,3,5]) + P([2,4,4])
+		+ P([3,3,4]) \\
+		&= \frac{6+6+3+6+3+3}{6^3} = \frac{27}{216} = \frac{1}{8}
+		\end{align*}
+		
+		The most probable are~: $10$ et $11$.
+	\end{solution}
+	
+	\item What is the expected value of the sum?
+	
+	\begin{solution}
+		\[
+		E(S) = \sum_{s=3}^{18} sP(S=s)
+		= \sum_{s=3}^{10}(s+21-s)P(S=s)
+		= 21 \sum_{s=3}^{10}P(S=s)
+		= \frac{21}{2}
+		\]
+	\end{solution}
+\end{enumerate}
+
+\question How big a group of people needs to be in order for the probability of two of them having the same birth day is greater then half?
+
+\begin{solution}
+	Denote by $A$ the event where 2 people have the same birth day. $P(A) = 1- P(A^c)$ where $A^c$ is the event where none of them have the same birth day, and
+	\[
+	P(A^c)=\frac{356}{356}\times\frac{355}{356}\times\cdots\times\frac{356-n-1}{356} =\left( \frac{1}{356}\right)^n\times \left(356\times356\times\dots\times(356-n-1)  \right) 
+	\]
+	and we get that for $ n=23 $ $P(A) \approx 0.507$  and for $ n=60 $ $P(A) \approx 0.99$. 
+\end{solution}
+
+
+
+\titledquestion {Lower bound for the Ramsey}
+Let  $s,n\in\N$, $s<n$ and $K_n$ the complete graph on $n$ vertices. We randomly and independently color all the edges by either red or blue with the probability $1/2$.
+\begin{enumerate}
+	\item What is the probability for of a complete subgraph on $s$ vertices to be monochromatic.
+	\begin{solution}
+		for red or blue $ 2^{-\binom{s}{2}}$  hence $ 2^{1-\binom{s}{2}}$
+	\end{solution}
+	\item Show that for $n=\left\lfloor 2^{(s-1)/2} \right\rfloor $ the probability for $K_n$ to have a monochromatic complete subgraph of size $s$ is less then 1.
+	\begin{solution}
+		\[  
+			2^{1-\binom{s}{2}}\binom{n}{s}\leq 2^{1-\binom{s}{2}}\frac{n^s}{s!}< 2^{-s(s-1)/2}\cdot2^{s(s-1)/2} = 1
+		\]
+	\end{solution}
+	\item Conclude that the Ramsey number $R(s,s)>\left\lfloor 2^{(s-1)/2} \right\rfloor$.
+\end{enumerate}
+
+
+
+
+\question
+Let $f:E \to F$, show that
+\begin{enumerate}
+	\item $f^{-1}[F] = E$ and $f^{-1}[\emptyset] = \emptyset$.
+	
+	\item $f^{-1}[F\setminus B] = E \setminus f^{-1}[B]$ for all $B \subseteq F$.
+	
+	\item $f^{-1}[\cup_{n}B_n] = \cup_{n} f^{-1}[B_n]$ and $f^{-1}[\cap_{n}B_n] = \cap_{n} f^{-1}[B_n]$.
+\end{enumerate}
+
+\question
+Let $U$ and $V$ two independent random variables on the same probability space with values in $\{-1,1\}$ and the same probability distribution defined by:
+\[
+P(U=-1) = \frac{1}{3} \mbox{ and } P(U=1)= \frac{2}{3}
+\]
+The $X$ and $Y$ the random variables defined by: $X = U$ et
+$Y = UV$
+\begin{enumerate}
+	\item What is the distribution of the random variable $(X,Y)$~?
+	
+	\begin{solution}
+		$P(1,1) = \frac{4}{9}$,
+		$P(1,-1) = \frac{2}{9}$,
+		$P(-1,1) = \frac{1}{9}$,
+		$P(-1,-1) = \frac{2}{9}$ et
+		$P(Y=1) = \frac{2}{3}\frac{2}{3} + \frac{1}{3}\frac{1}{3} = \frac{5}{9}$.
+	\end{solution}
+	
+	\item  Are $X$ and $Y$ independent~?
+	
+	\begin{solution}
+		Since $P(X=-1)P(Y=1) = \frac{5}{27} \neq \frac{1}{9} = P(-1,1)$,
+		and the variables $ X $ and $ Y $ are therefore not independent.
+	\end{solution}
+	
+	\item Are the variables $X^2$ and $Y^2$ independent~?
+	
+	\begin{solution}
+		We note that $X^2=U^2$ and $Y^2=V^2$ therefore the variables are independent as functions of independent variables.
+	\end{solution}
+\end{enumerate}
+
+\titledquestion{Min, Max et comparaison}
+Let $ X $ and $ Y $ be two independent random variables defined on the same probability space of the same geometric distribution $p$  ($P(X = k) = p(1-p)^k$).
+\begin{enumerate}
+	
+	\item Calculate $P(Y \geq X)$, for $p=\frac{1}{2}$.
+	
+	\begin{solution}
+		\[
+		1= P(Y > X)+P(Y < X)+P(Y = X)
+		\]
+		\[
+		P(Y > X) = 1/2(1 -P(Y = X))
+		\]		
+		\[
+		P(Y \geq X) = P(Y > X) + P(Y = X) =  1/2(1 +P(Y = X))
+		\]
+		
+		
+		
+		\begin{align*}
+		P(X=Y)=& \sum_{n\in\N }P(Y = n) P(X = n)
+		= \sum_{n\in\N} p^2(1-p)^{2n}\\& =\frac{p^2}{1-(1-p)^2} = \frac{p}{2-p}
+		\end{align*}
+		
+		\[
+		P(Y \geq X) =  1/2(1 +\frac{p}{2-p}) = \frac{1}{2-p} 
+		\]
+		
+		
+		
+		Since $X$ and $Y$ independent, by denoting $q=(1-p)$ we have~:
+		
+		\begin{align*}
+		\sum_{n \geq 0} P(Y=n) \sum_{k \leq n} P(X=k)
+		&= \sum_{n \geq 0} q^n p \sum_{k \leq n} q^k p \\
+		&= \sum_{n \geq 0} q^n p^2 \frac{1-q^{n+1}}{1-q} \\
+		&= p \sum_{n \geq 0} q^n -q^{2n+1} \\
+		&= p \sum_{n \geq 0} q^{2n} \\
+		&= p \cdot \frac{1}{1-q^2} \\
+		&= (1-q) \frac{1}{(1-q)(1+q)} \\
+		&= \frac{1}{1+q} \\
+		&= \frac{1}{2-p}
+		\end{align*}
+		For $p=\frac{1}{2}$, we obtain $\frac{2}{3}$.
+	\end{solution}
+		
+	\item Calculate $P(Y = X)$, for $p=\frac{1}{2}$.
+	
+	\begin{solution}
+		\[
+		\sum_{n \geq 0} P(Y=n) P(X=n)
+		= \sum_{n \geq 0} p^2 q^{2n}
+		= p^2 \frac{1}{1-q^2}
+		= \frac{p^2}{2p-p^2}
+		= \frac{p}{2-p}
+		\]
+		For $p=\frac{1}{2}$, we have $\frac{1}{3}$.
+	\end{solution}
+	
+	
+	
+
+\end{enumerate}
+We define the random variables $U$ and $V$ by
+\[
+U = \max(X,Y) \mbox{ and } V = \min(X,Y)
+\]
+\begin{enumerate}[resume]
+	\item For all $u\leq v\in \mathbb N$ calculate $P(U\leq u,V\geq v)$.
+	
+	\begin{solution}
+		If $v \leq u$, then~:
+		\[
+		P(U\leq u,V\geq v)
+		= P( v \leq X \leq u, v\leq Y \leq u)
+		=\left(\sum_{n=v}^{u}pq^n \right)^2 =
+		\]
+		\[
+		=\left(pq^v\sum_{n=0}^{u-v}q^n \right)^2
+		=\left(pq^v\frac{1-q^{v-u+1}}{1-q} \right)^2
+		= (q^{v} -q^{u+1})^2
+		\]
+	\end{solution}
+	
+	\item Calculate the distribution of the random variable $U$.
+	
+	\begin{solution}
+		We have for $u\geq 0$,
+		$P(U\leq u ) = P(U\leq u , V \geq 0) = (1 -q^{u+1})^2$\\
+		and $P(U=u) = P(U\leq u) - P(U \leq u-1) = p(2q^u-q^{2u}(1+q))$.
+	\end{solution}
+	
+	% \item On définit la variable aléatoire $W=U-V$.
+	%   Déterminer la loi de $W$.
+\end{enumerate}
+
+%\qformat{\textbf{Exercice \thequestion \,:}\\}
+%\question
+%To graduate, a student must pass the $ N $ exams that are offered, and thereby obtain the corresponding $ N $ worth of credits.
+%It is assumed that the student has a probability $ p \in ]0,1[$ to pass each exam (all attempts are assumed to be independent).
+%From year to year, the student can postpone the units of values obtained, and then passes only the exams that he did not succeed.
+%
+%Pour avoir son diplôme, un étudiant doit réussir les examens des $N$ cours qui sont proposés, et obtenir ainsi les $N$ unités de valeur correspondantes.
+%On suppose que l'étudiant a une probabilité $p \in ]0,1[$ de réussir chacun des examens (toutes les tentatives sont supposées indépendantes).
+%D'année en année, l'étudiant peut reporter les unités de valeurs obtenues, et il ne passe alors que les examens qu'il n'a pas réussis.
+%\begin{enumerate}
+%	\item Pour $1 \leq i \leq N$, notons $G_{i}$ le nombre d'essais nécessaires
+%	pour réussir l'examen du $i$-ième cours.
+%	Quelle est la loi de $G_{i}$~?
+%	
+%	\begin{solution}
+%		$\forall n\in\N\setminus\{0\}, P(G_i=n)=(1-p)^{n-1}p$.
+%		
+%		Remarque~: on en déduit~:
+%		$\forall n\in\N\setminus\{0\}, P(G_i \leq n)
+%		=\sum_{j=1}^n (1-p)^{j-1}p = 1-(1-p)^n$.
+%	\end{solution}
+%	
+%	\item On note $X_{n}$ le nombre total d'unités obtenues pendant les $n$
+%	premières années (si $X_{n}=N$, alors $X_{m}=N$ pour $m \geq  n$).
+%	Quelle est la loi de $X_{n}$~?
+%	
+%	\begin{solution}
+%		$\forall m \in \llbracket 0,N \rrbracket$, l'évènement $(X_n=m)$
+%		correspond au fait qu'exactement $m$ examens ont été réussis et les
+%		autres non.
+%		Notons $E_i$ l'évènement ``l'examen $i$ a été réussi pendant les $n$
+%		premières années'' et $F_i$ l'évènement contraire.
+%		Ainsi~:
+%		\begin{align*}
+%		P(X_n=m)
+%		&= \sqcup_{1 \leq i_1 < i_2 < \cdots < i_m \leq N}
+%		P(E_{i_1} \cap \cdots \cap E_{i_m} \cap_{k \notin \{i_j\}} F_k) \\
+%		&= \sqcup_{1 \leq i_1 < i_2 < \cdots < i_m \leq N}
+%		P((G_{i_1} \leq n) \cap \cdots \cap (G_{i_m} \leq n)
+%		\cap_{k \notin \{i_j\}} (G_k > n)) \\
+%		&= \binom{N}{m}(1-(1-p)^n)^m(1-p)^{n(N-m)}
+%		\end{align*}
+%	\end{solution}
+%	
+%	\item On suppose que l'étudiant ne peut passer les examens qu'au plus
+%	pendant $5$ ans.
+%	\begin{enumerate}
+%		\item Quelle est la probabilité que l'étudiant n'obtienne pas son
+%		diplôme~?
+%		
+%		\begin{solution}
+%			L'évènement ``l'étudiant n'obtient pas son diplôme'' correspond à
+%			l'évènement $X_5 < N$.
+%			\begin{align*}
+%			P(X_5 < N)
+%			&= \sum_{m=0}^{N-1} P(X_5=m) \\
+%			&= 1-P(X_5=N) \\
+%			&= 1-\binom{N}{N}(1-(1-p)^5)^N(1-p)^{5(N-N)} \\
+%			&= 1-(1-(1-p)^5)^N
+%			\end{align*}
+%		\end{solution}
+%		
+%		\item Combien d'examens l'étudiant passera-t-il en moyenne~?
+%		
+%		\begin{solution}
+%			On recherche l'espérance de la variable $X_5$~:
+%			\begin{align*}
+%			E(X_5)
+%			&= \sum_{m=0}^N mP(X_5=m) \\
+%			&= \binom{N}{m}(1-(1-p)^5)^m(1-p)^{5(N-m)} \\
+%			&= N(1-(1-p)^5)
+%			\end{align*}
+%		\end{solution}
+%	\end{enumerate}
+%\end{enumerate}
+
+
+\titledquestion {Turán's theorem}
+{\bf Turán's theorem:} Let $G$ be any graph with $ n $ vertices, such that $G$ is $ K_{t+1}$-free. Then the number of edges in $G$ is at most:
+\[
+\left( 1- \frac{1}{t}\right)\frac{n^2}{2}
+\] 
+Denote by $d(v)$ the degree of the vertex $v$.
+\begin{enumerate}
+	\item Let $<$ be a uniformly chosen total order on $V$. Define:
+	\[
+	I=\{v\in V\mid \{v,u\}\notin E \Rightarrow v<u \}
+	\]
+	For $v\in V$, what is the probability that $v\in I$.
+	\begin{solution}
+		
+	\end{solution}
+	\item What is the expected value of $|I|$?
+	
+	\item Denote by $\omega(G)$ the size of largest complete sub graph of $G$. Show that $\omega(G)\geq~\sum_{v\in V}\frac{1}{n-d(v)}$.
+	\begin{solution}
+		Let $<$ be a uniformly chosen total order on $V$. Define:
+		\[
+		I=\{v\in V\mid \{v,u\}\notin E \Rightarrow v<u \}
+		\]
+		Let $X_v$ be the random variable such that $X_v=1$ if $ v\in I $, and $X = \sum_{v\in V} X_v = |I|$.
+		For $v\in V$ we have $P(X_v=1)=\frac{1}{n-d(v)}$, since we need to pick him before all of the vertices which are not his neighbors and therefore $E[x_v]=\frac{1}{n-d(v)}$. 
+		Using the linearity of the expected value we get that:
+		\[
+		E[X]=\sum_{v\in V} X_v=\sum_{v\in V}\frac{1}{n-d(v)}
+		\]
+		Note that $I$ is a complete subgraph of $G$ and therefore $\omega(G)\geq\sum_{v\in V}\frac{1}{n-d(v)}$
+	\end{solution}
+	
+	
+	
+	\item Recall, Cauchy–Schwarz inequality $(\sum a_ib_i)^2\leq(\sum a_i^2)(\sum b_i^2)$. 
+	Show that:
+	$$n^2 \leq \omega(G)\sum_{v\in V} (n-d(v)) $$ 
+	and conclude the theorem.
+	\begin{solution}
+		By using Cauchy–Schwarz we can get that:
+		$$n^2 \leq \left(\sum_{v\in V} \sqrt{(n-d(v))}^2\right)\left(\sum_{v\in V} \left(\sqrt{\frac{1}{n-d(v)}}^2\right)\right)\leq \omega(G)\sum_{v\in V} (n-d(v)) $$
+		
+		The sum of the degrees of all the edges is: $\sum d(v) = 2|E|$. We assume that $w(G)\geq t$, hence:
+		$$n^2 \leq t (n^2-2|E|)$$
+		and by moving things around:		
+		$$|E|\leq\left( 1- \frac{1}{t}\right)\frac{n^2}{2}$$
+		
+	\end{solution}
+	
+\end{enumerate}
+
+
+
+\question
+
+We suppouse that $P : \N \rightarrow [0,1]$ is a probability distribution.
+This equates to the having a sequence of positive numbers $(p_n)_{n\in \N} $
+such that $\sum_n p_n=1$, with  $p_n=P(n)$.
+
+
+\begin{enumerate}
+	\item Prove that there is no probability distribution on $ \N $ that makes the drawing of an integer equiprobable.
+	
+	\begin{solution}
+		Since then we would have:
+		
+		$\sum_{n\in \N} a = +\infty$
+	\end{solution}
+	
+	\item   Suppose  $p_n = \frac{1}{2^{n+1}} .$
+	\begin{enumerate}
+		\item  Demonstrate that we have a probability distribution on $\N$.
+		\begin{solution}
+			We recognize a geometric series :$\sum_n p_n =1$.
+		\end{solution}
+		\item Calculate the probability of the set of even numbers and the set of odd numbers. 
+		
+		\begin{solution}
+			$ P(2\N) = \sum_n p_{2n} = \sum_n \frac{1}{2^{2n+1}} = \frac{1}{2}  \sum_n \frac{1}{4^{n}} = \frac{2}{3}$.
+			hence $P(2\N +1) = \frac{1}{3}$, it is not équitable.
+		\end{solution}
+	\end{enumerate}
+	\item Assume we have a probability distribution on $\N$
+	satisfying the following properties~:
+	\[\forall a\in \N\setminus\{0\}, P(a\N) = \frac{1}{a} .\]
+	Prove that if $ a $ and $ b $ are co-prime, the events ``all multiples of $ a $'' and the event ``all multiple of $ b $'' are independent.
+	
+	\begin{solution}
+		$a\N \cap b\N = ab \N$ donc $P(a\N \cap b\N) = P(ab \N) = \frac{1}{ab} = P(a\N)P(b\N)$.
+	\end{solution}
+\end{enumerate}
+
+
+
+\question
+Information is transmitted in a population.
+Each individual transmits the correct information with probability $ p $, and the negation of the information with probability $ 1-p $.
+Let $ p_n $ be the probability that the information is correct after $ n $ repetitions.
+
+\begin{enumerate}
+	\item Calculate value $p_n$ as a function of $p$ and $n$.
+	
+	\begin{solution}
+		Denote $q_n=1-p_n$ the probability that the information will be false after
+		$n$ repetitions.
+		Using the total probabilities formula,
+		$p_n=pp_{n-1}+qq_{n-1} = p_{n-1}(2p-1)+(1-p)$.
+		By recurrence, we obtain ~:
+		$p_n = \frac{1}{2}( 1+ (2p-1)^n)$
+	\end{solution}
+	
+	\item Calculate $\lim_n p_n$.
+	
+	
+	\begin{solution}
+		If $p=1$, the information is transmitted perfectly ~: the limit is $1$.
+		
+		If $p=0$, the information is inverses at each transmission, it alternates between true and false ~: there is no limit (cyclic behavior).
+		
+		and if, $|2p-1|<1$, $\lim_n p_n = \frac{1}{2}$.
+		Ultimately, there is equiprobability between information and its opposite.
+	\end{solution}
+\end{enumerate}
+
+
+
+\question
+
+A smoker has two boxes of matches with the same capacity in each of his two pockets.
+When he needs a match, he chooses equally one of his pockets and takes the match in the corresponding box.
+We denote by $ n $ the number of matches initially in each box.
+\begin{enumerate}
+	\item Let $r$ be a number between $0$ and $n$. Denote by $p_r$ the probability that when for the first time the smoker finds that one box is empty, the other contains exactly $ r $ matches. Calculate $p_r$.
+	
+	\begin{solution}
+		We look for the probability of equiprobable prints containing $n + 1$ $ D $, $ n-r $ $ G $ and ending with $ D $ (we took $ n $ matches in the right pocket and $ n-r $ in the left, the smoker sees it in the next draw in the right pocket) or the symmetrical event exchanging right and left.
+			
+		Hence $p_r = \frac{1}{2}(\binomial{2n-r}{n-r} (\frac{1}{2})^{2n-r} + \binomial{2n-r}{n-r} (\frac{1}{2})^{2n-r})
+		= \binomial{2n-r}{n-r} (\frac{1}{2})^{2n-r} = \binomial{2n-r}{n} (\frac{1}{2})^{2n-r}.$
+	\end{solution}
+	
+	\item 
+	For $ r $ between $ 0 $ and $ n $, $ q_r $ is the probability that one box will be emptied, while the other contains exactly $ r $ matches. Calculate the probability $ q_r $.
+	\begin{solution}
+		We look for the probability of equiprobable prints containing $ n $ $ D $, $ nr $ $ G $ ending with $ D $ (it takes $ n $ matches in the right pocket and $ n-r $ in the left, the last draw being $ D $) or the symmetrical event by exchanging right and left.
+		Therefore
+		$$q_r = \frac{1}{2}(\binomial{2n-r+1}{n-1} (\frac{1}{2})^{2n-r+1} + \binomial{2n-r-1}{n-1} (\frac{1}{2})^{2n-r+1}) =
+		\binomial{2n-r-1}{n-1} (\frac{1}{2})^{2n-r+1}.$$
+	\end{solution}
+	
+	\item What is the probability $ q $ that the first empty box is not the first box that the smoker finds empty.
+	
+	\begin{solution}
+		We apply the formula of the total probabilities by partitioning according to the number of prints after $ n $ which empties the first box ~:
+		For $ r $ between $ 0 $ and $ n $, we evaluate the probability of equally probable draws containing $ n $ $ D $, $ nr $ $ G $ ending with $ D $ followed by $ r + 1 $ $ G $ (It takes $ n $ matches in the right pocket and $ nr $ in the left, the last draw is $ D $, then only in $ G $ until it is empty) or the symmetric event by exchanging right and left.
+		Hence:
+		
+		$q = \sum_{r=0}^n q_r (\frac{1}{2})^{r+1} =   \sum_{r=0}^n  \binomial{2n-r-1}{n-1} (\frac{1}{2})^{2n+2}  =  (\frac{1}{2})^{2n+2} \binomial{2n}{n}$.
+	\end{solution}
+	
+\end{enumerate}
+ \question
+If $M$ is a monoid and $K, L$ two subsets of $M$, we denote by  $L^{-1}K = \{ x\in M \mid \exists y \in L, yx \in K \}$ and  $KL^{-1} = \{ x\in M \mid \exists y \in L, xy \in K \}$.
+\begin{enumerate}
+	\item Let $L$ a sub monoid of $\Sigma^*$. Show that $L$ is a free monoid iff $L^{-1}L \cap LL^{-1}=L$.\smallskip
+	
+	{\bf \underline{Solution:}}
+	
+		Suppose that $L$ is free on the set $B$. 
+		Let $m \in L^{-1}L \cap LL^{-1}$.
+		There exist $p,q$ in $L$ s.t. $mq,pm \in L$.
+		Moreover since $(pm)q=p(mq)\in L$, we get that $m\in L$
+		
+		\smallskip
+		
+		Conversely, suppose that $L^{-1}L \cap LL^{-1}=L$. Let $B$ be the minimal generating parts of $L$ (The elements of $L$ which are not a product of two distinct elements, which are not $1$).
+		Let $u_1 \dots u_m = v_1 \dots v_n$ with $u_i$ and $v_j$ in $B$.
+		Assume for example that in $\Sigma^*$, $u_m=wv_n$, that
+		$u_1 \dots u_{m-1} w = v_1 \dots v_{n-1}$, then
+		$w \in L^{-1}L \cap LL^{-1}=L$.
+		By the minimialty of elements in $B$ of $L$, $w=1$.
+		we conclude by recurrence.
+
+	
+	\item Let $L$ be a sub-monoid of $\Sigma^*$. We define by recursion~:
+	\begin{itemize}
+		\item $M_0 = L$
+		\item $M_{n+1} = \langle {M_n}^{-1}{M_n} \cap {M_n}{M_n}^{-1} \rangle$
+	\end{itemize}
+	Demonstrate that this is a well defined increasing sequence and that $\cup_N M_n$ is the smallest free sub-monoid containing $L$.\smallskip
+	
+%	\begin{solution}
+	{\bf \underline{Solution:}}
+	
+		We note that for any $L$,
+		$L \subset M^{-1}M \cap MM^{-1}$ ($\forall u \in M, 1u \in M$ and
+		$u1 \in M$) therefore $(M_n)_{n=0}^\infty$ is well defined increasing sequence of monoids.
+		Hence $M = \cup_n M_n$ is a monoid.\smallskip
+		
+		We show that $M^{-1}M \cap MM^{-1} \subset M$~:
+		let $u \in \Sigma^*$ s.t. there exists $v$ and $w$ in $M$ s.t. $vu \in M$ and $uv \in M$.
+		$M = \cup_n M_n$, hence there exists an integer $l$ and $m$ s.t. $v \in M_l$ and $w \in M_m$.
+		For $n=\max(l,m)$, $v$ and $w$ are in $M_n$, hence
+		$u \in M_n^{-1}M_n \cap M_n M_n^{-1} \subset M_{n+1} \subset M$.
+		Therefore $M$ is free.\smallskip
+		
+		Finally, if $N \subset P$ is an inclusion of sub-monoids, with $P$ free, we have $N^{-1}N \cap NN^{-1} \subset P^{-1}P \cap PP^{-1} = P$, so $\langle N^{-1}N \cap NN^{-1} \rangle \subset \langle P \rangle = P$,hence if $P$ contains $L$, it contains all $M_n$ and therefore
+		$M$~: $M$ is the smallest free sub monoid containing $L$.
+%	\end{solution}
+\end{enumerate}
+
+
+\end{questions}
+\end{document}
+
+% vim: spell spelllang=fr

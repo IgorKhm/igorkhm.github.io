@@ -1,0 +1,527 @@
+\documentclass[a4paper,11pt]{exam}
+%\printanswers % pour imprimer les réponses (corrigé)
+\noprintanswers % Pour ne pas imprimer les réponses (nonc)
+% \addpoints % Pour compter les points
+% \noaddpoints % pour ne pas compter les points
+\qformat{\textbf{Exercice \thequestion \,:}\\} % Questions style
+\usepackage{color} % Define new colors
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{exercise}
+\usepackage{mathrsfs,amsmath,amssymb,latexsym,amsfonts,mathtools,stmaryrd}
+\usepackage{enumitem}
+\setitemize{label=\textbullet}
+% Bigger binomial in math mode
+\usepackage{nccmath}
+\renewcommand{\binom}{\mbinom}
+
+\usepackage[francais]{babel}
+
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+\shadedsolutions % définit le style des réponses
+% \framedsolutions % définit le style des réponses 
+\definecolor{SolutionColor}{rgb}{0.8,0.9,1} % bleu ciel
+\renewcommand{\solutiontitle}{
+	\noindent\textbf{Solution:}\par\noindent} % Définit le titre des réponses
+\newcommand\eqdef[0]{\stackrel{\text{def}}{=}}
+
+\pagestyle{headandfoot}
+\headrule
+\header{L3 - 2018/2019 - TD5}{Mercredi 17 octobre}{Mathématiques discrètes}
+\footer{S. Le Roux, A. Lick, A. Mansutti}{\thepage}{E.N.S. Cachan}
+\footrule
+
+\renewcommand{\questionshook}{%
+	\setlength{\labelwidth}{0pt}%
+	\setlength{\itemsep}{0.9\baselineskip}
+}
+
+\definecolor{gris}{gray}{0.95}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\A}{\mathcal{A}}
+\renewcommand{\S}{\mathcal{S}}
+\newcommand{\RR}{\mathbin{\mathcal{R}}}
+
+\begin{document}
+	
+	\begin{questions}
+		
+		\question
+		Let $E$ be a set with a prtial order denoted by $\preccurlyeq$.
+		We say that $\preccurlyeq$ is a well quasi-order(wqo) if from any sequence of elements of $E$, we can extract an infinite monotone increasing sequence. I.e.\
+		$\forall (x_i)_{i\in\N} \in E^{\N}, \; $ there exists an increasing sub-sequence of indexes: $ i_0 < i_1 < \cdots < i_n < \cdots \;$
+		for which the sequence $(x_{i_n})_{n\in\N}$ is increasing~:
+		$x_{i_0} \preccurlyeq x_{i_1} \preccurlyeq \cdots \preccurlyeq
+		x_{i_n}\preccurlyeq \cdots$.		
+		\begin{enumerate}
+			\item Let $E,\preccurlyeq$ be an ordered set, we call it well founded if there is no infinite decreasing sequence. Assume that $E$ is countable and show that the order is wqo iff the set of all antichains is countable.
+			% 			il n'y a pas de suite infinie strictement décroissante (un tel ordre est dit \textit{bien fondé}). Démontrer que $ \preccurlyeq$ est un bel ordre si set seulement si l'ensemble des antichaines est dénombrable.
+			
+			\begin{solution}
+				On one hand, if the order is wqo then all of its antichains are finite. The family of all antichains is a sub-family of all the finite sets of $E$, and we saw that it is finite.
+				
+				On the other hand, if the order isn't a wqo, then there exists an infinite antichain. Every sub-chain of this chain is an antichain, and there are uncoutably many of them. 
+				
+			\end{solution}
+			
+			\item Dickson's Lemma ~:
+			Let $(E_1, \preccurlyeq_1)$  and $(E_2, \preccurlyeq_2)$ be a wqo set.
+			Show that $ (\preccurlyeq_1, \preccurlyeq_2) $ is a wqo on the product $E_1\times E_2$. 
+			
+			\begin{solution}
+				Let $\{(x_i,y_i)\}_{i\in\N}$ be an infinite sequence in $E_1\times E_2$. 
+				Since $(E_1, \preccurlyeq_1)$ is wqo, there exists an $I_1 \subset \N$ s.t. the sequence $\{x_i\}_{i \in I_1}$ is increasing. Since $(E_2, \preccurlyeq_2)$ is wqo, there exists an $I_2 \subset I_1$ s.t. the sequence $\{y_i\}_{i \in I_2}$ is increasing. Therefore the the sequence $\{(x_i,y_i)\}_{i \in I_2}$ is increasing.
+				
+			\end{solution}
+			
+			\item Higman's Lemma ~:
+			Let $\preccurlyeq$ be a wqo on $\Sigma$.
+			Define a relationship on $\Sigma^*$ as follows~:
+			\[
+			a_1...a_m \leq_{sw} b_1b_2...b_n \Leftrightarrow \left\{
+			\begin{array}{l}
+			\exists 1\leq i_1 < i_2 <\cdots < i_m \leq n \\
+			a_1\preccurlyeq b_{i_1} \wedge a_2\preccurlyeq b_{i_2} \cdots
+			a_m\preccurlyeq b_{i_m}
+			\end{array}
+			\right.
+			\]
+			
+			\begin{enumerate}
+				\item Show that $\leq_{sw}$ is an order %(sw stands for subword).
+				
+				\begin{solution}
+					Évident.
+				\end{solution}
+				
+				\item Show that $\leq_{sw}$ is wqo. Recall that we've shown that $\leq_{sw}$ is wqo if for any sequence $(x_i)_{i\in\N}$, we can find $i<j$ s.t. $x_i\preccurlyeq x_j$.
+				
+				\begin{solution}
+					Consider the set $U$ of all the infinite sequences $(u_i)_{i\in\N}$ s.t.
+					$\forall i<j, u_i \not\leq u_j$("bad sequence"). Pick the minimal sequence in the following sense: 
+					\begin{itemize}
+						\item Let $u_0$ be the shortest word that can start a bad sequence.
+						\item Let $u_1$ be the shortest word that can continue a bad sequence starting with $u_0$.
+						\item Let $u_i$ be the shortest word that can continue a bad sequence starting with $u_0,u_1\ldots u_{i-1}$.
+					\end{itemize}
+					We know that the sequence $(u_i)_{i\in\N}$ we got is "too bad".  Split every word $u_i=x_iv_i$ where $x_i$ is the first letter. The sequence $\{x_i\}_{i\in \N}$ has an infinite increasing sub-sequence $\{x_{n_i}\}_{i\in N}$. Now, we look at the sequence $u_1,u_2\ldots u_{n_1 -1}, v_{n_1},v_{n_2}\ldots$, this is not a bad sequence, since it would contradict the assumption on the minimality of $(u_i)_{i\in\N}$. Hence there are $j<k$ s.t. $v_j<v_k$ and hence $ x_j v_j<x_k v_k$, which gives us a contradiction to our assumption.
+					
+				\end{solution}
+			\end{enumerate}
+			\item Let $E,\leq$ be an ordered set, and $F\subset E$ s.t.~:
+			$\forall y \in E$, if there exists $x\in F$ s.t $x \preccurlyeq y$, then
+			$y\in F$ (we say that the set $F$ is \textit{upward closed} or \textit{upper} ).
+			\begin{enumerate}
+				\item Let $E,\leq$ be wqo. Show that a that any increasing sequence of upward closed sets is stationary, i.e. $F_1\subseteq F_2\subseteq\cdots$ there exists $i$ such that for any $j>i$ $F_i=F_j$. 
+				
+				\begin{solution}
+					Let $F_0 \subset F_1 \subset F_2 \subset \cdots$, and assume for contradiction that it is not stationary and without a duplicated sets. Pick an infinite sequence $\{x_i\}_{i\in\N}$ where $x_n \in F_n \setminus F_{n-1}$.  
+					We get that for any $i,i+1$, $x_i>x_{i+1}$ which gives us an infinite decreasing sequence, which is a contradiction to the fact that the order is wqo.   
+					
+				\end{solution}
+				
+				\item Show that if $F$ is an upward closed set, there exists a finte set of elements  $x_1,...,x_n$ in $F$ s.t. $F = \cup_i \{y\in E, x_i \preccurlyeq y\}$.
+				\begin{solution}
+					Consider the minimal elements of $F$. They are an anticahin, therefore finite.
+				\end{solution}
+			\end{enumerate}
+		\end{enumerate}
+		
+		
+		\question
+		Let $k$ a non-zero natural number. We equip $\N^k$ with the relation~:
+		\[
+		(x_1,...,x_k) \leq (y_1,...,y_k) \Leftrightarrow \forall i \in \{1,...,k\},
+		x_i \leq y_i
+		\]
+		\begin{enumerate}
+			\item Show that $\leq$ is a wqo $\N^k$.
+			
+			\begin{solution}
+				Lemme de Dickson.
+			\end{solution}
+			
+			\newcommand{\T}{\mathcal{T}}
+			\item A vectors addition system (VAS) on $\N^k$ is a the tuple $\left\langle v_0, \mathcal{T}\right\rangle $, where $v_0\in \N_k$ (called the initial state), and $\mathcal{T}$ is a fintite subset of $\Z^k$(called a set of transitions). For any element $t\in\mathcal{T}$ we define a application("firing") of $t$ on an element of $\N^k$ by $\xrightarrow{t}:v\xrightarrow{t}v'$ if $v'=v+t$, for all $v,v'\in \N^k$(note that for some $t$ and $v\in\N^k$, $v+t\notin\N^k $, in this case the application of $t$ is not defined on $v$).
+			We say that $v\in\N^k$ is reachable from $v_0$ if there exists a finite sequence $t_1,t_2,\ldots,t_n$ such that $v_0 \stackrel{t_1}{\to} v_1 \stackrel{t_2}{\to} \cdots \stackrel{t_n}{\to} v_n=v$.
+			
+			
+			%   Chaque élément de $\mathcal{T}$ définit une application partielle sur  $\N^k $ notée $\stackrel{t}{\to}$ : $V \stackrel{t}{\to} V'$ si $V' = V+t$, pour tous $V,V'$ dans $\N^k$ et $t$ dans $\mathcal{T}$ (remarquez que puisque $t \in \Z^k$, il se peut que $V+t \notin \N^k$ et dans ce cas $V$ n'a pas d'image par $t$).
+			%   On dit qu'un vecteur $V$ est \textrm{accessible} à partir de $V_0$ s'il existe une suite finie $t_1,...,t_n$ d'éléments de $\mathcal{T}$ telles que $V_0 \stackrel{t_1}{\to} V_1 \stackrel{t_2}{\to} \cdots \stackrel{t_n}{\to} V_n=V$.
+			\begin{enumerate}
+				\item Let $u_1,u_2, v_1$ elements of $\N^k$ such that  $u_1 \leq u_2$ and $V_1$ is reachable from $u_1$.
+				Show that there exists $v_2$ reachable from $u_1$ such that $v_1 \leq v_2$
+				\begin{solution}
+					Il existe une suite finie $t_1, \dots, t_n$ d'éléments de $\T$
+					telle que $U_1 \xrightarrow{t_1} v_1 \xrightarrow{t_2} \cdots
+					\xrightarrow{t_n} v_n = V_1$.
+					Alors $U_2 \xrightarrow{t_1} w_1 \xrightarrow{t_2} \cdots
+					\xrightarrow{t_n} w_n = V_2$.
+					Par récurrence, $v_i \leq w_i$ et la transition $t_{i+1}$ est alors
+					franchissable car $w_i + t_{i+1} \geq v_i + t_{i+1} \in \N^k$.
+				\end{solution}
+				
+				\item Assume there exist $u,v\in\N^k$ such that $u\leq v$, $v$ is reachable from $u$, and that for the $j$ component $u_j< v_j$. 
+				Show that there is an infinite sequence  $u_0 = u\leq u_1 = v \leq u_2 \leq \cdots \leq u_n \leq \cdots $ where all $u_i$ are reachable from $u$ and such that the sequence of the $ j $-th components is unbounded ($(u_n)_j\xrightarrow{n\rightarrow\infty}\infty$).
+				
+				% On suppose qu'il existe $U, V$ dans $\N^k$ tels que $U \leq V$ et $V$ est accessible à partir de $U$. On suppose que sur la $j$-ème composante, $U_j < V_j$.
+				%   Démontrer qu'il existe une suite croissante $U_0 = U \leq U_1 = V
+				%   \leq U_2 \leq \cdots \leq U_n \leq \cdots $ formée de vecteurs dans
+				%   $\N^k$ accessibles à partir de $U$ et tels que la suite des $j$-ème
+				%   composantes $\{U_{i,j}\}_{i\in\N}$ tend vers $+\infty$.
+				
+				\begin{solution}
+					Il existe une suite de transitions franchissables à partir de $U$
+					et menant à $V$~: $t_1, \dots, t_n$.
+					Ainsi, $V = U + W$ avec $W = t_1 + \cdots + t_n$.
+					D'après la question précédente, par récurrence sur
+					$m$, $U_m = U + mW$ est accessible depuis $U$. Elle convient.
+				\end{solution}
+				
+				\item We extend $\N$ with an element $\omega$ which is greater then all elements in $\N$: $\N_\omega=\N\cup\{\omega\}$.
+				We extend the addition of elements in $\N$ whrere $n+\omega=\omega + n=\omega$,  $\forall n\in \N_\omega$ and the multiplication $n \omega=\omega n=\omega$. This allows us to extend our VAS on $\N_\omega$. 
+				We now build a \textit{covering tree}, in the following way:
+				\begin{itemize}
+					\item The root of the tree is the vertex $s_o$ labeled with the vector $v_0$.
+					\item Given a branch of the tree $(s_0,v_0)\to (s_1,v_1) \to \cdots
+					\to (s_n,v_n)$, and $t\in \mathcal{T}$ which is fire-able from $v_n
+					\stackrel{t}{\to} v_{n+1}$, we extend the branch in the following way:
+					\begin{itemize}
+						\item[R1] If there $\exists i \leq n$ such that $v_{n+1} \leq v_i$, we {\bf do not} extend the branch.
+						\item[R2] If there $\exists i \leq n$ such that, $v_{n+1} >v_i$, We define the vector $\bar{v}_{n+1}= v_i + \omega (v_{n+1} -v_i)$ (if $(v_i)_j < (v_{n+1})_j$ then $(\bar{v}_{n+1})_j=\omega $ ). And we add the vertex $(s_{n+1},\bar{v}_{n+1})$ to the end of the branch.
+						\item[R3] If $\forall i \leq n$, $v_{n+1}$ and  $ v_i$ are incomparable, we add the vertex $(s_{n+1},v_{n+1})$ to the end of the branch.
+					\end{itemize}
+				\end{itemize}
+				
+				Show that this tree is finite.
+				
+				\begin{solution}
+					First, every vertex has at most $|T|$ children. Assume for contrediction the we have an infinite branch $(s_0,v_0) \rightarrow \cdots \rightarrow (s_i,v_i) \rightarrow \cdots$. By (1) we would have a infinitely increasing sequence $v_{i_0} \leq v_{i_1} \leq \cdots$, and by applying $R2$ we'd add an $\omega$ to at least one of the coordinates. And since we have a finite number of coordinates we can repeat this process is finitely many times. 
+					Now, by Konings lemma, every infinite tree contains either a vertex of infinite degree or an infinite branch. And therefore we get a finite tree.
+					
+					% very vertex in the t  L'arbrsete aree has a finite insi construit est tel qu'un sommet a au plus $\tau$ (avec
+					%   $\tau = |\T|$) fils.
+					%   Les branches sont toutes finies~: en effet, si une branche est
+					%   infinie $(s_0,v_0) \rightarrow \cdots \rightarrow (s_i,v_i)
+					%   \rightarrow \cdots$, on aurait une suite infinie
+					%   $v_{i_0} \leq v_{i_1} \leq \cdots$, or ceci ne peut se produire qu'en
+					%   appliquant la règle $R2$ qui ajoute au moins un $\omega$.
+					%   Ceci ne peut se produire que $k$ fois maximum.
+					%   On démontre qu'un tel arbre est fini (lemme de Koenig~:
+					%     si $Succ(s_0)$ est fini, il existe par le lemme des tiroirs $s_0
+					%     \xrightarrow{t} s_1$ tel que $Succ(s_1)$ est infini...
+					%   On construit ainsi par récurrence une branche infinie).
+				\end{solution}
+				
+				\item Let $k=3$, and the VAS with $V_0 = (1,0,1)$
+				and $\mathcal{T} = \{a=(1,1,-1), b=(-1,0,1), c=(0,-1,0) \}$. Show that the set or reachable vectors are infinite and build the covering tree.
+				
+				\begin{solution}
+					\[
+					V_0 \xrightarrow{a}\xrightarrow{b} (1,1,1) 
+					\xrightarrow{a}\xrightarrow{b} (1,2,1) \cdots
+					\xrightarrow{a}\xrightarrow{b} (1,n,1) \cdots
+					\]
+					Tree:
+					
+					\begin{tikzpicture}[level 1/.style={sibling distance=4cm}]
+					\node {$(1,0,1)$}
+					child {
+						node {$(2,1,0)$}
+						child {
+							node {$(1,\omega,1)$}
+							child {
+								node {$(2,\omega,0)$}
+								edge from parent node [left] {$a$}
+							}
+							child {
+								node {$(0,\omega,2)$}
+								edge from parent node [right] {$b$}
+							}
+							edge from parent node [left] {$b$}
+						}
+						child {
+							node {$(2,0,0)$}
+							edge from parent node [right] {$c$}
+						}
+						edge from parent node [left] {$a$}
+					}
+					child {
+						node {$(0,0,2)$}
+						child {
+							node {$(1,\omega,1)$}
+							child {
+								node {$(2,\omega,0)$}
+								edge from parent node [left] {$a$}
+							}
+							child {
+								node {$(0,\omega,2)$}
+								edge from parent node [right] {$b$}
+							}
+							edge from parent node [right] {$a$}
+						}
+						edge from parent node [right] {$b$}
+					};
+					\end{tikzpicture}
+				\end{solution}
+				
+				\item Show that the covering tree over-approximate the reachabilty set of a given VAS $(v_0,\mathcal{T})$ , in the following way:
+				\begin{itemize}
+					\item $\forall v$ reachable from  $v_0$, There is a vertex of the tree labeled by $w$ such that $v\leq w$.
+					
+					\begin{solution}
+						By induction on the path leading from $V_0$ to $V$.
+					\end{solution}
+					
+					\item The set of reachable vectors of the VAS is finite iff there are no vertices labeled with $\omega$.
+					
+					\begin{solution}
+						if there is omega iff there is an infinite path.
+						
+					\end{solution}
+				\end{itemize}
+			\end{enumerate}
+		\end{enumerate}
+		
+		\qformat{\textbf{Exercice \thequestion~(\thequestiontitle):}\\}
+		\titledquestion{Dilworth’s theorem}
+		Recall Dilworth’s theorem~: 
+		Let $k$ be the maximal cardinality of an antichain in $E$.
+		Then $E$ is a disjoint union of $k$ chains(a set of comparable elements).		
+		\begin{enumerate}			
+			\item Let $N$ be a non zero natural number. 
+			\begin{enumerate}
+				\item Let $\mathcal{F}=\{n_i, i\in [N]\}$ a sequance of natural numbers.
+				We equip $\mathcal{F}$ with the following relation~:
+				\[
+				n_i \preceq n_j \; \; \textrm{if }\; ( i\leq j \wedge n_i\leq n_j )
+				\]
+				Show that $\preceq$ is a partial order.
+				Describe the chains and antichains for the order $\preceq$.
+				
+				\begin{solution}
+					Verifying that $\preceq$ is a partial order is done by noticing that it is a sunset of $\N\times\N$.
+					
+					The chains are increasing sequences
+					$n_{i_1} \leq n_{i_2} \leq \cdots \leq n_{i_k}$ with
+					${i_1 < i_2 < \cdots < i_k}$.
+					
+					The antichains are decreasing sequences 
+					$n_{i_1} > n_{i_2} > \cdots > n_{i_k}$ with
+					${i_1 < i_2 < \cdots < i_k}$.
+				\end{solution}
+				
+				\item Let $m$ and $n$ be two natural numbers such that $N-1=nm$.
+				Show that $\mathcal{F}$ contains an increasing subsequence of length $n+1$ or a decreasing one of length $m+1$.
+				
+				\begin{solution}
+					By Dilworth theorem if $k$ is that maximal length of an antichain in $\mathcal{F}$ then $\mathcal{F}$ is a disjoint union of $k$ chains. 
+					If $k>m$ then we have an antichain of length greater $m+1$ hence a decreasing subsequence of length $k+1$. On the other hand if  $k\leq m$ the $\mathcal{F}$  a disjoint union of $k$ chains and from the pigeonhole principle there is one of length $n+1$.
+				\end{solution}
+			\end{enumerate}
+			
+			\item Let  $\mathcal{I}$ be a family of $N\in \N$ closed intervals in $\R$. Let $m$ and $n$ be two natural numbers such that $N-1=nm$.
+			Show that there are either $m+1$ disjoint intervals in $\mathcal{I}$ or there are $n+1$ intervals with a non empty intersection.
+			
+			% Soit $N$ un entier naturel non nul. Soit $\mathcal{I}$ une famille de
+			%   $N$ intervalles fermés réels.
+			%   Soit $m$ et $n$ deux entiers naturels tels que $N-1=nm$.
+			%   Démontrer qu'il existe $m+1$ intervalles dans $\mathcal{I}$ disjoints
+			%   deux à deux ou $n+1$ intervalles dans $\mathcal{I}$ d'intersection non
+			%   vide.
+			\newcommand{\I}{\mathcal{I}}
+			
+			\begin{solution}
+				We define a partial order $\preceq$ on the familly $\I$ follows~:
+				\[
+				[a,b] \prec [c,d] \text{ if } b<c
+				\]
+				The chains of $(\I,\preceq)$ are are intervals $[a_1,b_1], \dots, [a_k,b_k]$ s.t $a_1 < b_1 < a_2 < b_2 < \cdots < b_{k-1} < a_k < b_k$.
+				The antichains are intervals $[a_1,b_1], \dots, [a_k,b_k]$ s.t. $[a_i,b_i] \cap [a_j,b_j]\neq \emptyset$ for any $i<j\in[k]$. 
+				If there doesn't exists a family of intervals which don't intersect each other of size $m+1$ then by Dilworth's theorem there is an antichain of size $>n$ and we are done. We pick $a = \max(a_1, \dots, a_k)=a_j$ and $b = \max(b_1, \dots, b_k)=b_l$. Since for any $i$ the intersection $[a_i,b_i] \cap [a_j,b_j]$ is not empty, hence $a_i < a < b_i$, and $[a_i,b_i] \cap [a_l,b_l]$ is not empty, and hence $a_i < b < b_i$.
+				Therefore $[a,b]$ is a non empty interval contained in each $[a_i,b_i]$.
+				
+				%taking let $[a,b]$ be the intersection of $[a_1,b_1]$ and $[a_2,b_2]$. For any $i\notin\{1,2\}$  we get that $[a_i,b_i]$ 
+				
+				
+				
+				
+				% Les chaines sont les suites d'intervalles $[a_1,b_1], \dots, [a_k,b_k]$
+				% avec $a_1 < b_1 < a_2 < b_2 < \cdots < b_{k-1} < a_k < b_k$.
+				% Les antichaines sont les suites d'intervalles
+				% $[a_1,b_1], \dots, [a_k,b_k]$ telles que $[a_i,b_i] \cap [a_j,b_j]$
+				% soit vide pour tous $i,j$.
+				% S'il n'existe pas $m+1$ intervalles dans $\I$ disjoints deux à deux,
+				% les chaines sont toutes de cardinal $\leq m$.
+				% En utilisant le théorème de Dilworth, $\I$ est de cardinal $\leq mk$ où
+				% $k$ est le maximum des cardinaux des antichaines dans $\I$.
+				% Donc $k>n$.
+				% Soit alors $[a_1,b_1], \dots, [a_k,b_k]$ une antichaine de cardinal
+				% $k$.
+				% On pose $a = \max(a_1, \dots, a_k)=a_j$ et
+				% $b = \max(b_1, \dots, b_k)=b_l$.
+				% Alors pour tout $i$, $[a_i,b_i] \cap [a_j,b_j]$ est non vide, donc
+				% $a_i < a < b_i$ (en particulier $a < b$), et
+				% $[a_i,b_i] \cap [a_l,b_l]$ est non vide, donc $a_i < b < b_i$.
+				% Donc $[a,b]$ est un intervalle non vide contenu dans tous les
+				% $[a_i,b_i]$.
+			\end{solution}
+		\end{enumerate}
+		
+		\qformat{\textbf{Exercice \thequestion~(\thequestiontitle):}\\}
+		\titledquestion{Théorème de Cantor-Bernstein}
+		Let $A$ and $B$ two sets and $f:A \to B$ and $g: B \to A$ two injective functions.
+		Let $H:\mathcal{P}(A)\to  \mathcal{P}(A)$ the map~:
+		$$
+		X \mapsto A \setminus g[B \setminus f[X]]
+		$$
+		\begin{enumerate}
+			\item Using the Knaster-Tarski theorem, show that $ H $ has a fixed point
+			
+			\begin{solution}
+				Since $(\mathcal{P}(A),\subseteq)$ is complete lattice we are left with showing that $H$ is order preserving: 
+				\begin{align*}
+				E \subseteq&  F\\
+				H(E) \subseteq& H(F)\\
+				B\setminus H(E) \supseteq&  B\setminus H(F)\\
+				g\left(B\setminus H(E)\right)  \supseteq&  g\left(B\setminus H(F)\right)\\
+				A\setminus g\left(B\setminus H(E)\right) \subseteq& A\setminus g\left(B\setminus H(F)\right)
+				\end{align*}
+				Since a complete lattice has cannot be empty we are done.
+				
+			\end{solution}
+			
+			\item Deduce that  $A$ and $B$ are equipotent.
+			
+			\begin{solution}
+				Let $Z$ be a fixed point of $H$, i.e. $Z = A \setminus g[B \setminus f[Z]]$, hence $A \setminus Z = g[B \setminus f[Z]]$.
+				Note that, if $x\in A\setminus Z$ then $x\in g(B)$, if $x \in g[B]$ it has a unique preimage $g^{-1}(x)$, since $g$ is injective.				
+				We define a map $h$ as follows:
+				\begin{align*}
+				h : & A \to B\\
+				& x \mapsto
+				\begin{cases}
+				f(x) \mbox{ if }x \in Z\\
+				g^{-1}(x) \mbox{ if } x \in A \setminus Z
+				\end{cases}
+				\end{align*}
+				$h$ is injective, since given $x,y \in A$ such that
+				$h(x) = h(y)$, we get on of the three case:
+				\begin{itemize}
+					\item If $x,y \in Z$ and $f(x) = f(y)$, then $x = y$ since $f$ is injective.
+					\item If $x,y \in A \setminus Z$ and $g^{-1}(x) = g^{-1}(y)$ then 
+					$x = g(g^{-1}(x)) = g(g^{-1}(y)) = y$.
+					\item If $x \in Z$, $y \in A \setminus Z$, then
+					$h(x) = f(x) \in f[Z]$ and $h(y) = g^{-1}(y) \in B \setminus f[Z]$, but since $A \setminus Z = g[B \setminus f[Z]]$, we get a contradiction.
+				\end{itemize}
+				We are left with showing that $h$ is surjective. Let $y \in B$. If $y \in f[Z]$ we are done by the definition of $f[\cdot]$, that there exists $x \in Z$ such that
+				$h(x) = f(x) = y$.
+				If $y \in B \setminus f[Z]$ and $g(y) \in g[B \setminus f[Z]] = A\setminus Z$, then $h(g(y)) = g^{-1}(g(y)) = y$.
+			\end{solution}
+			
+			\item What are the smalles and largest fixed points of H~?
+			(Comparer avec la preuve du cours)
+		\end{enumerate}
+		
+		\begin{solution}
+			
+			Assuming that $A$ and $B$ are disjoint.  For all $x\in A\cup B$ define the following sequence :
+			\begin{itemize}
+				\item $x_0 := x$
+				\item For all $n \in \N$, if $x_{n}$ is defined:
+				\begin{itemize}
+					\item if  $x_n\in g[B]$, then $x_{n+1} := g^{-1}(x_{n})$.
+					\item if $x_n\in f[A]$, then $x_{n+1} := f^{-1}(x_{n})$.
+				\end{itemize}
+			\end{itemize}
+			
+			Let $A'$(resp.  $B'$) be the set of elements $x\in A$(resp.  $x\in B$) such that the sequence $(x_n)$ terminates in $B$(resp.  $A$). 
+			(For all $x \in (A \cup B) \setminus (A' \cup B')$, the sequences $(x_n)$
+			terminate in $A$ or are infinite.)
+			$A'$ is the least fixed point of $H$.
+			The greatest fixed point of $H$ est
+			\[
+			A' \cup \{ x \in A \mid \text{ the
+				infinite sequances $(x_n)$}  \}
+			\]
+		\end{solution}
+		
+		% \textbf{Rappel (Continuité au sens de Scott)~:}\\
+		% Soit $E$ et $F$ deux ensembles ordonnés. $f: E \to F$ est continue au
+		% sens de Scott si pour toute suite croissante $(x_n)_{n \in \N}$ admettant
+		% une borne supérieure, $(f(x_n))_{n \in \N}$ en admet aussi une et
+		% $\sup_{n \in \N}f(x_n) = f(\sup_{n \in \N}x_n)$.
+		
+		\qformat{\textbf{Exercise \thequestion \,:}\\}
+		\question
+		Show that any function from $\R$ to $\R$, is Scott continuous iff it is left continuous and monotonically increasing.
+		\begin{solution}
+			Let $f$ be Scott-continuous function from $\R$ to $\R$.
+			\begin{itemize}
+				\item Let $y<z$. Suppouse that $x_0=y$ and $x_n=z$ for all $n \geq  1$.
+				We have $\sup_{n \in \N}f(x_n) = f(\sup_{n \in\N}x_n)$, i.e. $\sup\{f(y),f(z)\} = f(z)$, therefore $f(y) \leq f(z)$, and	$f$ is monotonically increasing.
+				\item Let $c\in\R$. Let $(x_n)$ be a sequence in $\R$ increasing and converging to $c$.
+				We have $c = \sup \{ x_n \}$, therefore $f(c) = \sup \{ f(x_n) \}$ by Scott-continuity.
+				Moreover, the sequence $(f(x_n))$ is increasing because $f$ an $(x_n)$ are increasing. 
+				Hence $f(x_n) \rightarrow f(c)$, and $f$ is left continuous in $c$.
+			\end{itemize}
+			
+			On the other hand, let $f$ be a monotonically increasing function from $\R$ to $\R$, and left continuous in $c\in\R$.
+			Let $(x_n)$ an increasing sequence in  $\R$ s.t. $\sup \{ x_n \} = c$.
+			we have $x_n \rightarrow c$, hence $f(x_n) \rightarrow f(c)$ by continuity on the left of $f$ on $c$.
+			Moreover, since $f$ in increasing, $(f(x_n))$ is increasing, therefore $\sup \{ f(x_n) \} = f(c)$.
+			and $f$ is Scott-continuous in $c$.
+		\end{solution}
+		
+		\question
+		Let $R \in \mathcal{P}(E \times E)$,
+		and $t$ the map~: 
+		\[
+		\left\{
+		\begin{array}{rcl}
+		\mathcal{P}(E \times E) & \to & \mathcal{P}(E \times E)\\
+		Q &\mapsto& Q \cup R \cup Q^2
+		\end{array}
+		\right.
+		\]
+		where $Q^2 := \{(x,z) \in E \times E\mid \exists y \in E,\,xQy \wedge yQz\}$.
+		
+		Show that $t$ is Scott continuous for inclusion.
+		
+		\begin{solution}
+			$t$ est croissante car $Q \mapsto Q^2$ l'est :
+			Soit $S \subseteq Q \subseteq E \times E$ et $(x,z) \in S^2$.
+			Par définition il existe $y \in E$ tel que $xSySz$, donc $xQyQz$, donc
+			$(x,z) \in Q^2$.
+			
+			Soit $(Q_n)_{n \in \N}$ une suite croissante pour l'inclusion et
+			$Q := \cup_{n \in \N}Q_n$.
+			Pour tout $n \in \N$ on a $Q_n \subseteq Q$, donc
+			$t(Q_n) \subseteq t(Q)$.
+			Ainsi $\cup_{n \in \N}t(Q_n) \subseteq t(Q)$.
+			
+			Soit $x \in t(Q)$.
+			\begin{itemize}
+				\item Si $xQy$ alors il existe $n \in \N$ telle que $(x,y) \in Q_n$, donc
+				$(x,y) \in t(Q_n) \subseteq \cup_{n \in \N}t(Q_n)$.
+				
+				\item Si $xRy$ alors $(x,y) \in t(Q_0) \subseteq \cup_{n \in \N}t(Q_n)$
+				
+				\item Si $xQ^2y$, soit $z \in E$ tel que $xQzQy$. Il existe $n,m \in \N$
+				tels que $xQ_nz$ et $zQ_my$, donc $(x,y) \in Q_{\max(n,m)}^2 \subseteq
+				t(Q_{\max(n,m)})  \subseteq \cup_{n \in \N}t(Q_n)$.
+			\end{itemize}
+		\end{solution}
+		
+	\end{questions}
+	
+\end{document}
+% vim: spell spelllang=fr

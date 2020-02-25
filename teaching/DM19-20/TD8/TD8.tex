@@ -1,0 +1,1119 @@
+\documentclass[a4paper,11pt]{exam}
+%\printanswers % pour imprimer les réponses (corrigé)
+ \noprintanswers % Pour ne pas imprimer les réponses (nonc)
+% \addpoints % Pour compter les points
+% \noaddpoints % pour ne pas compter les points
+\qformat{\textbf{Exercice \thequestion \,:}\\} % Questions style
+\usepackage{color} % Define new colors
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{exercise}
+\usepackage{mathrsfs,amsmath,amssymb,latexsym,amsfonts,mathtools,stmaryrd}
+\usepackage{enumitem}
+\setitemize{label=\textbullet}
+% Bigger binomial in math mode
+\usepackage{nccmath}
+\renewcommand{\binom}{\mbinom}
+
+\usepackage[francais]{babel}
+
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+\shadedsolutions % définit le style des réponses
+% \framedsolutions % définit le style des réponses 
+\definecolor{SolutionColor}{rgb}{0.8,0.9,1} % bleu ciel
+\renewcommand{\solutiontitle}{
+\noindent\textbf{Solution:}\par\noindent} % Définit le titre des réponses
+\newcommand\eqdef[0]{\stackrel{\text{def}}{=}}
+
+\pagestyle{headandfoot}
+\headrule
+\header{L3 - 2019/2020 - TD7}{Mercredi 06 November}{Mathématiques discrètes}
+\footer{S. Le Roux, I. Khmelnitsky}{\thepage}{E.N.S. Cachan}
+\footrule
+
+\renewcommand{\questionshook}{%
+  \setlength{\labelwidth}{0pt}%
+  \setlength{\itemsep}{0.9\baselineskip}
+}
+
+\definecolor{gris}{gray}{0.95}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\A}{\mathcal{A}}
+\renewcommand{\S}{\mathcal{S}}
+\newcommand{\RR}{\mathbin{\mathcal{R}}}
+\renewcommand{\P}{\mathrm{P}}
+\DeclareMathOperator{\pgcd}{pgcd}
+\DeclareMathOperator{\Fix}{Fix}
+\DeclareMathOperator{\fix}{Fix}
+
+\begin{document}
+	Let $\Sigma$ a finite alphabet.
+\begin{questions}
+	
+
+  \question \label{uvvu}
+  Let $u$ and $v$ two words in $\Sigma^*$. 
+  Show  by induction on $|u| + |v|$
+  that $uv=vu \Rightarrow {\exists w \in \Sigma^*,} \{u,v\} \subseteq w^*$.
+
+  \begin{solution}
+    If $|u|=0$, then $w=v$.
+    If, we suppose that $u$ is a prefix of $v$ ; 
+    then $v=ut$ and $uut=uv=vu=utu$ hence $ut=tu$ with $|u|+|t|<|u|+|v|$,
+    therefor by the hypothesis, $\exists w \mid \{u,t\} \subseteq w^*$.
+    and $v=tu$, $v \in w^*$.
+  \end{solution}
+
+  \question
+  Let $u$ and $v$ be two words in $\Sigma^*$ , we say that they are conjugate if there exist 
+  $x$ and $y$ such that $u=xy$ and $v=yx$.
+  Show that the words $u$ and $v$ are conjugate iff there exists a word $z$ such that $uz = zv$.
+
+  \begin{solution}
+    Suppouse there exists a word $z$ such that $uz = zv$. If $|z| \leq |u|$,
+    there exists $w$ s.t. $u = zw$.
+    Hence $uz = zwz = zv$ and $wz = v$.
+    Otherwise, $|z| > |u|$, there exists $w$ s.t. $uw = z$.
+    therefore $zv = uwv = uz$ hence $wv = z$ ; hence $uw = wv$ with $|w| < |z|$,
+    and they are conjugated by recursion.
+  \end{solution}
+
+  \question
+  Consider the three words $x,y,z$ in $\Sigma^*$ such that $x^2y^2=z^2$.
+  Show that there exists a word $w$ in $\Sigma^*$ and numbers $p$ and $q$
+  such that $x=w^p$, $y=w^q$ and $z=w^{p+q}$.
+
+  \begin{solution}
+    if $x^2 y^2 = z^2$, $|z^2| = |x^2| + |y^2|$, then $2|z| = 2|x| + 2|y|$,
+    hence $|z| = |x| + |y|$.
+    In particular, $|x| \leq |z|$ and $x$ is a prefix of $z$.
+    Suppose $z=xu$.
+    In the same way, $y$ is a suffix of $z$ and $|u|=|y|$, we get that $y=u$($zz=xxyy$).
+    We have that $xyxy=xxyy$ so for simplification in
+    the free monoid $\Sigma^*$, $yx=xy$.
+    We get that (cf.\ Exercice \ref{uvvu}) that there exists
+    $w \in \Sigma^*$ and integers $p$ and $q$ such that $x=w^p$, $y=w^q$.
+    and $z=xy=w^{p+q}$.
+  \end{solution}
+
+\question
+Let $m$ and $n$ natural numbers $>0$.
+Solve in $\Sigma^*$ the equation $u^m = v^n$. First, solve for $\gcd(|v|,|u|)=1$.
+
+\begin{solution}
+	Denote $w=u^m=v^n$.
+	
+	Suppose that $|u|$ and $|v|$ are coprime,
+	and that $|v|>|u|$.
+	By Bezout's identity $1=a|v|-b|u|$ with $a$ and $b$ intgers, $a<|u|$ and $b<|v|$.
+	Let $s=|w|=m|u|=n|v|$, with $m$ the multiplicty of $|v|$ and $n$ the multiplicty $|u|$.
+	For all $i$ between $1$ and $s$, $w_i=w_{i+k|u|}=w_{i+l|v|}$ if $1 \leq i+k|u| \leq s$ and $1 \leq i+l|v| \leq s$.
+	For $i \leq |v|$, $i+a|v| \leq (a+1)|v| \leq |u||v| \leq n|u| = s$ hence
+	$w_i = w_{i+a|v|} = w_{i+a|v|-b|u|}=w_{i+1}$.
+	This shows that $v$, $w$ and $u$ constructed of only one letter.
+	In the general case, consider the alphabet $\Sigma^d$ where $d$ is
+	the GCD of $|u|$ and $|v|$.
+\end{solution}
+
+  \question
+  Let $M$ be a finite monoid and let $x \in M$.
+  \begin{enumerate}
+    \item Show that there two natural numbers $m$ and $n$ such that $m<n$ and
+      $x^m = x^n$.
+
+      \begin{solution}
+        Pigeon hole
+      \end{solution}
+
+    \item We choose a minimal $l$ from all the numbers $n$ for which there exists
+      $m<n$ such that $x^m = x^n$.
+      \begin{enumerate}
+        \item Show that $1,x,...,x^{l-1}$ are all distinct.
+
+          \begin{solution}
+            assume $x^h=x^k$ for $h<k<l$, hence $l$ is not minimal. 
+          \end{solution}
+
+        \item Show that the monoid $<x>$ is of cardinality $l$.
+
+          \begin{solution}
+            Let $k<l$ s.t $x^l=x^k$.
+            if $i \geq l$, $x^i=x^{k+i-l}$ then by recurrence on $i$,
+            $x^i \in \{1, \dots, x^{l-1} \}$.
+            hence $<x>=\{1, \dots, x^{l-1} \}$ is of cardinality $l$.
+          \end{solution}
+
+        \item Let $k<l$ such that $x^k = x^l$. Let $r$ be the unique integer between $k$ and $l-1$ divisible by $l-k$.
+        Show that $x^k,...,x^{l-1}$ is a cyclic group of order $l-k$ where $x^r$ is the natural element.
+
+          \begin{solution}
+            For $i \geq k$, let $j$ the reminder and  $q$ the quotient of the euclidean division of $i -k$ by $l-k$.
+            Then $x^i = x^{k+q(l-k)+j} = x^{k+j}$.
+            Hence $\{x^k, \dots, x^{l-1}\}$ is multiplicatively stable and
+            $x^r$ is a natural element.
+            Moreover, $x^i \times x^{(q+1)(l-k)-i}=x^{(q+1)(l-k)}=x^r$, hence 
+            $\{x^k, \dots, x^{l-1}\}$ is a group.
+          \end{solution}
+
+        \item Show that there exists $n$ such that $x^n=(x^n)^2$ i.e. idempotent. Are there several?
+
+          \begin{solution}
+            Using what we'ce shown previously, $x^r$ is idempotent.
+            Let $s$ s.t. $x^s$ is idempotent. Then $x^{2s}=x^s$, hence $2s \geq l$.
+            Therefore $x^s=x^{2s}=x^{3s}=\cdots=x^{rs}=\cdots=x^r$.
+          \end{solution}
+      \end{enumerate}
+  \end{enumerate}
+  \qformat{\textbf{Exercice \thequestion~(\thequestiontitle):}\\}
+  \titledquestion{Syntactic monoid}
+  Let $L \subset \Sigma^*$ be a language. This defines the equivalence relation on $\Sigma^*$~:
+  \[
+    w \sim_L w' \Leftrightarrow \forall u, v\in \Sigma^*, \; uwv\in L
+    \Leftrightarrow uw'v\in L
+  \]
+
+  Justify that $\sim_L $ is a congruence on $\Sigma^*$
+  ($x\sim y$ iff $uxv\sim uyv \,\,\forall v,u\in M$).
+  We define the Syntactic monoid $M_L$ as the quotient 
+  $\Sigma^*|_{\sim_L}$.
+
+  \begin{solution}
+    Let $w,w'$ s.t $w \sim_L w'$.
+    Let $s,t \in \Sigma^*$.
+    $\forall u,v \in \Sigma^*, u(swt)v=(us)w(tv)$ hence
+  ${u(swt)v \in L} \Rightarrow (us)w'(tv) \in L$.
+    Since $(us)w'(tv)=u(sw't)v$, we get that $u(sw't)v \in L$.
+    By symmetry, $u(swt)v \in L \iff u(sw't)v \in L$, hence $swt \sim_L sw't$.
+  \end{solution}
+
+%  \titledquestion{Language recognized by a monoid}
+%  Let $L \subset \Sigma^*$ a language.
+%  Let $M$ be a monoid. We say that a language $L$ is recognizable by $M$ if there exists a monoid morphism
+%  $\varphi$ from $\Sigma^*$ to $M$ and a subset $X$ of $M$ such that  $L = \varphi^{-1}(X)$.
+%  \begin{enumerate}
+%    \item Show that a language recognized by a finite monoid is regular.
+%
+%      \begin{solution}
+%        Let $L$ be recognized by $M$ using the monoid morphism $\varphi$ of $\Sigma^*$ to $M$ and $X$ a subset of $M$ such that $L = \varphi^{-1}(X)$.
+%        Then $L$ is the language recognized by an automaton where the states are element of $M$, the initial state $1$, the final states are elements in $X$, and the transitions are ~:
+%        \[
+%          \forall m \in M, \forall a \in \Sigma, m \xrightarrow{a} m\varphi(a)
+%        \]
+%      \end{solution}
+%
+%    \item Show that a language  $L$ is recognized by its syntactic monoid.
+%
+%      \begin{solution}
+%        let $\varphi$ the surjection of $\Sigma^*$ to
+%        $\Sigma^*|_{\sim_L}$.
+%        Then $L=\varphi^{-1}(\varphi(L))$.
+%      \end{solution}
+%
+%    \item Show that a language  $L$ is recognized by a monoid $N$ iff $M_L$ is isomorphic to a quotient of a sub monoid of $N$.
+%
+%      \begin{solution}
+%%      	et L  M using a monoid morphism φ of Σ * in M and X a
+%%      	part of M such that L = φ -1 (X). So L is the language recognized by the automaton
+%%      	the states are the elements of M, the initial state is 1, the final states are the elements
+%%      	of X, and the transitions are
+%%      	
+%      	
+%        Let $L$ be recognized by $N$ using a monoid morphism $\varphi$
+%        from $\Sigma^*$ to $N$ and $X$ a subset of $N$ s.t. $L = \varphi^{-1}(X)$.
+%        Let $w,w' \in \Sigma^*$.
+%        If $\varphi(w)=\varphi(w')$, then
+%        $\forall u,v \in \Sigma^*, uwv \in L \iff
+%        \varphi(uwv) \in X \iff \varphi(u)\varphi(w)\varphi(v) \in X \iff \varphi(u)\varphi(w')\varphi(v) \in X \iff \varphi(uw'v) \in X \iff
+%        uw'v \in L$
+%        and hence $uwv \in L \iff uw'v \in L$.
+%        We have shown that~: $\varphi(w) = \varphi(w') \Rightarrow w \sim_L w'$. Hence $\varphi$ is a well defined 1-1 morphism from $M_L$ to $N$, and hence isomorphic to some sub monoid.
+%      \end{solution}
+%      
+%    \item Deduce the characterization of regular languages relating to their syntactic monoid.
+%
+%      \begin{solution}
+%      	If a language is  regular then it has an automate and hence there is a finite monoid($\Sigma^* $ with equivalence according to the states)  which recognize it.
+%      	
+%        A language is regular if and only if its syntactic monoid is finite.
+%      \end{solution}
+%  \end{enumerate}
+
+ \titledquestion {Star-free languages}
+%  Soit $\Sigma$ un alphabet fini.
+%  La famille des langages sans étoile est la plus petite famille contenant le
+%  langage vide, les singletons et stable par union, passage au complémentaire
+%  et concaténation.
+Let $\Sigma$ be a finite alphabet.
+The Star-free  family of languages is the smallest family containing empty language, singletons and stable by union, passage to complement and concatenation.
+  \begin{enumerate}
+  	 \item Show that $\Sigma^*$ is star-free.
+  	
+  	\begin{solution}
+  		$\Sigma^*$ is the complementary of the empty language.
+  	\end{solution}
+    \item Demonstrate that the intersection of two star-free languages is star-free.
+      \begin{solution}
+        \[
+          L_1 \cap L_2 =(L_1^c\cup L_2^c)^c =  \Sigma^* \setminus
+          (\Sigma^* \setminus L \cup \Sigma^* \setminus L')
+        \]
+      \end{solution}
+
+    \item Let $a,b \in\Sigma$ where $a\neq b$. Show that $(ab)^*$ is star-free.
+
+      \begin{solution}
+        \[
+          (ab)^*=(a\Sigma^* \cap \Sigma^*b) \setminus 
+          (\Sigma^* a^2 \Sigma^* \cup \Sigma^* b^2 \Sigma^*)
+        \]
+      \end{solution}
+  \end{enumerate}
+
+  
+  We say that a finite monoid is aperiodic if the only group it contains is the trivial group $\{1\}$.
+  \begin{enumerate}[resume]
+    \item Let $M$ be a finite monoid.
+      Show that the following are equivalent:
+      \begin{enumerate}
+        \item The monoid $M$ is aperiodic.
+        \item For all $m$ in $M$, there exists a nonzero natural number $n$  such that $m^{n+1} = m^n$,
+        \item There exists a non zero natural number $n$ such that for all $m$ in $M$, $m^{n+1} = m^n$.
+      \end{enumerate}
+
+      \begin{solution}
+        $(a) \Rightarrow (b)$: Suppose there is $m \in M$ s.t.for all $n>0$, $m^{n+1} \neq m^n$.
+        By th pegion hole principle, there exists an integer $0<k<l$ s.t. $m^k = m^l$. We take $k$ the smallet possible and set $p=l-k$. So $m,m^2, \dots, m^{l-1}$ are different elements and $\{m^k, \dots, m^{l-1}\}$ is a group of order $p$ (of natural elements $m^r$, $r$ is a multiple between $p$ and $k$ and $l-1=k+p-1$).
+        By the hypothesis we know that $p \geq 2$.
+
+        $(b) \Rightarrow (c)$: take the maximal from all the elements in $M$.
+
+        $(c) \Rightarrow (a)$: if there exists $n>0$ s.t.
+        $\forall m \in M, m^{n+1} = m^n$, the only inversible element in $M$ is $1$ since $m^{n+1}m^{-n} = m^nm^{-n} \Rightarrow m = 1$,  hence $M$ is aperiodic.
+      \end{solution}
+
+    \item Let $L$ be a regular language and let $M_L$ be its syntactic monoid.
+      By the definition of a syntactic monoid, we deduce by the previous question that $M_L$ is aperiodic if and only if, for all words $u$, there exists a non-zero natural number $n$ s.t. for all words $v,w$, $vu^nw \in L \Leftrightarrow vu^{n+1}w \in L$.
+      In this case we denote it by $i(L)$ the smallest natural non-zero number $n$ such that for all words $u,v,w$, $vu^nw \in L \Leftrightarrow vu^{n+1}w \in L$. 
+      \begin{enumerate}
+        \item Show the following(for languages $L$ with finite $i(L)$):
+          \begin{enumerate}
+            \item $i(\{a\}) = 1$,
+            \item $i(L_1\cup L_2) \leq \max(i(L_1), i(L_2))$,
+            \item $i(L_1L_2) \leq i(L_1)+ i(L_2)+1$,
+            \item $i(\Sigma^* \setminus L) = i(L)$.
+          \end{enumerate}
+      \begin{solution}
+      	Denote by $n_1=i(L_1), n_2=i(L_2)$ and $n=n_1+n_2+1+1$.
+      	For any $x,u,v\in \Sigma^* $ we show that $ux^nv\in L_1L_2$ implies that  $ux^{n+1}v\in L_1L_2$. 
+      	We suppose that $x\neq e$. If $ux^nv\in L_1L_2$ then $ux^nv = x_1x_2$ where $x_1\in L_1, x_2\in L_2$. 
+      	There are 2 cases, either $x_1 = ux^{n_1}r$ with $rx_2=x^{n-n_1}v$ or $x_2=sx^{n_2}v$ with $x_1s=ux^{n-n1}$. Consider the first case, since ---****--- $ux^{n_1}v\in L_1$ we have $ux^{n_1+1}v\in L_1$ and hence $ux^{n+1}v\in L$ 
+      \end{solution}
+      
+        \item Deduce that a syntactic monoid of a star-free language is aperiodic.
+      \end{enumerate}
+   
+
+  \end{enumerate}
+
+ \begin{EnvFullwidth}
+	\colorbox{gris}{
+		\begin{minipage}[c]{\textwidth}
+			Groupes
+		\end{minipage}
+	}
+\end{EnvFullwidth}
+
+
+\question
+Let $G$ be a cyclic group, show that every sub group $G\subseteq H$ is cyclic
+
+\begin{solution}
+	If $G=\{e\}$ we are done. 
+	
+	Otherwise there exists $a\in G$ s.t. any element of $G$ has the form $a^n$ for some $n\in\N$. Let $H$ be a subgroup of $G$ and  $m$ the smallest strictly positive integer s.t. $a^m\in H$.
+	Let $b\in H$ hence $b=a^n$ for some $n\in \N$. We know that there exists $m$ and $r$ s.t. $n=mq+r $, and $0\leq r\leq m$. 
+	We get that $a^n=(a^m)^qa^r$ and $a^r=(a^m)^{-q}a^n$. Since $a^m\in H$, $a^{-qm}\in H$, and therefore $a_r\in H$. But $r<m$ which is a contradiction to our assumption, therefore $r=0$.
+	Which gives us $a^n = (a^m)^q$.
+	
+\end{solution}
+
+
+\question
+Consider the action $\cdot$ of the group $G$ on the set $E$.
+Show that:
+
+\begin{enumerate}
+	\item For all $g \in G$, show that the map $f_g : E \to E$ such as
+	$f_g(x) := g \cdot x$ is an inverse bijection of $f_{g^{-1}}$.
+	
+	\item The map $g \mapsto f_g$ is a morphism from $G$ to the set of map from $ E $ to $E$ with the operation $ f_g \circ f_{g'}$.
+\end{enumerate}
+%
+%\question
+%%We denote by $\varphi$ Euler's function.
+%
+%Let $n$ a natural number $>1$. 
+%%Denote by $d(n)$ the number of dividers of $n$.
+%
+%\begin{enumerate}
+%	\item Let $m$ a natural number between $1$ and $n$.
+%	Let $H_m$ be the set  of all the elements of $\Z/n\Z$ whose order is a divisor of $ m $, that is, the set of elements $ x $ of $\Z/n\Z$
+%	such that $\overline{m} x = \underbrace{x + x + \cdots + x}_{m} = 0$.
+%	Show~:
+%	\begin{enumerate}
+%		\item $H_m$ is a sub group  of $\Z/n\Z$.
+%		
+%		\begin{solution}
+%			Let $H_m = \{ x \in \Z/n\Z \mid
+%			\overline{m} x = \underbrace{x + x + \cdots + x}_{m} = 0 \}$
+%			
+%			Show that $H_m$ is a sub group of $\Z/n\Z$~:
+%			\begin{itemize}
+%				\item $\forall p\in\N, \overline{p} \cdot 0 = 0$, so
+%				$0 \in H_m$.
+%				\item Let $x,y \in H_m$.
+%				
+%				\begin{align*}
+%				\overline{m}(x-y) &= \underbrace{x-y + x-y + \cdots + x-y}_m\\
+%				&= \underbrace{x+x+\cdots+x}_m - \underbrace{y+y+\cdots+y}_m\\
+%				&= 0
+%				\end{align*}
+%				Hence $x-y \in H_m$.
+%			\end{itemize}
+%		\end{solution}
+%		
+%		\item $H_m$ is a cyclic sub-group of $\Z/n\Z$ of cardinality
+%		$\textrm{gcd}(m,n)$.
+%		
+%		\begin{solution}
+%			Let $a \in \Z$ relevant $x \in \Z/n\Z$.
+%			
+%			Then $[x] \in H_m \iff mx \in n\Z \iff x \in (n/\textrm{gcd}(m,n))\Z$
+%			(By Gauss theorem).
+%			Hence $H_m$ is a cyclic subgroup generated by the class of $n/\mathrm{gcd}(m,n)$ in $\Z/n\Z$.
+%			
+%			In addition, for any $d \in \N$, $dn/\gcd(m,n) \in n\Z \iff \gcd(m,n) | d$, so the $n/\gcd(m,n)$ class in $\Z/n\Z$ is exactly $\gcd(m,n)$. And so $H_m$ is of order $\gcd(m,n)$.
+%			
+%			De plus, pour tout $d \in \N$,
+%			$dn/\pgcd(m,n) \in n\Z \iff \pgcd(m,n) | d$, donc la classe de
+%			$n/\pgcd(m,n)$ dans $\Z/n\Z$ est exactement d'ordre $\pgcd(m,n)$.
+%			Et donc $H_m$ est d'ordre $\pgcd(m,n)$.
+%		\end{solution}
+%		
+%		\item Show that the set of all subgroups of $\Z/n\Z$ is exactly all the subgroups $H_d$ for $d \in \N$, $d$
+%		is a divisor of of $n$.
+%		
+%		\begin{solution}
+%			For $d$ a  divisor of $n$, $H_d$ is a sub group  of order $d=\gcd(m,n)$.
+%			Let $H$ be a sub group of order $d$.
+%			Then $H \subset H_d$ by the theorem of Lagrange.
+%			Now, $d = |H| = |H_d|$ hence $H=H_d$, hence the uniqueness.
+%		\end{solution}
+%	\end{enumerate}
+%%	\item We consider the following map~:
+%%	
+%%	\[
+%%	\begin{array}{ccccc}
+%%	\psi & : & (\Z/n\Z)^* \times \Z/n\Z & \rightarrow & \Z/n\Z \\
+%%	&& (\overline{m}, x ) & \to & \overline{m} x 
+%%	\end{array}
+%%	\]
+%%	
+%%	\begin{enumerate}
+%%		\item Justify that the group $(\Z/n\Z)^*$ acts on $\Z/n\Z$.
+%%		
+%%		\begin{solution}
+%%			$\forall x\in\Z/n\Z, \psi(\overline{1})(x)=\overline{1}x=x$, hence
+%%			$\psi(\overline{1})$ is the identity of $\Z/n\Z$.
+%%			
+%%			$\forall \overline{m_1},\overline{m_2} \in (\Z/n\Z)^*,
+%%			\overline{m_1} \cdot \overline{m_2}=\overline{m_1m_2}$
+%%			hence $\psi(\overline{m_1m_2})=
+%%			\psi(\overline{m_1})\circ\psi(\overline{m_2})$.
+%%		\end{solution}
+%%		
+%%		\item Show the equality~:
+%%		
+%%		\[
+%%		\sum_{\begin{array}{c} m \in \{1,\dots.,n\} \\
+%%			\textrm{gcd}(m,n)=1 \end{array}} \textrm{gcd}(m-1,n) =
+%%		\varphi(n) d(n)
+%%		\]
+%%		
+%%		\begin{solution}
+%%			We show that there are $d(n)$ orbits.
+%%			Let $x, y\in\Z/n\Z$.
+%%			$x$ and $y$ are in the same orbit under the action of $(\Z/n\Z)^*$ if and only if $\langle x \rangle = \langle y \rangle$
+%%			($\exists m\in\N, y=\overline{m}x \Rightarrow y \in \langle x \rangle$).
+%%			The $x$ orbit is the set of generators in the $\langle x \rangle$ subgroup.
+%%			There are therefore as many orbits as there are cyclic subgroups of $\Z/n\Z$, or $d(n)$ (question 1(c)).\\\\
+%%			
+%%			
+%%	
+%%			On démontre qu'il y a $d(n)$ orbites.
+%%			Soit $x,y\in\Z/n\Z$.
+%%			$x$ et $y$ sont dans une même orbite sous l'action de $(\Z/n\Z)^*$
+%%			si et seulement si $\langle x \rangle = \langle y \rangle$
+%%			($\exists m\in\N,
+%%			y=\overline{m}x \Rightarrow y \in \langle x \rangle$).
+%%			L'orbite de $x$ est l'ensemble des générateurs du sous-groupe
+%%			$\langle x \rangle$.
+%%			Il y a donc autant d'orbites que de sous-groupes cycliques de
+%%			$\Z/n\Z$, soit $d(n)$ (question 1(c)).
+%%		\end{solution}
+%%	\end{enumerate}
+%\end{enumerate}
+
+
+
+
+\question
+Let $p$ be a prime number.
+We denote by $(1,\dots,p)$ the $p$-cycle (the permutation of the symmetrical group that sends $1$ on $2$, $2$ on $3$, \dots, $p-1$ on $p$ and $p$ on $1$).
+We denote by $G$ the group generated by the $p$-cycle $(1,\dots,p)$. Assuming that $\Sigma$ a finite alphabet. 
+\begin{enumerate}
+	\item Show that $G$ is a group of order $p$.
+	
+	\begin{solution}
+		The permutation $\tau=(1,\dots,p)$ is an element of order $p$ so it generates an order group $p$.
+		If we want to show that the order of $\tau$ is exactly $p$, we can notice that $\tau(i)$ is congruent to $i+1$ modulo $p$, so $\tau^j(i)$ is congruent to $i+j$ modulo $p$. Thus, $\tau^j=Id$ if and only if $\forall i, \tau^j(i)=i$, so if and only if $j$ is a multiple of $p$.
+	\end{solution}
+	
+	\item What are the orders of the elements in $G$~ ? 
+	For each $d$, we will specify how many $G$ elements are of order $d$.
+	
+	\begin{solution}
+		Since $p$ is a prime number, by Lagrange theorem, the elements of $G$ are of order $1$ or $p$.
+		Only the neutral element is if order $1$, hence there are $p-1$ elements of order $p$.
+	\end{solution}
+	
+	\item We take $ G $ to act on $ \Sigma^p $, the set of words of length $p $ written with the letters of $ \Sigma $ as follows:
+	\[
+	\begin{array}{lll}
+	G \times \Sigma^p & \rightarrow & \Sigma^p \\
+	(\tau, a_1a_2\dots a_p)& \to & \tau \cdot (a_1a_2\dots a_p) =
+	a_{\tau^{-1}(1)} a_{\tau^{-1}(2)}\dots a_{\tau^{-1}(p)}
+	\end{array}
+	\]
+	\begin{enumerate}
+		\item Demonstrate that this is a group operation.
+		
+		\begin{solution}
+			Let $\sigma$ and $\rho$ be two permutations.
+			Let $a_1 a_2 \dots a_p \in \Sigma^p$. 
+			Then~:
+			\pagebreak
+			\begin{align*}
+			\sigma \cdot (\tau \cdot (a_1 a_2 \dots a_p))
+			&= \sigma \cdot (a_{\tau^{-1}(1)}a_{\tau^{-1}(2)}
+			\dots a_{\tau^{-1}(p)}) \\
+			&= \sigma \cdot (b_1 b_2 \dots b_p)
+			\text{ with } b_i=a_{\tau^{-1}(i)}, \forall i \\
+			&= b_{\sigma^{-1}(1)} b_{\sigma^{-1}(2)}
+			\dots b_{\sigma^{-1}(p)} \\
+			&=  a_{\tau^{-1}(\sigma^{-1}(1))} a_{\tau^{-1}(\sigma^{-1}(2))}
+			\dots a_{\tau^{-1}(\sigma^{-1}(p))} \\
+			&= a_{(\sigma\tau)^{-1}(1)} a_{(\sigma\tau)^{-1}(2)}
+			\dots a_{(\sigma\tau)^{-1}(p)}
+			\text{ since } (\sigma\tau)^{-1} = \tau^{-1}\sigma^{-1}
+			\end{align*}
+		\end{solution}
+		
+		\item Determine the fixer of $(1,\dots,p)$. Deduce the fixer of $ (1, \dots, p)^i $, for any integer $ i $ co prime with $ p $.
+		
+		\begin{solution}
+			Denote $\Fix((1,\cdots,p))$ the fixer  of $(1,\cdots,p)$.
+			$a_1 a_2 \dots a_p \in \Fix((1,\cdots,p))$  if
+			$(1,\cdots,p) \cdot a_1 a_2 \dots a_p = a_1 a_2 \dots a_p$.
+			However $(1,\cdots,p) \cdot a_1 a_2 \dots a_p = a_2 a_3 \dots a_p a_1$.
+			Hence $a_1 a_2 \dots a_p \in \Fix((1,\cdots,p))$ iff $a_1=a_2$, $a_2=a_3$, \dots, $a_p=a_1$.
+			Hence $\Fix((1,\cdots,p)) = \{ a^p \mid a \in \Sigma \}$.
+			
+			A word in the fixer of $(1,\cdots,p)$ is in the fixer of $(1,\cdots,p)^i$, for all integers $i$.
+			If $i$ is co prime with $p$, there exist  integers $a$ an $b$ s.t. $ap+bi=1$ hence $(1,\cdots,p)=((1,\cdots,p)^p)^a((1,\cdots,p)^i)^b=((1,\cdots,p)^i)^b$, hence the word which is in the fixer of $(1,\cdots,p)^i$ is in the fixer of $(1,\cdots,p)$.
+			Therefore for all $i$ coprime with $p$, $\Fix((1,\cdots,p))=\Fix((1,\cdots,p))^i$.
+		\end{solution}
+		
+		\item Show that the number of orbits, $r$, of this operation are~:
+		\[
+		r = \frac{1}{p} (|\Sigma|^p + (p-1) |\Sigma|)
+		\]
+		
+		\begin{solution}
+			By Burnside~:
+			\[
+			r = \frac{1}{|G|}\sum_{g \in G}|\Fix(g)|
+			\]
+			The identity fixes every element of  $\Sigma^p$, the other elements of $G$ are $(1,\cdots,p)^i$ for $i \in \{1,\cdots,p-1 \}$ and their fixer $\{ a^p \mid a \in \Sigma \}$, is of cardinality $|\Sigma|$.
+			And $G$ is of order $p$, so the formula of Burnside gives us~:
+			\[
+			r = \frac{1}{p}(|\Sigma|^p+(p-1)|\Sigma|)
+			\]
+		\end{solution}
+		
+		\item Retrieve Fermat's little theorem ($a^{p} \equiv_p a$).
+		
+		\begin{solution}
+			Since the number of orbits is a natural number, we deduce that  $p$ divides the integer $|\Sigma|^p+(p-1)|\Sigma| =
+			(|\Sigma|^{p-1}+(p-1))|\Sigma|$.
+			When the alphabet of $\Sigma$ is of cardinality co prime to $p$, $p$ is inverse modulo $p$ and $p-1 \equiv -1 \mod p$, hence $|\Sigma|^{p-1} \equiv 1 \mod p$.
+			For all $n\in\N$ s.t. $n \wedge p = 1$ an alphabet of cardinalty $n$, retrives Fermat's little theorem.		\end{solution}
+	\end{enumerate}
+\end{enumerate}
+
+
+ \question
+ On a sheet of paper, a large $2$ by $2$ square is drawn, consisting of 4 small $1$ by $1$ squares.
+ We color this large square by coloring each of the small squares with
+ one of the four colors Green ($G$), yellow ($Y$), black ($B$) and red
+ ($R$).
+ A coloring of this square corresponds to a choice of colors for each of the small squares.
+ For example, in the figure below, having numbered the small squares from the lower left corner, we have chosen to assign the color yellow to the square number $1$, the color red to the square number $2$, the color black to the square number $3$ and the color
+ green squared number $4$.
+ 
+\begin{center}
+	\begin{tikzpicture}[scale=0.8]
+	\draw[thick, fill=yellow!30] (0,0) rectangle (1,1) ;
+	\draw[thick, fill=red!30] (1,0) rectangle (2,1) ;
+	\draw[thick, fill=green!30] (0,1) rectangle (1,2) ;
+	\draw[thick, fill=black!50] (1,1) rectangle (2,2) ;
+	
+	\draw (0.5,0.5) node {1};
+	\draw (1.5,0.5) node {2};
+	\draw (0.5,1.5) node {4};
+	\draw (1.5,1.5) node {3};
+	\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}
+	\item How many ways can we color this square in the way described above~?
+	
+	\begin{solution}
+		For each small square we have 4 choices hence total of $ 4^4 $
+	\end{solution}
+\end{enumerate}
+
+Once cut, this large square becomes rotatable by 90$^\textrm{o}$, 180$^\textrm{o}$ or 270$^\textrm{o}$ degrees.
+We identify the coloring's of the square if they are attainable from each other by rotation.
+For example, the figure below represents the same coloring of the square after identification~:
+
+\begin{center}
+	\begin{tikzpicture}[scale=0.8]
+	\draw[thick, fill=yellow!30] (0,0) rectangle (1,1) ;
+	\draw[thick, fill=red!30] (1,0) rectangle (2,1) ;
+	\draw[thick, fill=green!30] (0,1) rectangle (1,2) ;
+	\draw[thick, fill=red!30] (1,1) rectangle (2,2) ;
+	
+	
+	\draw[thick, fill=green!30] (3,0) rectangle (4,1) ;
+	\draw[thick, fill=yellow!30] (4,0) rectangle (5,1) ;
+	\draw[thick, fill=red!30] (3,1) rectangle (4,2) ;
+	\draw[thick, fill=red!30] (4,1) rectangle (5,2) ;
+	
+	
+	\draw[thick, fill=red!30] (6,0) rectangle (7,1) ;
+	\draw[thick, fill=green!30] (7,0) rectangle (8,1) ;
+	\draw[thick, fill=red!30] (6,1) rectangle (7,2) ;
+	\draw[thick, fill=yellow!30] (7,1) rectangle (8,2) ;
+	
+	
+	\draw[thick, fill=red!30] (9,0) rectangle (10,1) ;
+	\draw[thick, fill=red!30] (10,0) rectangle (11,1) ;
+	\draw[thick, fill=yellow!30] (9,1) rectangle (10,2) ;
+	\draw[thick, fill=green!30] (10,1) rectangle (11,2) ;
+	% \draw{(1,0)}rectangle{(2,1)}
+	% \draw{(0,1)}rectangle{(1,2)}
+	% \draw{(1,1)}rectangle{(2,2)}
+	\end{tikzpicture}
+\end{center}
+We now count how many different coloring's we have after this identification. 
+
+\begin{enumerate}[resume]
+	\item Model this problem using a group operation.
+	
+	\begin{solution}
+		We represent a coloration of the static square as an application of the set $\llbracket 1.4 \rrbracket$ (each number of a small square) in the set of colors $\{ B, Y, B, R \}$.
+		
+		Let's say $G$ the group formed by the identity and rotations of $90^\circ$, $180^\circ$ and $270^\circ$.
+	\end{solution}
+	
+	\item For each of the elements of the group, describe their fixers.
+	\begin{solution}
+		\begin{itemize}
+			\item All coloration is fixed by identity.
+			The identity fixer is cardinal $4^4$.
+			\item The angle rotation $180^\circ$ exchanges squares 1 and 3, and squares 2 and 4.
+			A coloration fixed by this rotation therefore has squares 1 and 3 of the same color and squares 2 and 4 of the same color.
+			The fixator of this rotation is cardinal $4^2$.
+			\item The angle rotation $90^\circ$ circularly exchanges squares 1, 2, 3, 4.
+			A coloration fixed by this rotation therefore has squares 1 and 2 of the same color, squares 2 and 3 of the same color, and squares 3 and 4 of the same color.
+			The only possibility is that the 4 small squares are of the same color.
+			The fixator of this rotation is cardinal $4$.
+			\item Similarly, the angle rotation $270^\circ$ circularly exchanges squares 1, 2, 3, 4.
+			The only possibility is that the 4 small squares are of the same color.
+			The fixator of this rotation is cardinal $4$.
+		\end{itemize}
+	\end{solution}
+	\item Conclude the number of possible coloring's.
+	
+	\begin{solution}
+		The number of colours of the large movable square is
+		\[
+		\frac{1}{4}(4^4+4^2+4+4)=70
+		\]
+	\end{solution}
+	
+	\item Repeat the exercise with a large $3$ by $3$ side square formed of 9 small $1$ side squares.
+	
+	\begin{solution}
+		On représente une coloration du carré statique comme une application de
+		l'ensemble $\llbracket 1,9 \rrbracket$ (chaque numéro d'un petit carré)
+		dans l'ensemble des couleurs $\{B, J, N, R\}$.
+		Pour chacun des éléments du groupe, on décrit les colorations fixes.
+		\begin{itemize}
+			\item Toute coloration est fixe par l'identité.
+			Le fixateur de l'identité est de cardinal $4^9$.
+			\item La rotation d'angle $180^\circ$ fixe le carré central, échange
+			les autres carrés deux par deux, par symétrie par rapport au
+			centre~: 1 et 5, les carrés 3 et 7, les carrés 2 et 6, et les carrés
+			4 et 8.
+			Une coloration fixe par cette rotation a donc les carrés échangés de
+			la même couleur.
+			Le fixateur de cette rotation est de cardinal $4^5$.
+			\item La rotation d'angle $90^\circ$ fixe le carré central, échange
+			circulairement les carrés diagonaux 1, 3, 5, 7, et échange
+			circulairement les autres carrés 2, 4, 6, 8.
+			Le fixateur de cette rotation est de cardinal $4^3$.
+			\item De même, pour la rotation d'angle $270^\circ$.
+			Le fixateur de cette rotation est de cardinal $4^3$.
+		\end{itemize}
+		Le nombre de colorations du grand carré mobile est~:
+		\[
+		\frac{1}{4}(4^9+4^5+4^3+4^3) = 65824
+		\]
+	\end{solution}
+\end{enumerate}
+
+
+%\large Probability
+%
+%
+%\question
+%Show that for all sequences $(A_n)_{n \in \N}$ of events we have
+%\[
+%\P(\cup_{n \in \N}A_n) \leq \sum_{n \in \N}\P(A_n)
+%\]
+%where the right sum can diverge.
+%
+%\begin{solution}
+%	For all $n \in \N$, let $B_n := A_n \setminus \cup_{k = 0}^{n-1}A_k$.
+%	We show by recurrences on $n$ that $\cup_{k = 0}^nB_k = \cup_{k = 0}^nA_k$.
+%	We deduce that $B_n \cap \cup_{k = 0}^{n-1}B_k = \emptyset$.
+%	
+%	Hence $\P(\cup_{n \in \N}A_n) = \P(\cup_{n \in \N}B_n)
+%	= \sum_{n \in \N}\P(B_n) \leq \sum_{n \in \N}\P(A_n)$,
+%	because $B_n \subseteq A_n$.
+%\end{solution} 
+%
+%\question
+%Let $(\Omega,\mathcal{T},\P)$ be a probability space.
+%\begin{enumerate}
+%	\item Show that for all sequences $(A_n)_{n \in \N}$ of growing events by inclusion, the sequence of $\P(A_n)$ converges and
+%	\[
+%	\lim_{n \to \infty} \P(A_n) = \P(\cup_{n \in \N}A_n)
+%	\]
+%	
+%	
+%	\begin{solution}
+%		$\cup_{n \in \N}A_n = A_0 \sqcup \sqcup_{n \in \N}A_{n+1}\setminus A_n$,
+%		hence $\P(\cup_{n \in \N}A_n)
+%		= \P(A_0) + \sum_{n \in \N}\P(A_{n+1} \setminus A_n)$ therefore
+%		$\sum_{i = n}\P(A_{i+1}\setminus A_i) \to_{n \to \infty}0$.
+%		
+%		We get that $\P(\cup_{n \in \N}A_n)
+%		= \P(A_k) + \sum_{n = k}^{+\infty}\P(A_{n+1} \setminus A_n)$, therefore
+%		$\P(A_n) \to_{} \P(\cup_{n \in \N}A_n)$
+%	\end{solution}
+%	
+%	\item Show for all decreasing sequences  (by inclusion) $(A_n)_{n \in \N}$ of events, the sequence $\P(A_n)$ converges and
+%	\[
+%	\lim_{n \to \infty} \P(A_n) = \P(\cap_{n \in \N}A_n)
+%	\]
+%	
+%	\begin{solution}
+%		If the sequence is decreasing, then $A_0 \setminus A_n$ is increasing.
+%		$\P(A_n) + \P(A_0 \setminus A_n) = \P(A_0)
+%		= \P(\cap_{n}A_n) + \P(\cup_{n}A_0\setminus A_n)$.
+%		Since $\P(A_0 \setminus A_n) \to \P(\cup_{n}A_0\setminus A_n)$ by the previous results we get $\P(A_n) \to \P(\cap_{n}A_n)$.
+%	\end{solution} 
+%\end{enumerate}
+%
+%\question
+%Let $\{B_1,\dots,B_n\}$ be a partition of $\Omega$ such that for all $i$,
+%$\P(G_i) > 0$.
+%Show that for all events $A$ we have
+%\[
+%\P(A) = \sum_{i = 1}^n \P(A \mid B_i) \P(B_i)
+%\]
+%
+%\begin{solution}
+%	$\P(A)
+%	= \P(A \cap \sqcup_iB_i)
+%	= \P(\sqcup_i(A \cap B_i))
+%	= \sum_{i} \P(A \cap B_i)
+%	= \sum_{i} \P(A \mid B_i)\P(B_i)$.
+%\end{solution} 
+%
+%\question
+%An urn contains $ n $ black balls, $ b $ white balls and $ r $ red balls.
+%We pick two balls without discount.
+%On tire deux boules sans remise.
+%What is the probability of the event ``the second ball drawn is
+%black'' ~?
+%
+%\begin{solution}
+%	Let $S = n + b + r$, let $DN$ the event ``the second ball is black'', and $N$, $B$, $R$ for the first ball.
+%	\begin{align*}
+%	\P(DN)
+%	&= \P(DN \mid N)\cdot\P(N) + \P(DN \mid B)\cdot\P(B)
+%	+ \P(DN \mid R)\cdot\P(R)\\
+%	&= \frac{n-1}{S - 1} \cdot \frac{n}{S}
+%	+ \frac{n}{S - 1} \cdot \frac{b}{S} + \frac{n}{S - 1} \cdot \frac{r}{S}\\
+%	&= \frac{n(n+b+r) - n}{S(S-1)} = \frac{n(S-1)}{S(S-1)} = \frac{n}{S}
+%	\end{align*}
+%\end{solution} 
+%
+%\question
+%Let $\{B_1,\dots,B_n\}$ be a partition of $\Omega$ such that $\P(B_i) > 0$ for all $i$.
+%Then for every event $A$ such that $\P(A) > 0$ we have
+%\[
+%\P(B_i \mid A)
+%= \frac{\P(A \mid B_i)\P(B_i)}{\sum_{j = 1}^n \P(A \mid B_j) \P(B_j)}
+%\]
+%
+%\begin{solution}
+%	$\P(B_i \mid A) \P(A) = \P(A \cap B_i) = \P(A \mid B_i)\P(B_i)$ by the definition of conditional probability.
+%	Hence
+%	\[
+%	\P(B_i \mid A) = \frac{\P(A \mid B_i)\P(B_i)}{\P(A)}
+%	\]
+%	
+%	Now, according to the formula of total probabilities, we have
+%	$\P(A) = \sum_{i = 1}^n \P(A \mid B_i) \P(B_i)$.
+%\end{solution} 
+%%
+%  \question
+%If $M$ is a monoid and $K, L$ two subsets of $M$, we denote by  $L^{-1}K = \{ x\in M \mid \exists y \in L, yx \in K \}$.
+%\begin{enumerate}
+%	\item Let $L$ a sub monoid of $\Sigma^*$. Show that $L$ is a free monoid iff $L^{-1}L \cap LL^{-1}=L$.
+%	
+%	\begin{solution}
+%		Suppose that $L$ is free on the set $B$. 
+%		Let $m \in L^{-1}L \cap LL^{-1}$.
+%		There exist $p$  in $L$ s.t. $pm \in L$.
+%		By decomposing $p$ and $pm$ according to the basis $B$, we obtain $m \in L$.
+%		\smallskip
+%		
+%		Conversely, suppose that $L^{-1}L \cap LL^{-1}=L$. Let $B$ be the minimal generating parts of $L$ (The elements of $L$ which are not a product of two distinct elements, which are not $1$).
+%		Let $u_1 \dots u_m = v_1 \dots v_n$ with $u_i$ and $v_j$ in $B$.
+%		Assume for example that in $\Sigma^*$, $u_m=wv_n$, that
+%		$u_1 \dots u_{m-1} w = v_1 \dots v_{n-1}$, then
+%		$w \in L^{-1}L \cap LL^{-1}=L$.
+%		By the minimialty of elements in $B$ of $L$, $w=1$.
+%		we conclude by recurrence.
+%	\end{solution}
+%	
+%	\item Let $L$ a sub-monoid of $\Sigma^*$. Define recursively~:
+%	$M_0 = L$, $M_{n+1} = {M_n}^{-1}{M_n} \cap {M_n}{M_n}^{-1}$.
+%	Show that this is an increasing sequence, and that 
+%	$\cup_N M_n$ is the smallest free monoid containing $L$.
+%	
+%	\begin{solution}
+%		note that for any monoid $M$,
+%		$M \subset M^{-1}M \cap MM^{-1}$ ($\forall u \in M, 1u \in M$ and
+%		$u1 \in M$) therefore the sequence $(M_n)_{n\in\N}$  is an increasing sequence. 
+%		Denote $M = \cup_n M_n$.
+%		
+%		We show that $M^{-1}M \cap MM^{-1} \subset M$~:
+%		soit $u \in \Sigma^*$ tel qu'il existe $v$ et $w$ dans $M$ tels que
+%		$vu \in M$ et $uv \in M$.
+%		$M = \cup_n M_n$, donc il existe des entiers $l$ et $m$ tels que
+%		$v \in M_l$ et $w \in M_m$.
+%		Pour $n=\max(l,m)$, $v$ et $w$ sont dans $M_n$, donc
+%		$u \in M_n^{-1}M_n \cap M_n M_n^{-1} = M_{n+1} \subset M$.
+%		$M$ is a free monoid containing $L$
+%		
+%		If $N \subset P$ with $P$
+%		free monoid, we have $N^{-1}N \cap NN^{-1} \subset P^{-1}P \cap PP^{-1} = P$,
+%		therefore if $P$ contains $L$, it also contains $M_n$ hence $M$.
+%	\end{solution}
+%\end{enumerate}
+
+
+
+
+%\question
+%Show that a finite monoid is a quotient of a free monoid.
+%
+%\begin{solution}
+%	Let $\Sigma$ be an alphabet with a bijection($\phi$) to $M$. then the monoid morphism $\hat\phi$ that extends $\phi$ is subjective.
+%	
+%	\[
+%	\begin{array}{ccc}
+%	\Sigma & \hspace{-0.5em}\xrightarrow{\phi} & M \\
+%	\hspace{2.0em}\searrow & & \hspace{-1.0em}\nearrow_{\hat\phi} \\
+%	& \hspace{-0.5em}\Sigma^* &
+%	\end{array}
+%	\]
+%\end{solution}
+%
+%
+% 
+%
+%  \titledquestion{Groupes libres}
+%  Soit $\Sigma$ un alphabet fini.
+%  On note $\bar{\Sigma}$ une copie de $\Sigma$~;
+%  $\bar{\Sigma} = \{ \bar{a} \mid a \in \Sigma\}$.
+%  Pour chaque lettre $a \in \Sigma$, on note $\bar{\bar{a}} = a$.
+%  L'application $x \to \bar{x}$ ainsi définit une involution de 
+%  $\Sigma \sqcup \bar{\Sigma}$ qui échange $\Sigma $ et $\bar{\Sigma}$.
+%
+%  On note $L$ le monoïde libre sur l'alphabet $\Sigma \sqcup \bar{\Sigma}$.
+%
+%  On appelle \textit{opération élémentaire} sur un mot
+%  $w=u_1u_2...u_p, u_i \in \Sigma \sqcup \bar{\Sigma}$~:
+%  \begin{itemize}
+%    \item{\textit{Une insertion} :}
+%      $u_1u_2..u_i\, u\bar{u}\, u_{i+1}...u_p$ pour un $i$ entre $0$ et $p$ et
+%      $u \in \Sigma \sqcup \bar{\Sigma}$.
+%    \item{\textit{Une suppression} :}
+%      $u_1u_2..u_{i-1}u_{i+2}...u_p$ pour un $i$ entre $1$ et $p-1$
+%      tel que $u_{i+1} = \bar{u_i}$.
+%  \end{itemize}
+%
+%  \begin{enumerate}
+%    \item On définit sur $L$ une relation en posant $w \sim w'$ s'il existe une
+%      suite finie de mots $w_1=w,w_2,...,w_{n-1}, w_n=w'$ tels que $w_{i+1}$
+%      est obtenu à partir de $w_i$ par une opération élémentaire.
+%
+%      Démontrer que $\sim$ est une congruence.
+%
+%    \item On dit qu'un mot $w$ est \textit{réduit} si on ne peut pas faire de
+%      suppression dans $w$.
+%      \begin{enumerate}
+%        \item Démontrer que toute classe de congruence contient un mot réduit.
+%
+%          \begin{solution}
+%            Un mot de longueur minimale dans une classe de congruence est réduit.
+%          \end{solution}
+%
+%        \item On se propose de justifier que toute classe de congruence
+%          contient un unique mot réduit.
+%          Soit $w$ et $w'$ deux mots réduits congruents.
+%          Soit $w_1=w,w_2,...,w_{n-1}, w_n=w'$ tels que $w_{i+1} $ est obtenu à
+%          partir de $w_i$ par une opération élémentaire et tels que
+%          $\sum_{i} |w_i|$ est minimal parmi les suites finies de mots
+%          vérifiant cette propriété.
+%          On suppose $w\neq w'$ donc $n>1$.
+%          \begin{enumerate}
+%            \item Justifier que $|w| < |w_2| $ et $|w'| < |w_{n-1}|$.
+%
+%              \begin{solution}
+%                Comme $w$ est réduit, la suite commence par une insertion.
+%                De même, comme $w'$ est réduit, la suite finit par une
+%                suppression.
+%              \end{solution}
+%
+%            \item En déduire qu'il existe $i$ tel que 
+%              % $|w_i| > |w_{i-1}|$ et $|w_i| > |w_{i+1}|$,
+%              $w_i$ obtenu à partir de $w_{i-1}$ à partir d'une insertion et 
+%              $w_{i+1} $ est obtenu à partir de $w_i$ à partir d'une suppression.
+%
+%              \begin{solution}
+%                Comme $|w|<|w_2|$ et $|w'|<|w_{n-1}|$, il existe $i$ tel que
+%                $|w_i|>|w_{i-1}|$ et $|w_i|>|w_{i+1}|$.
+%              \end{solution}
+%
+%            \item Soit $a, b \in \Sigma \sqcup \bar{\Sigma}$ et $s,t$ tels que~:
+%              $w_{i-1} = u_1u_2..u_p$, 
+%              $w_i=u_1u_2..u_sa\bar{a}u_{s+1}...u_p = v_1....v_{p+2}$
+%              et $w_{i+1} = v_1...v_{t-1}v_{t+1}...v_{p+2}$
+%              avec $v_t=b$ et $V_{t+1}=\bar{b}$.
+%              En étudiant les cas où ces deux opérations se chevauchent ou non,
+%              aboutir à une contradiction.
+%
+%              \begin{solution}
+%                Si les deux opérations ne se chevauchent pas, on aurait pu
+%                commencer par la suppression puis effectuer l'insertion.
+%                Dans ce cas, la suite $w_1=w, w_2, \dots,$
+%                $w_{i-1}, w_i', w_{i+1}, \dots, w_{n-1}, w_n=w'$ représenterait
+%                une suite d'opérations élémentaires avec $|w_i'|=|w_i|-4$, ce
+%                que contredit la minimalité de $\sum_i |w_i|$.
+%
+%                Si les deux opérations de font au même endroit, alors
+%                $w_{i-1}=w_{i+1}$, on peut supprimer $w_i$ et $w_{i+1}$ de la
+%                suite
+%                $w_1=w, w_2, \dots, w_{i-1}, w_i', w_{i+1}, \dots, w_{n-1},$
+%                $w_n=w'$, ce que contredit la minimalité de $\sum_i |w_i|$.
+%
+%                Si les deux opérations se chevauchent sur une lettre~: \\
+%                $w_i = u_1 u_2 \dots u_s a \bar{a} u_{s+1} \dots u_p$,
+%                $u_{s+1}=a$ et $w_{i+1}=u_1 u_2 \dots u_s a u_{s+2} \dots u_p$.
+%                Mais alors
+%                $w_{i-1} = u_1 u_2 \dots u_s a u_{s+2} \dots u_p = w_{i+1}$
+%                et à nouveau on peut supprimer $w_i$ et $w_{i+1}$ de la suite.
+%                De même, si $u_s=\bar{a}$ et $\\
+%                w_{i+1}=u_1 u_2 \dots u_{s-1} \bar{a} u_{s+2} \dots u_p =
+%                w_{i-1}$.
+%              \end{solution}
+%          \end{enumerate}
+%      \end{enumerate}
+%    \item On note $GF$ le monoïde $ L/\sim$ et $\pi$ la surjection canonique de
+%      $L$ sur $GF$.
+%      \begin{enumerate}
+%        \item Démontrer que $\pi$ injecte $\Sigma$ dans $GF$.
+%
+%          \begin{solution}
+%            Une lettre est un mot réduit.
+%          \end{solution}
+%
+%        \item Démontrer que $GF$ est un groupe engendré par $\pi(\Sigma)$.
+%
+%          \begin{solution}
+%            On remarque que $u\bar{u} \sim \varepsilon \bar{u}u$, pour tout
+%            $u \in \Sigma \sqcup \bar{\Sigma}$, donc
+%            $\pi(u)\pi(\bar{u})=\pi(\bar{u})\pi(u)=1$, les éléments de
+%            $\pi(\Sigma)$ sont tous inversibles.
+%
+%            Si $w=u_1 \dots u_n \in L$, $u_i \in \Sigma \sqcup \bar{\Sigma}$,
+%            on a
+%            $\pi(w)=\pi(u_1) \cdots \pi(u_n) \in \langle \pi(\Sigma) \rangle$.
+%            De plus, $\pi(w)\pi(u_n)^{-1} \cdots \pi(u_1)^{-1}=1$ et 
+%            $\pi(u_n)^{-1} \cdots \pi(u_1)^{-1}\pi(w)=1$
+%          \end{solution}
+%
+%        \item Quel est ce groupe lorsque $\Sigma$ est un singleton~? 
+%
+%          \begin{solution}
+%            $\Z$.
+%          \end{solution}
+%      \end{enumerate}
+%    \item Soit $\phi$ une application de l'ensemble $\Sigma$ dans un groupe
+%      $G$.
+%      On étend $\phi$ sur $\bar{\Sigma}$ en posant
+%      $phi(\bar{u}) = \phi(u)^{-1}$, pour tout $u$ dans $\Sigma$.
+%      Démontrer qu'il existe un unique morphisme de groupes de $GF$ dans $G$
+%      prolongeant $\phi$.
+%
+%      \begin{solution}
+%        On sait déjà qu'il existe un morphisme de monoïdes de $L$ dans $G$ qui
+%        prolonge $\phi$.
+%        Notons $\hat\phi$ ce morphisme.
+%        \[
+%          \begin{array}{ccc}
+%            \Sigma \sqcup \bar\Sigma & \xrightarrow{\phi} & G \\
+%            \hspace{1.0em}\searrow & & \hspace{-1.0em}\nearrow_{\hat\phi} \\
+%            & L &
+%          \end{array}
+%        \]
+%
+%        Or on vérifie qu'en passant d'un mot $w$ à un mot $w'$ par une
+%        opération élémentaire, $\hat\phi(w)=\hat\phi(w')$, donc deux mots
+%        congruents ont une même image par $\hat\phi$.
+%        Donc $\hat\phi$ passe au quotient.
+%        On note $\tilde\phi$ l'application ainsi obtenue de $GF$ dans $G$.
+%        \[
+%          \begin{array}{cccc}
+%            \Sigma \sqcup \bar\Sigma & \xrightarrow{\phi} & & G \\
+%            \hspace{1.0em}\searrow & & \nearrow_{\hat\phi} &
+%            \uparrow \tilde\phi \\
+%            & L & \xrightarrow{\pi} & GF
+%          \end{array}
+%        \]
+%        
+%        Comme $\tilde\phi(\pi(a))=\phi(a)$ pour tout $a \in \Sigma$ et que
+%        $GF = \langle \pi(\Sigma) \rangle$, on a l'unicité.
+%      \end{solution}
+%
+%    \item On note $L_R$ l'ensemble des mots réduits.
+%      \begin{enumerate}
+%        \item Démontrer que tout facteur d'un mot réduit est réduit.
+%        \item Soit $u \in \Sigma$.
+%            % Pour $w\in L_R$, $w=u_1...u_p$, avec $u_i \in \Sigma \cupsquare
+%            % \bar{\Sigma}$,
+%            % démontrer que $wu \in L_R$ si et seulement si $u_p \neq \bar{u}$.
+%          Justifier qu'on peut définir une application $\sigma_u$ de $L_R$ dans
+%          lui-même en posant~:
+%          \[
+%            \sigma_u : w \to \left\{
+%              \begin{array}{cl}
+%                uw & \text{ si } uw \in L_R, \\
+%                v & \text{ si } w=\bar{u}v.
+%              \end{array}
+%            \right.
+%          \]
+%
+%          \begin{solution}
+%            Soit $w \in L_R$, $w = u_1 \dots u_p$,
+%            $u_i \in \Sigma \sqcup \bar\Sigma$.
+%
+%            $v = u_2 \dots u_p$ est réduit car suffixe de $w$, donc si
+%            $u_1=\bar{u}$, $w=\bar{u}v$ avec $v \in L_R$.
+%            Sinon, $u_1 \neq \bar{u}$, donc $uw$ est réduit car comme $w$ est
+%            réduit, la seule suppression à envisager aurait été $u u_1$.
+%            On a donc bien défini une application de $L_R$ dans $L_R$.
+%          \end{solution}
+%
+%        \item Démontrer que $\sigma_u$ est une permutation de $L_R$.
+%
+%          \begin{solution}
+%            Par définition, on a $\sigma_{\bar{u}} \circ \sigma_u = Id$ et 
+%            $\sigma_u \circ \sigma_{\bar{u}} = Id$, donc $\sigma_u$ est une
+%            permutation.
+%          \end{solution}
+%
+%        \item Soit $\sigma : \Sigma \rightarrow L$ l'application telle que
+%          $\sigma(u) = \sigma_u$.
+%          On note $\hat{\sigma}$ le morphisme de groupes prolongement de
+%          $\sigma$ de $L$ dans $\frak{S}(L_R)$.
+%          Si $w \in L_R$, démontrer que $\sigma_w(\varepsilon)= w$.
+%
+%          \begin{solution}
+%            Soit $w = u_1 \dots u_p$ un mot réduit.
+%            Justifions par récurrence sur $p$ que
+%            $\hat\sigma_w(\varepsilon) = w$~: 
+%            $\hat\sigma_w = \hat\sigma_{u_1}\hat\sigma_{u_2 \dots u_p} =
+%            \sigma_{u_1}\hat\sigma_{u_2 \dots u_p}$.
+%            Par hypothèse de récurrence,
+%            $v=\hat\sigma_{u_2 \dots u_p}(\varepsilon) = u_2 \dots u_p$, donc
+%            $\hat\sigma_w(\varepsilon)=\sigma_{u_1}(v)$.
+%            Comme $w$ est réduit, $u_1 \neq \bar{u_2}$, donc
+%            $\sigma_{u_1}(v) u_1 v = w$.
+%          \end{solution}
+%
+%        \item Retrouver ainsi l'unicité du mot réduit dans une classe de
+%          congruence.
+%
+%          \begin{solution}
+%            On note $\tilde\sigma$ le morphisme de groupes prolongement de
+%            $\sigma$ de $GF$ dans $\mathfrak{S}(L_R)$.
+%            Soit $w,w'$ deux mots congruents, ils définissent un même élément
+%            dans $GF$, $\hat\sigma(w) = \tilde\sigma(\pi(w)) =
+%            \tilde\sigma(\pi(w')) = \hat\sigma(w')$.
+%            Donc
+%            $w = \hat\sigma(w)(\varepsilon) = \hat\sigma(w')(\varepsilon) = w'$.
+%          \end{solution}
+%      \end{enumerate}
+%  \end{enumerate}
+\end{questions}
+\end{document}
+
+% vim: spell spelllang=fr

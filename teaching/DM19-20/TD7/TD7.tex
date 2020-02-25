@@ -1,0 +1,924 @@
+\documentclass[a4paper,11pt]{exam}
+%\printanswers % pour imprimer les réponses (corrigé)
+ \noprintanswers % Pour ne pas imprimer les réponses (nonc)
+% \addpoints % Pour compter les points
+% \noaddpoints % pour ne pas compter les points
+\qformat{\textbf{Exercice \thequestion \,:}\\} % Questions style
+\usepackage{color} % Define new colors
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{exercise}
+\usepackage{mathrsfs,amsmath,amssymb,latexsym,amsfonts,mathtools,stmaryrd}
+\usepackage{enumitem}
+\setitemize{label=\textbullet}
+% Bigger binomial in math mode
+\usepackage{nccmath}
+\renewcommand{\binom}{\mbinom}
+
+\usepackage[francais]{babel}
+
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+\shadedsolutions % définit le style des réponses
+% \framedsolutions % définit le style des réponses 
+\definecolor{SolutionColor}{rgb}{0.8,0.9,1} % bleu ciel
+\renewcommand{\solutiontitle}{
+\noindent\textbf{Solution:}\par\noindent} % Définit le titre des réponses
+\newcommand\eqdef[0]{\stackrel{\text{def}}{=}}
+
+\pagestyle{headandfoot}
+\headrule
+\header{L3 - 2019/2020 - TD7}{Mercredi 06 November}{Mathématiques discrètes}
+\footer{S. Le Roux, I. Khmelnitsky}{\thepage}{E.N.S. Cachan}
+\footrule
+
+\renewcommand{\questionshook}{%
+  \setlength{\labelwidth}{0pt}%
+  \setlength{\itemsep}{0.9\baselineskip}
+}
+
+\definecolor{gris}{gray}{0.95}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\A}{\mathcal{A}}
+\renewcommand{\S}{\mathcal{S}}
+\newcommand{\RR}{\mathbin{\mathcal{R}}}
+
+\begin{document}
+\begin{questions}
+	
+	\question
+	\begin{enumerate}
+		\item Let $ (E, \leq) $ be a partially ordered set. Let $ \mathcal{C} $ be the set of well-founded chains of $ (E, \leq) $. We define a binary relation $ \mathrel{R} $ on $ \mathcal{C} $ as follows: for all $ C_1, C_2 \in \mathcal{C} $ we put $ C_1 \mathrel{R} C_2 $ if $ C_1 \subseteq C_2 $ and for all $ x \in C_1 $ and $ y \in C_2 \setminus C_1 $ we have $ x \leq y $.
+		\begin{enumerate}
+			\item Which type of relation is $\mathrel{R}$ ?
+			
+			\item Show that all the chains $\{C_i\}_{i \in I}$ in $(\mathcal{C},\mathrel{R})$ have a least upper bound in $(\mathcal{C},R)$.
+			
+			\item Deduce that there is a chain of $(E,\leq)$ which is a maximal element of $(\mathcal{C},\mathrel{R})$.
+		\end{enumerate}
+		
+		\begin{solution}
+			\begin{enumerate}
+				\item $R$ est un ordre (partiel).
+				
+				\item Let $ C: = \cup_ {i \in I} C_i$. $ C $ is well founded because a descendant chain of $C$ is included in a $C_i$. Let $ i \in I $. On the one hand, $ C_i \subseteq C $. On the other hand, let $ x \in C_i $ and $ y \in C \setminus C_i $. Then there exists $ j \in I \setminus \{i \} $ such that $ y \in C_j \setminus C_i $, so $ \neg (C_j \subseteq C_i) $, or $ \neg (C_j R C_i) $. Now $ \{C_i \} _ {i \in I} $ is a chain, so $ C_i R C_j $, hence $ x \leq y $. So $ C_iRC $, so $ C $ is an upper bound of $ \{C_i \}_{i \in I} $.
+				
+				Let $ D \in \mathcal {C} $ be an upper bound of $ \{C_i \}_{i \in I} $. Then $ C_i \subseteq D $ for all $ i \in I $, so $ C \subseteq D $. Let $ x \in C $ and $ y \in D \setminus C $. Then there is $ i \in I $ such that $ x \in C_i $. Now $ y \in D \setminus C_i $, so $ x \leq y $. Hence, $ C R D $, which shows that $ C $ is the desired upper bound.
+				
+				
+				
+				\item According to Zorn's Lemma(Suppose a partially ordered set P has the property that every chain in P has an upper bound in P. Then the set P contains at least one maximal element), the ordered set $ (\mathcal{C}, R) $ thus has a maximal element $ C $, which is a chain of $ (E, \leq) $.
+			\end{enumerate}
+			
+		\end{solution}
+		
+		
+		
+		\item Let $(E, \leq)$ a lattice for which any well-founded chain has an upper bound.
+		
+		\begin{enumerate}
+			\item Show that $(E, \leq)$ has a least element $\bot$.
+			
+			\item Let $ A $ be a subset of $ E $. Let $ B $ be the set of all elements smaller that all elements in $A $ . Show that if $ B $ has a maximum element $ b $, then $ b $ is the greatest element of $ B $.
+			
+			
+			\item Show that $B$ has a maximal element $b$. (you may use question 1.1.c)
+			
+			\item Show that $(E, \leq)$ is a complete lattice.
+		\end{enumerate}
+		
+		\begin{solution}
+			\begin{enumerate}
+				\item The empty set has an upper bound, which is therefore also the least element.
+				
+				\item Let $b' \in B$. Let $d := \sup \{b,b'\}$. By definition of $B$, we have $b \leq a$ and $b' \leq a$ for all $a \in A$, hence $d \leq a$ by the definition of suprimum. Observe that $d \in B$. Since $b \leq d$, we get that $b = d$ by the maximallty of $b$, and therefore $b' \leq b$. 
+				
+				
+				\item $(B, \leq_B)$ is a non empty po, since $\bot \in B$. by question 7.1.c, let $C$ be a maximal well founded chain in $(B, \leq_B)$. By the hipothesis of the question, $C$ has an upper bound $b$. Let $b' \in B$ such that $b < b'$.  Then the set $C \cup \{b'\} \neq C$ is a well founded chain in $(B, \leq_B)$ such that $CR(C \cup \{b'\})$, which contradicts our assumption. Therefore $b$ is a maximal element of $B$.
+				
+				\item $b$ is the infimum of $A$. therefore all sets in $E$ have an infimum and therefore $E$ is a complete lattice.
+			\end{enumerate}
+		\end{solution}
+	\end{enumerate}
+	
+	
+  \bigskip
+\colorbox{gris}{
+	\begin{minipage}[c]{15cm}
+		Monoids.
+	\end{minipage}
+}	
+	
+  \question
+  ~\vspace{-0.4cm}
+  \begin{enumerate}
+    \item Show that $(\mathcal{P}(E \times E), \circ, id_E)$, where
+      $R \circ S := RS :=
+      \{(x,z) \in E \times E \mid \exists y \in E,\, xRySz\}$ is a monoid.
+    \item Under what condition a lattice is a monoid, if we take the superior of two elements as the rule of composition?
+    \begin{solution}
+    	existence of a least element
+    \end{solution}
+    \item Show that the product of two monoids is a monoid, where the binary operation is just the operation on each of the elements separately.
+    \item $(\Z/6\Z, \cdot, 1)$ is a monoid.
+      Show that $(\{0,2,4\}, \cdot, 4)$ is a monoid.
+  \end{enumerate}
+
+  \question
+ Prove the following statements~:
+
+  \begin{enumerate}
+    \item  The composition of two morphisms of monoid is a morphism.
+    \item The inverse of a bijective monoid morphism is a monoid morphism.
+
+      \begin{solution}
+        Soit $f: M \to N$ un tel morphisme.
+        Donc $f(e_M) = e_N$, donc $f^{-1}(e_N) = e_M$.
+        Soit $x,y \in N$, pour montrer que $f^{-1}(xy) = f^{-1}(x) f^{-1}(y)$,
+        il suffit de montrer qu'ils ont la même image par $f$.
+        On a $f(f^{-1}(xy)) = xy = f(f^{-1}(x)) f(f^{-1}(y))
+        = f(f^{-1}(x) f^{-1}(y))$. 
+      \end{solution}
+
+    \item The image of a sub-monoid is a sub-monoid.
+    \item The inverse image of a sub-monoid is a sub-monoid.
+%    \item  The kernel of a monoid morphism is a sub-monoid.
+
+  \end{enumerate} 
+
+  \question
+  \begin{enumerate}
+  	\item An equivalence relation $\sim$ on a monoid $M$ is congruence ($x\sim y$ iff $uxv\sim uyv \,\,\forall v,u\in M$) iff for all $x\sim x' \wedge y \sim y' \Rightarrow xy \sim x'y'$.
+  	\item Let $f: M \to N$ be a monoid morphism.
+  	Show that if $x \sim y \Leftrightarrow f(x) =f(y)$, then $\sim$ is a
+  	congruence.
+  \end{enumerate}
+  
+  \begin{solution}
+  	$\sim$ est bien une relation d'équivalence (réflexive, symétrique,
+  	transitive) car $=$ en est une.
+  	
+  	Soit $x \sim y$, et soit $u,v \in M$.
+  	\begin{align*}
+  	f(uxv) &= f(u)f(x)f(v) \\
+  	&= f(u)f(y)f(v) \text{ car } x \sim y \text{ donc } f(x)=f(y) \\
+  	&= f(uyv)
+  	\end{align*}
+  	Donc $uxv \sim uyv$.
+  	$\sim$ est donc bien une congruence.
+  \end{solution}
+
+\bigskip\bigskip
+  \hspace{-0.2cm}Let $\Sigma$ a finite alphabet.
+
+  \question \label{uvvu}
+  Let $u$ and $v$ two words in $\Sigma^*$.
+  show  by induction on $|u| + |v|$
+  that $uv=vu \Rightarrow {\exists w \in \Sigma^*,} \{u,v\} \subseteq w^*$.
+
+  \begin{solution}
+    If $|u|=0$, then $w=v$.
+    If, we suppose that $u$ is a prefix of $v$ ; 
+    then $v=ut$ and $uut=uv=vu=utu$ hence $ut=tu$ with $|u|+|t|<|u|+|v|$,
+    therefor by the hypothesis, $\exists w \mid \{u,t\} \subseteq w^*$.
+    and $v=tu$, $v \in w^*$.
+  \end{solution}
+
+  \question
+  Let $m$ and $n$ natural numbers $>0$.
+  Solve in $\Sigma^*$ the equation $u^m = v^n$. 
+
+  \begin{solution}
+    Denote $w=u^m=v^n$.
+
+    Suppose that $|u|$ and $|v|$ are coprime,
+	and that $|v|>|u|$.
+    By Bezout's identity $1=a|v|-b|u|$ with $a$ and $b$ intgers, $a<|u|$ and $b<|v|$.
+    Let $s=|w|=m|u|=n|v|$, with $m$ the multiplicty of $|v|$ and $n$ the multiplicty $|u|$.
+    For all $i$ between $1$ and $s$, $w_i=w_{i+k|u|}=w_{i+l|v|}$ if $1 \leq i+k|u| \leq s$ and $1 \leq i+l|v| \leq s$.
+    For $i \leq |v|$, $i+a|v| \leq (a+1)|v| \leq |u||v| \leq n|u| = s$ hence
+    $w_i = w_{i+a|v|} = w_{i+a|v|-b|u|}=w_{i+1}$.
+    This shows that $v$, $w$ and $u$ constructed of only one letter.
+    In the general case, consider the alphabet $\Sigma^d$ where $d$ is
+    the GCD of $|u|$ and $|v|$.
+  \end{solution}
+
+  \question
+  Let $u$ and $v$ be two words in $\Sigma^*$ , we say that they are conjugate if there exist 
+  $x$ and $y$ such that $u=xy$ and $v=yx$.
+  Show that the words $u$ and $v$ are conjugate iff there exists a word $z$ such that $uz = zv$.
+
+  \begin{solution}
+    Suppouse there exists a word $z$ such that $uz = zv$. If $|z| \leq |u|$,
+    there exists $w$ s.t. $u = zw$.
+    Hence $uz = zwz = zv$ and $wz = v$.
+    Otherwise, $|z| > |u|$, there exists $w$ s.t. $uw = z$.
+    therefore $zv = uwv = uz$ hence $wv = z$ ; hence $uw = wv$ with $|w| < |z|$,
+    and they are conjugated by recursion.
+  \end{solution}
+
+  \question
+  Consider the three words $x,y,z$ in $\Sigma^*$ such that $x^2y^2=z^2$.
+  Show that there exists a word $w$ in $\Sigma^*$ and numbers $p$ and $q$
+  such that $x=w^p$, $y=w^q$ and $z=w^{p+q}$.
+
+  \begin{solution}
+    if $x^2 y^2 = z^2$, $|z^2| = |x^2| + |y^2|$, then $2|z| = 2|x| + 2|y|$,
+    hence $|z| = |x| + |y|$.
+    In particular, $|x| \leq |z|$ and $x$ is a prefix of $z$.
+    Suppose $z=xu$.
+    In the same way, $y$ is a suffix of $z$ and $|u|=|y|$, we get that $y=u$($zz=xxyy$).
+    We have that $xyxy=xxyy$ so for simplification in
+    the free monoid $\Sigma^*$, $yx=xy$.
+    We get that (cf.\ Exercice \ref{uvvu}) that there exists
+    $w \in \Sigma^*$ and integers $p$ and $q$ such that $x=w^p$, $y=w^q$.
+    and $z=xy=w^{p+q}$.
+  \end{solution}
+
+  \question
+  Let $M$ be a finite monoid and let $x \in M$.
+  \begin{enumerate}
+    \item Show that there two natural numbers $m$ and $n$ such that $m<n$ and
+      $x^m = x^n$.
+
+      \begin{solution}
+        Pigeon hole
+      \end{solution}
+
+    \item We choose a minimal $l$ from all the numbers $n$ for which there exists
+      $m<n$ such that $x^m = x^n$.
+      \begin{enumerate}
+        \item Show that $1,x,...,x^{l-1}$ are all distinct.
+
+          \begin{solution}
+            assume $x^h=x^k$ for $h<k<l$, hence $l$ is not minimal. 
+          \end{solution}
+
+        \item Show that the monoid $<x>$ is of cardinality $l$.
+
+          \begin{solution}
+            Let $k<l$ s.t $x^l=x^k$.
+            if $i \geq l$, $x^i=x^{k+i-l}$ then by recurrence on $i$,
+            $x^i \in \{1, \dots, x^{l-1} \}$.
+            hence $<x>=\{1, \dots, x^{l-1} \}$ is of cardinality $l$.
+          \end{solution}
+
+        \item Let $k<l$ such that $x^k = x^l$. Let $r$ be the unique integer between $k$ and $l-1$ divisible by $l-k$.
+        Show that $x^k,...,x^{l-1}$ is a cyclic group of order $l-k$ where $x^r$ is the natural element.
+
+          \begin{solution}
+            For $i \geq k$, let $j$ the reminder and  $q$ the quotient of the euclidean division of $i$ by $l-k$.
+            Then $x^i = x^{k+q(l-k)+j} = x^{k+j}$.
+            Hence $\{x^k, \dots, x^{l-1}\}$ is multiplicatively stable and
+            $x^r$ is a natural element.
+            Moreover, $x^i \times x^{(q+1)(l-k)-i}=x^{(q+1)(l-k)}=x^r$, hence 
+            $\{x^k, \dots, x^{l-1}\}$ is a group.
+          \end{solution}
+
+        \item Show that there exists $n$ such that $x^n=(x^n)^2$ i.e. idempotent. Are there several?
+
+          \begin{solution}
+            Using what we'ce shown previously, $x^r$ is idempotent.
+            Let $s$ s.t. $x^s$ is idempotent. Then $x^{2s}=x^s$, hence $2s \geq l$.
+            Therefore $x^s=x^{2s}=x^{3s}=\cdots=x^{rs}=\cdots=x^r$.
+          \end{solution}
+      \end{enumerate}
+  \end{enumerate}
+  \qformat{\textbf{Exercice \thequestion~(\thequestiontitle):}\\}
+  \titledquestion{Syntactic monoid}
+  Let $L \subset \Sigma^*$ be a language. This defines the equivalence relation on $\Sigma^*$~:
+  \[
+    w \sim_L w' \Leftrightarrow \forall u, v\in \Sigma^*, \; uwv\in L
+    \Leftrightarrow uw'v\in L
+  \]
+
+  Justify that $\sim_L $ is a congruence on $\Sigma^*$.
+  We define the Syntactic monoid $M_L$ as the quotient 
+  $\Sigma^*|_{\sim_L}$.
+
+  \begin{solution}
+    Let $w,w'$ s.t $w \sim_L w'$.
+    Let $s,t \in \Sigma^*$.
+    $\forall u,v \in \Sigma^*, u(swt)v=(us)w(tv)$ hence
+  ${u(swt)v \in L} \Rightarrow (us)w'(tv) \in L$.
+    Since $(us)w'(tv)=u(sw't)v$, we get that $u(sw't)v \in L$.
+    By symmetry, $u(swt)v \in L \iff u(sw't)v \in L$, hence $swt \sim_L sw't$.
+  \end{solution}
+
+  \titledquestion{Language recognized by a monoid}
+  Let $L \subset \Sigma^*$ a language.
+  Let $M$ be a monoid. We say that a language $L$ is recognizable by $M$ if there exists a monoid morphism
+  $\varphi$ of $\Sigma^*$ to $M$ and a set $X$ of $M$ such that  $L = \varphi^{-1}(X)$.
+  \begin{enumerate}
+    \item Show that a language recognized by a finite monoid is regular.
+
+      \begin{solution}
+        Let $L$ be recognized by $M$ using the monoid morphism $\varphi$ of $\Sigma^*$ to $M$ and $X$ a subset of $M$ such that $L = \varphi^{-1}(X)$.
+        Then $L$ is the language recognized by an automaton where the states are element of $M$, the initial state $1$, the final states are elements in $X$, and the transitions are ~:
+        \[
+          \forall m \in M, \forall a \in \Sigma, m \xrightarrow{a} m\varphi(a)
+        \]
+      \end{solution}
+
+    \item Show that a language  $L$ is recognized by its syntactic monoid.
+
+      \begin{solution}
+        let $\varphi$ the surjection of $\Sigma^*$ to
+        $\Sigma^*|_{\sim_L}$.
+        Then $L=\varphi^{-1}(\varphi(L))$.
+      \end{solution}
+
+    \item Show that a language  $L$ is recognised by a monoid $M$ iff $M_L$ is isomorphic to a sub monoid of $M$.
+
+      \begin{solution}
+%      	et L  M using a monoid morphism φ of Σ * in M and X a
+%      	part of M such that L = φ -1 (X). So L is the language recognized by the automaton
+%      	the states are the elements of M, the initial state is 1, the final states are the elements
+%      	of X, and the transitions are
+%      	
+      	
+        Let $L$ be recognized by $M$ using a monoid morphism $\varphi$
+        from $\Sigma^*$ to $M$ and $X$ a subset of $M$ s.t. $L = \varphi^{-1}(X)$.
+        Let $w,w' \in \Sigma^*$.
+        If $\varphi(w)=\varphi(w')$, then
+        $\forall u,v \in \Sigma^*, uwv \in L \iff
+        \varphi(uwv) \in X \iff \varphi(u)\varphi(w)\varphi(v) \in X$ therefore
+        $uwv \in L \iff \varphi(uw'v)=\varphi(u)\varphi(w')\varphi(v) \in X$
+        and hence $uwv \in L \iff uw'v \in L$.
+        We have shown that~: $\varphi(w) = \varphi(w') \Rightarrow w \sim_L w'$.
+      \end{solution}
+      
+    \item Deduce the characterization of regular languges relating to their syntactic monoid.
+
+      \begin{solution}
+        A language is rational if and only if its syntactic monoid is finite.
+      \end{solution}
+  \end{enumerate}
+
+\question
+Let $A$ be a set. We consider the free monoid $(A^*,\cdot,\epsilon)$ defined on the alphabet $A$ by concatenation and the empty word. The set $C \subseteq A^*$ is a code if the following condition holds:  for all $c_1,\dots,c_n, d_1,\dots, d_p \in C$, if $c_1 \dots c_n = d_1 \dots d_p$ then $n = p$ and $c_i = d_ i$ for all $i \in \llbracket 1,n \rrbracket$.
+
+Let $X \subseteq A^*$. Which of these assertion imply which assertions?
+\begin{enumerate}
+	\item\label{eq3.1} $X$ is a code.
+	\item\label{eq3.2} For all sets $B$ and a morphisme $\varphi : B^* \to A^*$ such that $\varphi|_B : B \to X$ (i.e. the restriction of $\varphi$ to $B$) is bijective, $\varphi$ is injective.
+	\item\label{eq3.3} there exists a set $B$ and an injective morphism $\varphi : B^* \to A^*$ such that $\varphi[B] = X$.
+\end{enumerate}
+
+\begin{solution}
+	\begin{itemize}
+		\item $\ref{eq3.1} \Rightarrow \ref{eq3.2}$ Let $u,v \in B^*$ such that $\varphi(u) = \varphi(v)$. Hence $u$ has a decomposition $u = u_1\dots u_n$ with $u_1,\dots ,u_n \in B$. By the same reasoning, $v = v_1\dots v_p$. Then \\ $\varphi(u_1) \dots \varphi(u_n) = \varphi(v_1) \dots \varphi(v_p)$. By the assumption, $\varphi[B] \subseteq X$, hence $\varphi(u_i), \varphi(v_j) \in X$ for all $i,j$. By the definition of a code, $n = p$ and $\varphi(u_i) = \varphi(v_i)$ for all $i$. Since $\varphi|_B : B \to X$ is bijective, we deduce that $u_i = v_i$ for all $i$, hence $u = v$.
+		
+		\item $\ref{eq3.2} \Rightarrow \ref{eq3.3}$ Let $B := X$ and
+		\begin{align*}
+		\varphi &: B^* \to A^*\\
+		& x \mapsto x
+		\end{align*}
+		we note that $\varphi$ is a morphisem ($\varphi(\epsilon) = \epsilon$ and $\varphi(uv) = uv = \varphi(u)\varphi(v)$) and is injective. Also, $\varphi[B] = \varphi[X] = X$.
+		
+		
+		
+		\item $\ref{eq3.3} \Rightarrow \ref{eq3.1}$ Let $x_1,\dots x_n,y_1,\dots,y_p \in X$ such that $x_1 \dots x_n = y_1 \dots y_p$. Since $\varphi[B] = X$ by the assumption, let $a_1,\dots, a_n,b_1,\dots, b_p \in B$ s.t. $\varphi(a_i) = x_i$ and $\varphi(b_j) = y_j$ for all $i,j$. Then,
+		\begin{align*}
+		\varphi(a_1 \dots a_n) & = \varphi(a_1) \dots \varphi(a_n) =  x_1 \dots x_n \\
+		& = y_1 \dots y_p = \varphi(b_1 \dots b_p)
+		\end{align*}
+		By the injectivety of $\varphi$ we obtain $a_1 \dots a_n = b_1 \dots b_p$, hence $n=p$ et $a_i = b_i$ for all $i$, therefore $x_i = y_i$ for all $i$. 
+		
+		
+	\end{itemize}
+\end{solution}
+
+
+%
+%  \question
+%If $M$ is a monoid and $K, L$ two subsets of $M$, we denote by  $L^{-1}K = \{ x\in M \mid \exists y \in L, yx \in K \}$.
+%\begin{enumerate}
+%	\item Let $L$ a sub monoid of $\Sigma^*$. Show that $L$ is a free monoid iff $L^{-1}L \cap LL^{-1}=L$.
+%	
+%	\begin{solution}
+%		Suppose that $L$ is free on the set $B$. 
+%		Let $m \in L^{-1}L \cap LL^{-1}$.
+%		There exist $p$  in $L$ s.t. $pm \in L$.
+%		By decomposing $p$ and $pm$ according to the basis $B$, we obtain $m \in L$.
+%		\smallskip
+%		
+%		Conversely, suppose that $L^{-1}L \cap LL^{-1}=L$. Let $B$ be the minimal generating parts of $L$ (The elements of $L$ which are not a product of two distinct elements, which are not $1$).
+%		Let $u_1 \dots u_m = v_1 \dots v_n$ with $u_i$ and $v_j$ in $B$.
+%		Assume for example that in $\Sigma^*$, $u_m=wv_n$, that
+%		$u_1 \dots u_{m-1} w = v_1 \dots v_{n-1}$, then
+%		$w \in L^{-1}L \cap LL^{-1}=L$.
+%		By the minimialty of elements in $B$ of $L$, $w=1$.
+%		we conclude by recurrence.
+%	\end{solution}
+%	
+%	\item Let $L$ a sub-monoid of $\Sigma^*$. Define recursively~:
+%	$M_0 = L$, $M_{n+1} = {M_n}^{-1}{M_n} \cap {M_n}{M_n}^{-1}$.
+%	Show that this is an increasing sequence, and that 
+%	$\cup_N M_n$ is the smallest free monoid containing $L$.
+%	
+%	\begin{solution}
+%		note that for any monoid $M$,
+%		$M \subset M^{-1}M \cap MM^{-1}$ ($\forall u \in M, 1u \in M$ and
+%		$u1 \in M$) therefore the sequence $(M_n)_{n\in\N}$  is an increasing sequence. 
+%		Denote $M = \cup_n M_n$.
+%		
+%		We show that $M^{-1}M \cap MM^{-1} \subset M$~:
+%		soit $u \in \Sigma^*$ tel qu'il existe $v$ et $w$ dans $M$ tels que
+%		$vu \in M$ et $uv \in M$.
+%		$M = \cup_n M_n$, donc il existe des entiers $l$ et $m$ tels que
+%		$v \in M_l$ et $w \in M_m$.
+%		Pour $n=\max(l,m)$, $v$ et $w$ sont dans $M_n$, donc
+%		$u \in M_n^{-1}M_n \cap M_n M_n^{-1} = M_{n+1} \subset M$.
+%		$M$ is a free monoid containing $L$
+%		
+%		If $N \subset P$ with $P$
+%		free monoid, we have $N^{-1}N \cap NN^{-1} \subset P^{-1}P \cap PP^{-1} = P$,
+%		therefore if $P$ contains $L$, it also contains $M_n$ hence $M$.
+%	\end{solution}
+%\end{enumerate}
+%\question
+%Show that a finite monoid is a quotient of a free monoid.
+%
+%\begin{solution}
+%	Let $\Sigma$ be an alphabet with a bijection($\phi$) to $M$. then the monoid morphism $\hat\phi$ that extends $\phi$ is subjective.
+%	
+%	\[
+%	\begin{array}{ccc}
+%	\Sigma & \hspace{-0.5em}\xrightarrow{\phi} & M \\
+%	\hspace{2.0em}\searrow & & \hspace{-1.0em}\nearrow_{\hat\phi} \\
+%	& \hspace{-0.5em}\Sigma^* &
+%	\end{array}
+%	\]
+%\end{solution}
+%
+%
+%  \titledquestion {Langages sans étoile}
+%  Soit $\Sigma$ un alphabet fini.
+%  La famille des langages sans étoile est la plus petite famille contenant le
+%  langage vide, les singletons et stable par union, passage au complémentaire
+%  et concaténation.
+%  \begin{enumerate}
+%    \item Démontrer que l'intersection de deux langages sans étoile est sans
+%      étoile.
+%
+%      \begin{solution}
+%        \[
+%          L \cap L' = \Sigma^* \setminus
+%          (\Sigma^* \setminus L \cup \Sigma^* \setminus L')
+%        \]
+%      \end{solution}
+%
+%    \item Démontrer que $\Sigma^*$ est sans étoile.
+%      
+%      \begin{solution}
+%        $\Sigma^*$ est le complémentaire du langage vide.
+%      \end{solution}
+%
+%    \item Soit $a,b \in\Sigma$ distincts. Démontrer que $(ab)^*$ est sans
+%      étoile.
+%
+%      \begin{solution}
+%        \[
+%          (ab)^*=(a\Sigma^* \cap \Sigma^*b) \setminus 
+%          (\Sigma^* a^2 \Sigma^* \cup \Sigma^* b^2 \Sigma^*)
+%        \]
+%      \end{solution}
+%  \end{enumerate}
+%
+%  
+%  On dit qu'un monoïde fini est apériodique si le seul groupe qu'il contient
+%  est le groupe trivial $\{1\}$.
+%  \begin{enumerate}[resume]
+%    \item Soit $M$ un monoïde fini.
+%      Démontrer l'équivalence des assertions:
+%      \begin{enumerate}
+%        \item Le monoïde $M$ est apériodique.
+%        \item Pour tout $m$ dans $M$, il existe un entier naturel non nul $n$
+%          tel que $m^{n+1} = m^n$,
+%        \item Il existe un entier naturel non nul $n$ tel que pour tout $m$
+%          dans $M$, $m^{n+1} = m^n$.
+%      \end{enumerate}
+%
+%      \begin{solution}
+%        $(a) \Rightarrow (b)$: supposons qu'il existe $m \in M$ tel que pour
+%        tout $n>0$, $m^{n+1} \neq m^n$.
+%        Par le principe des tiroirs, il existe des entiers $0<k<l$ tels que
+%        $m^k = m^l$. On prend alors $k$ le plus petit possible et on pose
+%        $p=l-k$. Alors $m,m^2, \dots, m^{l-1}$ sont des éléments tous distincts
+%        et $\{m^k, \dots, m^{l-1}\}$ est un groupe d'ordre $p$ (d'élément
+%        neutre $m^r$, $r$ étant le multiple de $p$ entre $k$ et $l-1=k+p-1$).
+%        L'hypothèse assure que $p \geq 2$.
+%
+%        $(b) \Rightarrow (c)$: on prend le maximum sur les éléments de $M$.
+%
+%        $(c) \Rightarrow (a)$: s'il existe un $n>0$ tel que
+%        $\forall m \in M, m^{n+1} = m^n$, le seul élément inversible de $M$ est
+%        $1$ donc $M$ est apériodique.
+%      \end{solution}
+%
+%    \item Soit $L$ un langage rationnel et soit $M_L$ son monoïde syntaxique.
+%      Par définition du monoïde syntaxique, on déduit de la question précédente
+%      que $M_L$ est apériodique si et seulement si, pour tout mot $u$, il
+%      existe un entier naturel non nul $n$ tel que pour tous mots $v,w$,
+%      $vu^nw \in L \Leftrightarrow vu^{n+1}w \in L$.
+%      Dans ce cas, on appelle indice de $L$ et on note $i(L)$ le plus petit
+%      entier naturel non nul $n$ tel que pour tous mots $v,w$,
+%      $vu^nw \in L \Leftrightarrow vu^{n+1}w \in L$. 
+%      \begin{enumerate}
+%        \item Démontrer les propriétés suivantes:
+%          \begin{enumerate}
+%            \item $i(\{a\}) = 1$,
+%            \item $i(L\cup L') \leq \max(i(L), i(L'))$,
+%            \item $i(L L') \leq i(L)+ i(L')+1$,
+%            \item $i(\Sigma^* \setminus L) = i(L)$.
+%          \end{enumerate}
+%        \item En déduire que le monoïde syntaxique d'un langage sans étoile est
+%          apériodique.
+%      \end{enumerate}
+%    \item Soit $M$ un monoïde fini apériodique. Démontrer les propriétés
+%      suivantes~:
+%      \begin{enumerate}
+%        \item Règles de simplification : Pour tous $k,l,m$ dans $M$,
+%          $m=kml \Rightarrow m=km =ml$.
+%
+%          \begin{solution}
+%            $m=kml$ donc $m=k^nml^n$ ; 
+%            si $n$ vérifie $k^{n+1}=k^n$ et $l^{n+1}=l^n$, on a $m=km=ml$.
+%          \end{solution}
+%            
+%        \item $1$ est le seul élément inversible à droite ou à gauche
+%
+%          \begin{solution}
+%            Soit $m$ inversible à droite d'inverse $l$.
+%            $1=ml=1ml \Rightarrow 1m=ml=1$.
+%          \end{solution}
+%
+%        \item $\forall m\in M, ( mM\cap Mm)\setminus
+%          \{k\in M \mid m\notin MkM\} = \{m\}.$
+%
+%          \begin{solution}
+%            Soit $p \in (mM \cap Mm) \setminus \{k \in M \mid m \notin MkM\}$.
+%            Soit $k,l \in M$ tels que $p=km=ml$.
+%            Comme $p \notin \{k \in M \mid m \notin MkM\}$, $m \in MpM$, donc
+%            il existe $r,s \in M$ tels que $m=rps$.
+%            Ainsi, $m=rps=r(ml)s=mls$ par simplification, donc $m=ps$ ;
+%            $p=km=kps=ps$ par simplification donc $p=m$.
+%
+%            L'inclusion inverse est évidente.
+%          \end{solution}
+%      \end{enumerate}
+%    \item\label{HR} Soit $M$ un monoïde fini apériodique.
+%      Soit $m \in M$. On définit $\rho(m) = |MmM|$.
+%      \begin{enumerate}
+%        \item Démontrer que le seul $m$ tel que $\rho(m)=|M|$ est $m=1$.
+%
+%          \begin{solution}
+%            $\rho(m) = |M|$ si et seulement si $MmM=M$ si et seulement si
+%            $1 \in MmM$. Or $1 \in MmM$ implique $1=m$ par simplification.
+%          \end{solution}
+%
+%        \item Si $m$ et $n$ vérifient~: $m\in nM$ et $n\notin mM$, alors
+%          $\rho(n) > \rho(m)$.
+%
+%          \begin{solution}
+%            Comme $m \in nM$, $MmM \subset MnM$.
+%            Si $n \in MmM$, alors il existe $p$ et $q$ tels que $n=pmq$ ; 
+%            soit $k$ tel que $m=nk$.
+%            Alors $n=pnkq$, par simplification $n=nkq=mq \in mM$.
+%            On obtient une contradiction.
+%            L'inclusion $MmM \subset MnM$ est donc stricte.
+%          \end{solution}
+%
+%        \item Si $m$ et $n$ vérifient~: il existe $a,b$ dans $M$ tels que
+%          $m\in ManM\cap MnbM$ et $m\notin ManbM$, alors $\rho(n) > \rho(m)$.
+%
+%          \begin{solution}
+%            De même, on écrit~: $m=panq=rnbs$ et $n=umv$ (par l'absurde).
+%            Alors, par simplification$n = urnbs = nbs$ et
+%            $m = panbsq \in MambM$, contradiction.
+%          \end{solution}
+%      \end{enumerate}
+%    \item Soit $\mu$ un morphisme de $\Sigma^*$ dans un monoïde apériodique
+%      fini $M$.
+%      Soit $m \in M$. On pose~:
+%      \[
+%        \begin{array}{lcr}
+%          U = 
+%          \bigcup_{
+%            \begin{array}{c}
+%              (a,n)\in\Sigma \times N \\n\mu(a)M=mM \\
+%              n\notin mM
+%            \end{array}
+%          }
+%          \mu^{-1}(n)a 
+%          & &
+%          V = 
+%          \bigcup_{
+%            \begin{array}{c}
+%              (a,n)\in\Sigma \times N \\M\mu(a)n=Mm \\
+%              n\notin Mm
+%            \end{array}
+%          }
+%          a\mu^{-1}(n)
+%        \end{array}
+%      \]
+%
+%      \[
+%        W = \{ a\in \Sigma \mid m\notin MaM\} \cup 
+%        \bigcup_{
+%          \begin{array}{c}
+%            (a,b,n)\in\Sigma \times \Sigma\times N \\
+%            m\in M\mu(a)nM\cap Mn\mu(b)M \\
+%            m\notin M\mu(a)n\mu(b)M
+%          \end{array}
+%        }
+%        a\mu^{-1}(n) b
+%      \]
+%
+%      \begin{enumerate}
+%        \item Soit $m \in M$ tel que $m\neq 1$.
+%          Soit $x\in \Sigma^*$ tel que $\mu(x)\in mM$.
+%          Démontrer que $x$ se factorise sous la forme $uay$, avec
+%          $\mu(u) \notin mM, \mu(ua)\in mM$.
+%          On pose $n= \mu(u)$.
+%          Établir une réciproque.
+%
+%          \begin{solution}
+%            Comme $1 \notin mM$ (par simplification), on prend pour $u$ le plus
+%            grand préfixe de $m$ tel que $\mu(u) \notin mM$.
+%            Comme $m \in mM$, c'est un préfixe strict.
+%          \end{solution}
+%
+%        \item On démontre de la même façon que $x \in \Sigma^*$ est tel que
+%          $\mu(x) \in Mm$ si et seulement s'il se factorise sous la forme
+%          $u'a'v'$ avec $\mu(v') \notin Mm$ et $\mu(a'v') \in Mm$.
+%          Démontrer que $m \notin M\mu(x)M$ si et seulement si
+%          $x \notin \Sigma^* W \Sigma^*$.
+%
+%          \begin{solution}
+%            Soit $x$ tel que $m \notin M\mu(x)M$. Soit $y$ le plus petit
+%            facteur de $x$ tel que $m \in M\mu(y)M$.
+%            Soit $y$ est une lettre $a$ et $x=uav$ avec $m \notin M\mu(a)M$,
+%            soit $y$ se factorise en $azb$ avec
+%            $m \in M\mu(a)\mu(z)M \cap M\mu(z)\mu(b)M$.
+%          \end{solution}
+%
+%        \item Conclure par récurrence sur $\rho(M)$.
+%
+%          \begin{solution}
+%            On vient de montrer avec les notations précédentes que
+%            $\mu^{-1}(m) = U \Sigma^* \cap \Sigma^* V \setminus
+%            (\Sigma^* W \Sigma^*)$.
+%            La question \ref{HR} ci dessus montre qu'on peut appliquer
+%            l'hypothèse de récurrence à chacun des langages.
+%          \end{solution}
+%      \end{enumerate}
+%  \end{enumerate}
+%
+%  \titledquestion{Groupes libres}
+%  Soit $\Sigma$ un alphabet fini.
+%  On note $\bar{\Sigma}$ une copie de $\Sigma$~;
+%  $\bar{\Sigma} = \{ \bar{a} \mid a \in \Sigma\}$.
+%  Pour chaque lettre $a \in \Sigma$, on note $\bar{\bar{a}} = a$.
+%  L'application $x \to \bar{x}$ ainsi définit une involution de 
+%  $\Sigma \sqcup \bar{\Sigma}$ qui échange $\Sigma $ et $\bar{\Sigma}$.
+%
+%  On note $L$ le monoïde libre sur l'alphabet $\Sigma \sqcup \bar{\Sigma}$.
+%
+%  On appelle \textit{opération élémentaire} sur un mot
+%  $w=u_1u_2...u_p, u_i \in \Sigma \sqcup \bar{\Sigma}$~:
+%  \begin{itemize}
+%    \item{\textit{Une insertion} :}
+%      $u_1u_2..u_i\, u\bar{u}\, u_{i+1}...u_p$ pour un $i$ entre $0$ et $p$ et
+%      $u \in \Sigma \sqcup \bar{\Sigma}$.
+%    \item{\textit{Une suppression} :}
+%      $u_1u_2..u_{i-1}u_{i+2}...u_p$ pour un $i$ entre $1$ et $p-1$
+%      tel que $u_{i+1} = \bar{u_i}$.
+%  \end{itemize}
+%
+%  \begin{enumerate}
+%    \item On définit sur $L$ une relation en posant $w \sim w'$ s'il existe une
+%      suite finie de mots $w_1=w,w_2,...,w_{n-1}, w_n=w'$ tels que $w_{i+1}$
+%      est obtenu à partir de $w_i$ par une opération élémentaire.
+%
+%      Démontrer que $\sim$ est une congruence.
+%
+%    \item On dit qu'un mot $w$ est \textit{réduit} si on ne peut pas faire de
+%      suppression dans $w$.
+%      \begin{enumerate}
+%        \item Démontrer que toute classe de congruence contient un mot réduit.
+%
+%          \begin{solution}
+%            Un mot de longueur minimale dans une classe de congruence est réduit.
+%          \end{solution}
+%
+%        \item On se propose de justifier que toute classe de congruence
+%          contient un unique mot réduit.
+%          Soit $w$ et $w'$ deux mots réduits congruents.
+%          Soit $w_1=w,w_2,...,w_{n-1}, w_n=w'$ tels que $w_{i+1} $ est obtenu à
+%          partir de $w_i$ par une opération élémentaire et tels que
+%          $\sum_{i} |w_i|$ est minimal parmi les suites finies de mots
+%          vérifiant cette propriété.
+%          On suppose $w\neq w'$ donc $n>1$.
+%          \begin{enumerate}
+%            \item Justifier que $|w| < |w_2| $ et $|w'| < |w_{n-1}|$.
+%
+%              \begin{solution}
+%                Comme $w$ est réduit, la suite commence par une insertion.
+%                De même, comme $w'$ est réduit, la suite finit par une
+%                suppression.
+%              \end{solution}
+%
+%            \item En déduire qu'il existe $i$ tel que 
+%              % $|w_i| > |w_{i-1}|$ et $|w_i| > |w_{i+1}|$,
+%              $w_i$ obtenu à partir de $w_{i-1}$ à partir d'une insertion et 
+%              $w_{i+1} $ est obtenu à partir de $w_i$ à partir d'une suppression.
+%
+%              \begin{solution}
+%                Comme $|w|<|w_2|$ et $|w'|<|w_{n-1}|$, il existe $i$ tel que
+%                $|w_i|>|w_{i-1}|$ et $|w_i|>|w_{i+1}|$.
+%              \end{solution}
+%
+%            \item Soit $a, b \in \Sigma \sqcup \bar{\Sigma}$ et $s,t$ tels que~:
+%              $w_{i-1} = u_1u_2..u_p$, 
+%              $w_i=u_1u_2..u_sa\bar{a}u_{s+1}...u_p = v_1....v_{p+2}$
+%              et $w_{i+1} = v_1...v_{t-1}v_{t+1}...v_{p+2}$
+%              avec $v_t=b$ et $V_{t+1}=\bar{b}$.
+%              En étudiant les cas où ces deux opérations se chevauchent ou non,
+%              aboutir à une contradiction.
+%
+%              \begin{solution}
+%                Si les deux opérations ne se chevauchent pas, on aurait pu
+%                commencer par la suppression puis effectuer l'insertion.
+%                Dans ce cas, la suite $w_1=w, w_2, \dots,$
+%                $w_{i-1}, w_i', w_{i+1}, \dots, w_{n-1}, w_n=w'$ représenterait
+%                une suite d'opérations élémentaires avec $|w_i'|=|w_i|-4$, ce
+%                que contredit la minimalité de $\sum_i |w_i|$.
+%
+%                Si les deux opérations de font au même endroit, alors
+%                $w_{i-1}=w_{i+1}$, on peut supprimer $w_i$ et $w_{i+1}$ de la
+%                suite
+%                $w_1=w, w_2, \dots, w_{i-1}, w_i', w_{i+1}, \dots, w_{n-1},$
+%                $w_n=w'$, ce que contredit la minimalité de $\sum_i |w_i|$.
+%
+%                Si les deux opérations se chevauchent sur une lettre~: \\
+%                $w_i = u_1 u_2 \dots u_s a \bar{a} u_{s+1} \dots u_p$,
+%                $u_{s+1}=a$ et $w_{i+1}=u_1 u_2 \dots u_s a u_{s+2} \dots u_p$.
+%                Mais alors
+%                $w_{i-1} = u_1 u_2 \dots u_s a u_{s+2} \dots u_p = w_{i+1}$
+%                et à nouveau on peut supprimer $w_i$ et $w_{i+1}$ de la suite.
+%                De même, si $u_s=\bar{a}$ et $\\
+%                w_{i+1}=u_1 u_2 \dots u_{s-1} \bar{a} u_{s+2} \dots u_p =
+%                w_{i-1}$.
+%              \end{solution}
+%          \end{enumerate}
+%      \end{enumerate}
+%    \item On note $GF$ le monoïde $ L/\sim$ et $\pi$ la surjection canonique de
+%      $L$ sur $GF$.
+%      \begin{enumerate}
+%        \item Démontrer que $\pi$ injecte $\Sigma$ dans $GF$.
+%
+%          \begin{solution}
+%            Une lettre est un mot réduit.
+%          \end{solution}
+%
+%        \item Démontrer que $GF$ est un groupe engendré par $\pi(\Sigma)$.
+%
+%          \begin{solution}
+%            On remarque que $u\bar{u} \sim \varepsilon \bar{u}u$, pour tout
+%            $u \in \Sigma \sqcup \bar{\Sigma}$, donc
+%            $\pi(u)\pi(\bar{u})=\pi(\bar{u})\pi(u)=1$, les éléments de
+%            $\pi(\Sigma)$ sont tous inversibles.
+%
+%            Si $w=u_1 \dots u_n \in L$, $u_i \in \Sigma \sqcup \bar{\Sigma}$,
+%            on a
+%            $\pi(w)=\pi(u_1) \cdots \pi(u_n) \in \langle \pi(\Sigma) \rangle$.
+%            De plus, $\pi(w)\pi(u_n)^{-1} \cdots \pi(u_1)^{-1}=1$ et 
+%            $\pi(u_n)^{-1} \cdots \pi(u_1)^{-1}\pi(w)=1$
+%          \end{solution}
+%
+%        \item Quel est ce groupe lorsque $\Sigma$ est un singleton~? 
+%
+%          \begin{solution}
+%            $\Z$.
+%          \end{solution}
+%      \end{enumerate}
+%    \item Soit $\phi$ une application de l'ensemble $\Sigma$ dans un groupe
+%      $G$.
+%      On étend $\phi$ sur $\bar{\Sigma}$ en posant
+%      $phi(\bar{u}) = \phi(u)^{-1}$, pour tout $u$ dans $\Sigma$.
+%      Démontrer qu'il existe un unique morphisme de groupes de $GF$ dans $G$
+%      prolongeant $\phi$.
+%
+%      \begin{solution}
+%        On sait déjà qu'il existe un morphisme de monoïdes de $L$ dans $G$ qui
+%        prolonge $\phi$.
+%        Notons $\hat\phi$ ce morphisme.
+%        \[
+%          \begin{array}{ccc}
+%            \Sigma \sqcup \bar\Sigma & \xrightarrow{\phi} & G \\
+%            \hspace{1.0em}\searrow & & \hspace{-1.0em}\nearrow_{\hat\phi} \\
+%            & L &
+%          \end{array}
+%        \]
+%
+%        Or on vérifie qu'en passant d'un mot $w$ à un mot $w'$ par une
+%        opération élémentaire, $\hat\phi(w)=\hat\phi(w')$, donc deux mots
+%        congruents ont une même image par $\hat\phi$.
+%        Donc $\hat\phi$ passe au quotient.
+%        On note $\tilde\phi$ l'application ainsi obtenue de $GF$ dans $G$.
+%        \[
+%          \begin{array}{cccc}
+%            \Sigma \sqcup \bar\Sigma & \xrightarrow{\phi} & & G \\
+%            \hspace{1.0em}\searrow & & \nearrow_{\hat\phi} &
+%            \uparrow \tilde\phi \\
+%            & L & \xrightarrow{\pi} & GF
+%          \end{array}
+%        \]
+%        
+%        Comme $\tilde\phi(\pi(a))=\phi(a)$ pour tout $a \in \Sigma$ et que
+%        $GF = \langle \pi(\Sigma) \rangle$, on a l'unicité.
+%      \end{solution}
+%
+%    \item On note $L_R$ l'ensemble des mots réduits.
+%      \begin{enumerate}
+%        \item Démontrer que tout facteur d'un mot réduit est réduit.
+%        \item Soit $u \in \Sigma$.
+%            % Pour $w\in L_R$, $w=u_1...u_p$, avec $u_i \in \Sigma \cupsquare
+%            % \bar{\Sigma}$,
+%            % démontrer que $wu \in L_R$ si et seulement si $u_p \neq \bar{u}$.
+%          Justifier qu'on peut définir une application $\sigma_u$ de $L_R$ dans
+%          lui-même en posant~:
+%          \[
+%            \sigma_u : w \to \left\{
+%              \begin{array}{cl}
+%                uw & \text{ si } uw \in L_R, \\
+%                v & \text{ si } w=\bar{u}v.
+%              \end{array}
+%            \right.
+%          \]
+%
+%          \begin{solution}
+%            Soit $w \in L_R$, $w = u_1 \dots u_p$,
+%            $u_i \in \Sigma \sqcup \bar\Sigma$.
+%
+%            $v = u_2 \dots u_p$ est réduit car suffixe de $w$, donc si
+%            $u_1=\bar{u}$, $w=\bar{u}v$ avec $v \in L_R$.
+%            Sinon, $u_1 \neq \bar{u}$, donc $uw$ est réduit car comme $w$ est
+%            réduit, la seule suppression à envisager aurait été $u u_1$.
+%            On a donc bien défini une application de $L_R$ dans $L_R$.
+%          \end{solution}
+%
+%        \item Démontrer que $\sigma_u$ est une permutation de $L_R$.
+%
+%          \begin{solution}
+%            Par définition, on a $\sigma_{\bar{u}} \circ \sigma_u = Id$ et 
+%            $\sigma_u \circ \sigma_{\bar{u}} = Id$, donc $\sigma_u$ est une
+%            permutation.
+%          \end{solution}
+%
+%        \item Soit $\sigma : \Sigma \rightarrow L$ l'application telle que
+%          $\sigma(u) = \sigma_u$.
+%          On note $\hat{\sigma}$ le morphisme de groupes prolongement de
+%          $\sigma$ de $L$ dans $\frak{S}(L_R)$.
+%          Si $w \in L_R$, démontrer que $\sigma_w(\varepsilon)= w$.
+%
+%          \begin{solution}
+%            Soit $w = u_1 \dots u_p$ un mot réduit.
+%            Justifions par récurrence sur $p$ que
+%            $\hat\sigma_w(\varepsilon) = w$~: 
+%            $\hat\sigma_w = \hat\sigma_{u_1}\hat\sigma_{u_2 \dots u_p} =
+%            \sigma_{u_1}\hat\sigma_{u_2 \dots u_p}$.
+%            Par hypothèse de récurrence,
+%            $v=\hat\sigma_{u_2 \dots u_p}(\varepsilon) = u_2 \dots u_p$, donc
+%            $\hat\sigma_w(\varepsilon)=\sigma_{u_1}(v)$.
+%            Comme $w$ est réduit, $u_1 \neq \bar{u_2}$, donc
+%            $\sigma_{u_1}(v) u_1 v = w$.
+%          \end{solution}
+%
+%        \item Retrouver ainsi l'unicité du mot réduit dans une classe de
+%          congruence.
+%
+%          \begin{solution}
+%            On note $\tilde\sigma$ le morphisme de groupes prolongement de
+%            $\sigma$ de $GF$ dans $\mathfrak{S}(L_R)$.
+%            Soit $w,w'$ deux mots congruents, ils définissent un même élément
+%            dans $GF$, $\hat\sigma(w) = \tilde\sigma(\pi(w)) =
+%            \tilde\sigma(\pi(w')) = \hat\sigma(w')$.
+%            Donc
+%            $w = \hat\sigma(w)(\varepsilon) = \hat\sigma(w')(\varepsilon) = w'$.
+%          \end{solution}
+%      \end{enumerate}
+%  \end{enumerate}
+\end{questions}
+\end{document}
+
+% vim: spell spelllang=fr

@@ -1,0 +1,864 @@
+\documentclass[a4paper,11pt]{exam}
+%\printanswers % pour imprimer les réponses (corrigé)
+%\noprintanswers % Pour ne pas imprimer les réponses (nonc)
+% \addpoints % Pour compter les points
+% \noaddpoints % pour ne pas compter les points
+\qformat{\textbf{Exercice \thequestion \,:}\\} % Questions style
+\usepackage{color} % Define new colors
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{exercise}
+\usepackage{mathrsfs,amsmath,amssymb,latexsym,amsfonts,mathtools,stmaryrd}
+\usepackage{enumitem}
+\setitemize{label=\textbullet}
+% Bigger binomial in math mode
+\usepackage{nccmath}
+\renewcommand{\binom}{\mbinom}
+
+\usepackage[francais]{babel}
+
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+\shadedsolutions % définit le style des réponses
+% \framedsolutions % définit le style des réponses 
+\definecolor{SolutionColor}{rgb}{0.8,0.9,1} % bleu ciel
+\renewcommand{\solutiontitle}{
+	\noindent\textbf{Solution:}\par\noindent} % Définit le titre des réponses
+\newcommand\eqdef[0]{\stackrel{\text{def}}{=}}
+
+\pagestyle{headandfoot}
+\headrule
+\header{L3 - 2019/2020 - TD4}{Wednesday 9 October}{Mathématiques discrètes}
+\footer{S. Le Roux, I. Khmelnitsky}{\thepage}{E.N.S. Cachan}
+\footrule
+
+\renewcommand{\questionshook}{%
+	\setlength{\labelwidth}{0pt}%
+	\setlength{\itemsep}{0.9\baselineskip}
+}
+
+\definecolor{gris}{gray}{0.95}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\A}{\mathcal{A}}
+\renewcommand{\S}{\mathcal{S}}
+\newcommand{\RR}{\mathbin{\mathcal{R}}}
+\begin{document}
+	
+	\colorbox{gris}{
+		\begin{minipage}[c]{15cm}
+			Orders.
+		\end{minipage}
+	}
+	% \bigskip
+	
+	
+	
+	
+	\begin{questions}
+		\question
+		Let $E$ be a set with a partial order $\leq$.
+		Recall that an \textit{antichain} is a subset of $E$ in which all the elements are incomparable.
+		
+		\begin{enumerate}
+			\item We consider $ \N^2 $ with the product order ($(a,b)\leq(x,y) \iff a\leq x \wedge b \leq y$)
+			\begin{enumerate}
+				\item Show an  antichain of cardinality $n$, for any $n >1$.
+				
+				\begin{solution}
+					$(0,n), (1,n-1), \cdots, (n,0)$ is an antichain of length $n+1$.
+				\end{solution}
+				
+				\item Can we find an infinite  antichain?
+				
+				\begin{solution}
+					No.
+					Let $(v_i = (x_i, y_i))_{i \in \N}$ a series of distinct elements in $\N^2$.
+					\begin{itemize}
+						\item If the set $\{ x_i, i \in \N \}$ is finite, by the pigeonhole principle there exist $i<j$ s.t. $x_i = x_j$ and the vectors $v_i$ et $v_j$ are comparable.
+						\item On the other hand, we have an infinitely increasing infinite sequence on the first component and it is not possible that the corresponding sequence on the second component is strictly decreasing.
+					\end{itemize}
+				\end{solution}
+			\end{enumerate}
+			
+			\item Show that the set $\Sigma^* $ with the sub-string order ($w_1<w_2 $ iff $ \exists u,v\in\Sigma^* $ s.t. $ w_2 = uw_1v$), has an infinite chain.
+			
+			\begin{solution}
+				Take $\Sigma = \{ a,b \}$,
+				the family $ab^na,~ n \geq 1$ is an antichain.
+			\end{solution}
+		\end{enumerate}
+		
+		%  In the following, $ E $ is the family of subsets of a finite $ X $ set of cardinal $n$ ($E= \mathcal{P}(X)$).
+		\question Given $A,B\in\mathcal{P}([n])$ we say that $A<B$ iff $A\subset B$. 
+		
+		
+		
+		\begin{enumerate}
+			\item Assume that $n>1$. 
+			Show that~:
+			\[
+			1 < \binom{n}{1} < \binom{n}{2} < \cdots <
+			\binom{n}{\lfloor \frac{n}{2}\rfloor} \geq \cdots >
+			\binom{n}{n-2} > \binom{n}{n-1} > 1
+			\]
+			
+			\begin{solution}
+				$\binom{n}{k} = \frac{n-(k-1)}{k}\binom{n}{k-1}$ and
+				$\frac{n-(k-1)}{k} < 1 \iff k > \lfloor \frac{n}{2} \rfloor$.
+			\end{solution}
+			
+			\item For $k \in\{1,...,\frac{n}{2}\}$ find an antichain of cardinality $\binom{n}{k}$ in $ \mathcal{P}([n])$.
+			
+			\begin{solution}
+				The family of all sets of size $k$ are an antichain of cardinality
+				$\binom{n}{k}$.
+			\end{solution}
+			
+			\item Let $A$ be an anti chain in $ \mathcal{P}([n])$. For $k$ in $\llbracket 0,n\rrbracket$, we denote by $ a_k $ the number of sets of cardinality $k$ in $ A $.
+			We will now show the Lubell-Yamamoto-Meshalkin inequality~:
+			\[
+			\sum_{k=0}^n \frac{a_k}{\binom{n}{k}} \leq 1
+			\]
+			
+			\begin{enumerate}
+				\item Demonstrate that there are exactly $ n! $ Strictly increasing chains in $ \mathcal{P}([n])$, of the form $X_0 = \emptyset \subsetneq X_1
+				\subsetneq X_2 \subsetneq \cdots \subsetneq X_n=X$.
+				
+				\begin{solution}
+					The chain $X_0 = \emptyset \subsetneq X_1 \subsetneq X_2 \subsetneq
+					\cdots \subsetneq X_n=X$ being strictly growing, each $X_i$
+					is of cardinality $i$. 
+					There are $n$ for the unique element $x_1$ of $X_1$, by recurrence there  are $n-i+1$ choices for the unique  element of $X_i \setminus
+					X_{i-1}$.
+					Therefore $n!$ in total.
+				\end{solution}
+				
+				\item Let $ S $ be a subset of $ X $ of cardinality $ s $. Show that there are exactly $ s! (n-s)!$ strictly increasing chains in $ \mathcal{P}([n])$, of the form $X_0 = \emptyset \subsetneq X_1 \subsetneq X_2
+				\subsetneq \cdots \subsetneq X_n=X$, where $X_s = S$.
+				
+				\begin{solution}
+					Such a strictly increasing sequence is completely determined by ~:
+					$$X_0 = \emptyset \subsetneq X_1 \subsetneq X_2 \subsetneq
+					\cdots \subsetneq X_s=S,$$
+					a strictly increasing sequence in $S$, and 
+					$$Y_0 = X_s \setminus X_s = \emptyset \subsetneq Y_1 =
+					X_{s+1} \setminus X_s \subsetneq \cdots \subsetneq Y_{n-s} =
+					X \setminus X_s = S^c,$$
+					strictly increasing sequence in $S^c$.
+					
+					There are $s!$ choices for the first and $(n-s)!$ choices for the second, therefore $s!(n-s)!$ is all the choices.
+				\end{solution}
+				
+				\item Let $X_1 \subsetneq X_2 \subsetneq \cdots \subsetneq X_r$ a strictly increasing chains in $  \mathcal{P}([n]) $.
+				Then there is at most one $X_i$ in $A$(the antichain). By partitioning all the strictly increasing sequences $X_0 = \emptyset \subsetneq X_1
+				\subsetneq X_2 \subsetneq \cdots \subsetneq X_n=X$, according to their possible intersection with $ A $, demonstrate the Lubell-Yamamoto-Meshalkin inequality.
+				
+				\begin{solution}
+					For $S$ in $A$, we denote by $SIC_S$ the set of strictly increasing chains $X_0 = \emptyset \subsetneq X_1 \subsetneq X_2
+					\subsetneq \cdots \subsetneq X_n=X$ for which there exists $i$ s.t. $X_i=S$.
+					It's a set of cardinality $|S|!(n-|S|)!$ according to the previous question.
+					
+					If a strictly increasing sequence  $X_0 = \emptyset
+					\subsetneq X_1 \subsetneq X_2 \subsetneq \cdots \subsetneq X_n=X$
+					is such that there exists a $ i $ such that $ X_i \in A $, then such $ i $ is unique since the elements of $ A $ are incomparable; so the sets $ SIC_S $ are disjoint, when $ S $ goes through $ A $.
+					
+					So~: $\sum_{S \in A} (|S|!(n-|S|)!) \leq n!$ and 
+					\[
+					\sum_{k=0}^n \frac{a_k}{\binom{n}{k}} = 
+					\sum_{S \in A} \frac{1}{\binom{n}{|S|}} = 
+					\sum_{S \in A} \frac{|S|!(n-|S|)!}{n!} =
+					\frac{1}{n!} \sum_{S \in A} |S|!(n-|S|)! \leq 1
+					\]
+				\end{solution}
+			\end{enumerate}
+			
+			\item Deduce the maximal cardinality of an antichain in $ \mathcal{P}([n])$.
+			
+			\begin{solution}
+				Pick $A$ an antichain. 
+				With the previous notations,
+				\[
+				|A| \leq \sum_{k=0}^n a_k \leq
+				\binom{n}{\frac{n}{2}} \sum_{k=0}^n \frac{a_k}{\binom{n}{k}} \leq
+				\binom{n}{\frac{n}{2}}
+				\]
+				In addition, all the cardinal parts $\frac{n}{2}$ is an
+				antichain  of cardinality $\binom{n}{\frac{n}{2}}$, so the maximum is exactly $\binom{n}{\frac{n}{2}}$.
+			\end{solution}
+		\end{enumerate}
+		
+		
+		
+		
+		
+		\question
+		Show 2 of the following~:
+		
+		Let $(R_i)_{i \in I}$ a family of binary relationships on the set $E$.
+		Let $R = \cap_{i \in I}R_i$. In other words, $xRy$ if $xR_iy$ for all $i\in I$.
+		\begin{itemize}
+			\item If one of the $R_i$'s is irreflexive/asymmetric/antisymmetric, then $R$ is too.
+			\item If all $R_i$'s are reflexive/symmetric/transitives, then $R$ is too
+			\item The intersection does not preserve totality or trichotomy.
+		\end{itemize}
+		
+		\begin{solution}
+			\begin{itemize}
+				\item Suppose that $R_i$ is irreflexive. Then for any $x\in E$ if $xRx$ it would imply $xR_ix$ which is a contradiction to the assumption.
+				
+				Suppose that $R_i$ is asymmetric. Then for any $x,y\in E$ if $xRy$ and $yRx$ it would imply $xR_iy$ and $yR_ix$  which is a contradiction to the assumption.
+				
+				Suppose that $R_i$ is antisymmetric. Then for any $x,y\in E$ if $xRy$ and $yRx$ it would imply $xR_iy$ and $yR_ix$  which implies that $x=y$, and therefore $R$ is antisymmetric.
+				
+				
+				\item Suppose that all $R_i$'s are reflexive.Then or any $x\in E$, $xR_ix$ for all $i \in I$, and therefore $xRx$.
+				
+				Suppose that all $R_i$'s are symmetric. Then or any $x,y\in E$, if $xRy$ then for all $i \in I$ $xR_iy$ and $yR_ix$,  which gives us that $yRx$.
+				
+				Suppose that all $R_i$'s are transitives. Then or any $x,y,z\in E$, s.t. $xRy$ and $yRz$. Then for all $i \in I$ $xR_iy$ and $yR_iz$, therefore $xR_iz$ which gives us that $xRz$.
+				
+				\item Let $E=\{0,1\}$.
+				
+				Take $R_0 := {(0,1)}$ and $R_1 := \{(1,0)\}$ trichotomous relations and total. But the intersection of $R_0 \cap R_1 = \emptyset$ and thus not trichotomous.
+				
+				Take $R_0 := {(0,1),(0,0),(1,1)}$ and $R_1 := \{(1,0),(0,0),(1,1)\}$ total relations. But the intersection of $R_0 \cap R_1 = \{(0,0),(1,1)\}$ and thus not total.
+				
+			\end{itemize}
+		\end{solution}
+		
+		\question
+		Show 2 of the following~:
+		
+		Let $R$ be a relation on the set $E$, and $F \subseteq E$.
+		If $R$ is reflexive / symmetric / transitive / total / antisymmetric /
+		irreflexive / asymmetric / trichotomous, then $R_F$ is the same.
+		
+		\begin{solution}
+			to maybe do
+		\end{solution}
+		
+		\question
+		Show 2 of the following~:
+		
+		If $R$ is reflexive / symmetric / transitive / total / antisymmetric /
+		irreflexive / asymmetric / trichotomous, Then $R^{-1}$ is the same.
+		
+		\begin{solution}
+			to maybe do
+		\end{solution}
+		
+		\question
+		Show the following propositions~:
+		\begin{itemize}
+			\item If $(E,\leq)$ is a finite ordered set and $x \in E$. There is a maximal element $y$ in $E$ s.t. $x \leq y$.
+			\item If any finite part of an ordered set has a greatest element, then it is a total order.
+		\end{itemize}
+		
+		\begin{solution}
+			\begin{itemize}
+				\item By induction on the size of $E$. 
+				
+				For $|E|=1$ the unique element is a maximal element.
+				
+				Denote by $\max(E)$ the set of all maximal elements in $E$(not empty since its a finite order). For $|E|=n$. Pick an element $x\in \max(E)$, by induction the the proposition holds for $E\backslash\{x\}$. For any $y\in E\backslash\{x\}$ if $y\leq x$ then $x$ is the maximal element which is bigger then it. Otherwise $y$ had a maximal element in $z\in E\backslash\{x\}$  which was bigger then it. $z\not\leq x$ since that would imply that $y\leq x$. And since $x$ is maximal in $E$ we are done.
+				
+				%      Par récurrence sur le cardinal de $E$. Si $|E| = 1$, alors l'unique
+				%        élément de $E$ est maximal. Soit $(E,\leq)$ de cardinal $n + 1$ et $x
+				%        \in E$. Supposons que $x$ n'est pas maximal (sinon il n'y a rien à
+				%        faire).  Donc $F := \{y \in E \setminus \{x\}\,|\,x \leq y\}$ est
+				%        non vide. De plus, $(F,\leq_F)$ est ordonné et $|F| < |E|$ car $x
+				%        \notin F$, donc $F$ a un élément maximal $y$ par hypothèse de
+				%        récurrence.
+				%
+				%        Soit $z \in E$ tel que $y \leq z$. Si $z = x$ alors $y = x$ par
+				%        antisymétrie, contradiction, donc $z \neq x$. De plus $x \leq z$ par
+				%        transitivité, donc $z \in F$, donc $z = y$ par maximalité de $y$ dans
+				%        $F$. Cela prouve que $y$ est maximal dans $E$.
+				
+				\item For all $x,y \in E$ we have $x \leq y$ or $y \leq x$ because $\{x,y\}$ has a greatest element.
+			\end{itemize}
+		\end{solution}
+		
+		\question
+		Show that the lexicographic product of (total) orders is a (total) order.\\ 
+		For all $x,y\in\prod_{i\in I}(E_i,\leq_i)$, $x\leq_{lex}y$ iff given $k := \min \{j \in I\,|\,
+		x_j \neq y_j\}$ we have $x_k\leq_ky_k$.
+		
+		\begin{solution}
+			\begin{itemize}
+				\item Reflexive : by definition.
+				
+				\item Antisymmetric : Assume $x \leq_{\mathrm{lex}} y$ and $y
+				\leq_{\mathrm{lex}} x$ and $x \neq y$. Pick $k := \min \{j \in I\,|\,
+				x_j \neq y_j\}$, then  $x_k \leq_k y_k$ and $y_k \leq_k x_k$, therefore
+				$x_k = y_k$, and we get a contradiction.
+				
+				\item Total (if the orders are total) : suppose that $x \neq y$. Pick
+				$k := \min \{j \in I\,|\, x_j \neq y_j\}$, then $x_k \leq_k y_k$ or $y_k \leq_k x_k$, therefore $x \leq_{\mathrm{lex}} y$ where $y \leq_{\mathrm{lex}} x$.
+				
+				\item Transitive : If $x,y,z \in E$ s.t. $x \leq_{\mathrm{lex}}
+				y \leq_{\mathrm{lex}} z$. If $x = y$ or $y =z$ or $x = z$, then $x
+				\leq_{\mathrm{lex}} z$. assume thath $x$, $y$ and $z$ are all distinct. Let $k := \min \{j \in I\,|\, x_j \neq y_j\}$
+				and $l := \min \{j \in I\,|\, y_j \neq z_j\}$. consider the following cases.
+				\begin{itemize}
+					\item if $k = l$, then $x_k \leq_k y_k \leq_k z_k$ and $x_k \neq
+					z_k$. Therefore $x_k \leq_k z_k$, and for the other part $k = \min
+					\{j \in I\,|\, x_j \neq z_j\}$, and $x \leq_{\mathrm{lex}} z$.
+					\item If $k < l$, then $k = \min \{j \in I\,|\, x_j \neq z_j\}$ and
+					$z_k = y_k$, hence $x_k \leq_k z_k$, i.e. $x \leq_{\mathrm{lex}} z$.
+					\item if $l < k$, then $l = \min \{j \in I\,|\, x_j \neq z_j\}$ and
+					$x_l = y_l$, hence $x_l \leq_l z_l$, i.e. $x \leq_{\mathrm{lex}} z$.
+				\end{itemize}
+			\end{itemize}
+		\end{solution}
+		
+		\question
+		Let $E$ be a set with a prtial order denoted by $\preccurlyeq$.
+		We say that $\preccurlyeq$ is a well quasi-order(wqo) if from any sequence of elements of $E$, we can extract an infinite monotone increasing sequence. I.e.\
+		$\forall (x_i)_{i\in\N} \in E^{\N}, \; $ there exists an increasing sub-sequence of indexes: $ i_0 < i_1 < \cdots < i_n < \cdots \;$
+		for which the sequence $(x_{i_n})_{n\in\N}$ is increasing~:
+		$x_{i_0} \preccurlyeq x_{i_1} \preccurlyeq \cdots \preccurlyeq
+		x_{i_n}\preccurlyeq \cdots$.
+		
+		\begin{enumerate}
+			\item Show that if the order $\preccurlyeq$ is total, then it is wqo iff any non-empty subset of $E$ has a least element.
+			
+			\begin{solution}
+				On one hand if the order is wqo. Let $F\subseteq E$ which doesn't have a least element. If it finite it has a least element(total order), therefore $F$ is infinite. Since $F$ is infinite we can build an infinite strictly decreasing sequence by noticing that for any finite $G\subset F$ there is an element $x\in F\setminus G$ which is smaller then all elements in $G$.
+				
+				On the other hand any non-empty subset of $E$ has a least element, let $\{x_i\}_{i=0}^\infty$ be an infinite sequence in $E$. Construct an infinite monotone increasing sequence by picking $x_{i_0} = \min\{ x_i \mid i\in\N \}$ and, for any $n > 0$, $x_{i_n} = \min\{ x_i \mid i\in\N~;~i > i_{n-1} \}$.
+				
+				%        Par l'absurde~: une partie non vide de $E$ qui n'admet pas de plus petit élément permet par récurrence de construire une suite infinie strictement décroissante dont on en peut pas extraire de suite croissante.
+				%        
+				%        Réciproquement, on extrait d'une suite $(x_i)_{i\in\N}$ une suite strictement croissante par récurrence en posant~:
+				%        $x_{i_0} = \min\{ x_i \mid i\in\N \}$ et, pour $n > 0$,
+				%        $x_{i_n} = \min\{ x_i \mid i\in\N~;~i > i_{n-1} \}$.
+			\end{solution}
+			
+			\item Give an example of a total ordered set which is not wqo.
+			
+			\begin{solution}
+				$(\Z,\leq)$, $(\Q,\leq)$, $(\R,\leq)$.
+			\end{solution}
+			
+			\item Show that the following are equivalent~:
+			\begin{itemize}
+				\item[(\textit{def1})] The ordered set $(E,\preccurlyeq)$,  
+				is wqo.
+				\item[(\textit{def2})]
+				For any sequence $(x_i)_{i\in\N}$, we can find $i<j$ s.t. $x_i\preccurlyeq x_j$.
+				\item[(\textit{def3})] 
+				\begin{enumerate}[label=(\roman*)]
+					\item There is no infinite sequence strictly decreasing in $E$,
+					\item There is no infinite antichain.
+				\end{enumerate}
+			\end{itemize}
+			
+			\begin{solution}
+				(\textit{def1}) $\Rightarrow$ (\textit{def2})~:
+				trivial.
+				
+				(\textit{def2}) $\Rightarrow$ (\textit{def3})~:
+				The property (\textit{def2}) contradicts the existence of and infinite antichain or a strictly decreasing sequence in $E$.
+				
+				(\textit{def3}) $\Rightarrow$ (\textit{def1})~:
+				We color the set $F = \{ (x_i,x_j), i<j \}$ as follows~:
+				\begin{itemize}
+					\item $(x_i,x_j)$ is colored red if $x_i \preccurlyeq x_j$,
+					\item $(x_i,x_j)$ is colored green if $x_j \preccurlyeq x_i$ and
+					$x_i \neq x_j$,
+					\item $(x_i,x_j)$ is colored blue if $x_i$ and $x_j$ are incomparable.
+				\end{itemize}
+				By Ramsey's theorem there is an infinite set $I
+				\subset \N$ of color $c$ s.t.~: $\forall i,j \in I, i<j,
+				(x_i,x_j)$ is colored in $c$.
+				If $c$ is the blue color, $(x_i)_{i \in I}$ is an antichain, which is impossible.
+				If $c$ is the green color, $(x_i)_{i \in I}$ is a decresing sequence, which is impossible.
+				Therefore $c$ is the red color, and $(x_i)_{i \in I}$ is an increasing sequence.
+			\end{solution}
+			
+			\item Let $E,\preccurlyeq$ be an ordered set, we call it well founded if there is no infinite decreasing sequence. Assume that $E$ is countable and show that the order is wqo iff the set of all antichains is countable.
+			% 			il n'y a pas de suite infinie strictement décroissante (un tel ordre est dit \textit{bien fondé}). Démontrer que $ \preccurlyeq$ est un bel ordre si set seulement si l'ensemble des antichaines est dénombrable.
+			
+			\begin{solution}
+				On one hand, if the order is wqo then all of its antichains are finite. The family of all antichains is a sub-family of all the finite sets of $E$, and we saw that it is finite.
+				
+				On the other hand, if the order isn't a wqo, then there exists an infinite antichain. Every sub-chain of this chain is an antichain, and there are uncoutably many of them. 
+				
+			\end{solution}
+			
+			\item Dickson's Lemma ~:
+			Let $(E_1, \preccurlyeq_1)$  and $(E_2, \preccurlyeq_2)$ be a wqo set.
+			Show that $ (\preccurlyeq_1, \preccurlyeq_2) $ is a wqo on the product $E_1\times E_2$. 
+			
+			\begin{solution}
+				Let $\{(x_i,y_i)\}_{i\in\N}$ be an infinite sequence in $E_1\times E_2$. 
+				Since $(E_1, \preccurlyeq_1)$ is wqo, there exists an $I_1 \subset \N$ s.t. the sequence $\{x_i\}_{i \in I_1}$ is increasing. Since $(E_2, \preccurlyeq_2)$ is wqo, there exists an $I_2 \subset I_1$ s.t. the sequence $\{y_i\}_{i \in I_2}$ is increasing. Therefore the the sequence $\{(x_i,y_i)\}_{i \in I_2}$ is increasing.
+				
+			\end{solution}
+			
+			\item Higman's Lemma ~:
+			Let $\preccurlyeq$ be a wqo on $\Sigma$.
+			Define a relationship on $\Sigma^*$ as follows~:
+			\[
+			a_1...a_m \leq_{sw} b_1b_2...b_n \Leftrightarrow \left\{
+			\begin{array}{l}
+			\exists 1\leq i_1 < i_2 <\cdots < i_m \leq n \\
+			a_1\preccurlyeq b_{i_1} \wedge a_2\preccurlyeq b_{i_2} \cdots
+			a_m\preccurlyeq b_{i_m}
+			\end{array}
+			\right.
+			\]
+			
+			\begin{enumerate}
+				\item Show that $\leq_{sw}$ is an order %(sw stands for subword).
+				
+				\begin{solution}
+					Évident.
+				\end{solution}
+				
+				\item Show that $\leq_{sw}$ is wqo.
+				
+				\begin{solution}
+					We'll use (\textit{def2}) from 3.
+					
+					Consider the set $U$ of all the infinite sequences $(u_i)_{i\in\N}$ s.t.
+					$\forall i<j, u_i \not\leq u_j$("bad sequence"). Pick the minimal sequence in the following sense: 
+					\begin{itemize}
+						\item Let $u_0$ be the shortest word that can start a bad sequence.
+						\item Let $u_1$ be the shortest word that can continue a bad sequence starting with $u_0$.
+						\item Let $u_i$ be the shortest word that can continue a bad sequence starting with $u_0,u_1\ldots u_{i-1}$.
+					\end{itemize}
+					We know that the sequence $(u_i)_{i\in\N}$ we got is "too bad".  Split every word $u_i=x_iv_i$ where $x_i$ is the first letter. The sequence $\{x_i\}_{i\in \N}$ has an infinite increasing sub-sequence $\{x_{n_i}\}_{i\in N}$. Now, we look at the sequence $u_1,u_2\ldots u_{n_1 -1}, v_{n_1},v_{n_2}\ldots$, this is not a bad sequence, since it would contradict the assumption on the minimality of $(u_i)_{i\in\N}$. Hence there are $j<k$ s.t. $v_j<v_k$ and hence $ x_j v_j<x_k v_k$, which gives us a contradiction to our assumption.
+					
+				\end{solution}
+			\end{enumerate}
+			\item Let $E,\leq$ be an ordered set, and $F\subset E$ s.t.~:
+			$\forall y \in E$, if there exists $x\in F$ s.t $x \preccurlyeq y$, then
+			$y\in F$ (we say that the set $F$ is \textit{upward closed} or \textit{upper} ).
+			\begin{enumerate}
+				\item Let $E,\leq$ be wqo. Show that a that any increasing sequence of upward closed sets is stationary, i.e. $F_1\subseteq F_2\subseteq\cdots$ there exists $i$ such that for any $j>i$ $F_i=F_j$. 
+				
+				\begin{solution}
+					Let $F_0 \subset F_1 \subset F_2 \subset \cdots$, and assume for contradiction that it is not stationary and without a duplicated sets. Pick an infinite sequence $\{x_i\}_{i\in\N}$ where $x_n \in F_n \setminus F_{n-1}$.  
+					We get that for any $i,i+1$, $x_i>x_{i+1}$ which gives us an infinite decreasing sequence, which is a contradiction to the fact that the order is wqo.   
+					
+				\end{solution}
+				
+				\item Show that if $F$ is an upward closed set, there exists a finte set of elements  $x_1,...,x_n$ in $F$ s.t. $F = \cup_i \{y\in E, x_i \preccurlyeq y\}$.
+				\begin{solution}
+					Consider the minimal elements of $F$. They are an anticahin, therefore finite.
+				\end{solution}
+			\end{enumerate}
+		\end{enumerate}
+		%		
+		%		\question
+		%		Soit $k$ un entier naturel non nul. On munit $\N^k$ de la relation~:
+		%		\[
+		%		(x_1,...,x_k) \leq (y_1,...,y_k) \Leftrightarrow \forall i \in \{1,...,k\},
+		%		x_i \leq y_i
+		%		\]
+		%		
+		%		\begin{enumerate}
+		%			\item Justifier que $\leq$ est un bel ordre sur $\N^k$.
+		%			
+		%			\begin{solution}
+		%				Lemme de Dickson.
+		%			\end{solution}
+		%			
+		%			\newcommand{\T}{\mathcal{T}}
+		%			\item On définit un système d'additions de vecteurs (SAV) sur $\N^k$ par
+		%			la donnée d'un vecteur (dit marquage initial) $V_0 \in \N^k$ et d'un
+		%			ensemble fini $\mathcal{T}$ de vecteurs dans $\Z^k$.
+		%			Chaque élément de $\mathcal{T}$ définit une application partielle sur
+		%			$\N^k $ notée $\stackrel{t}{\to}$ : $V \stackrel{t}{\to} V'$ si
+		%			$V' = V+t$, pour tous $V,V'$ dans $\N^k$ et $t$ dans $\mathcal{T}$
+		%			(remarquez que puisque $t \in \Z^k$, il se peut que $V+t \notin \N^k$
+		%			et dans ce cas $V$ n'a pas d'image par $t$).
+		%			On dit qu'un vecteur $V$ est \textrm{accessible} à partir de $V_0$ 
+		%			s'il existe une suite finie $t_1,...,t_n$ d'éléments de $\mathcal{T}$
+		%			telles que $V_0 \stackrel{t_1}{\to} V_1 \stackrel{t_2}{\to} \cdots
+		%			\stackrel{t_n}{\to} V_n=V$.
+		%			\begin{enumerate}
+		%				\item Soit $U_1,U_2, V_1$ dans $\N^k$ tels que $U_1 \leq U_2$ et
+		%				$V_1$ est accessible à partir de $U_1$.
+		%				Démontrer qu'il existe $V_2$ dans $\N^k$ accessible à partir de
+		%				$U_2$.
+		%				
+		%				\begin{solution}
+		%					Il existe une suite finie $t_1, \dots, t_n$ d'éléments de $\T$
+		%					telle que $U_1 \xrightarrow{t_1} v_1 \xrightarrow{t_2} \cdots
+		%					\xrightarrow{t_n} v_n = V_1$.
+		%					Alors $U_2 \xrightarrow{t_1} w_1 \xrightarrow{t_2} \cdots
+		%					\xrightarrow{t_n} w_n = V_2$.
+		%					Par récurrence, $v_i \leq w_i$ et la transition $t_{i+1}$ est alors
+		%					franchissable car $w_i + t_{i+1} \geq v_i + t_{i+1} \in \N^k$.
+		%				\end{solution}
+		%				
+		%				\item On suppose qu'il existe $U, V$ dans $\N^k$ tels que $U \leq V$ et
+		%				$V$ est accessible à partir de $U$. On suppose que sur la $j$-ème
+		%				composante, $U_j < V_j$.
+		%				Démontrer qu'il existe une suite croissante $U_0 = U \leq U_1 = V
+		%				\leq U_2 \leq \cdots \leq U_n \leq \cdots $ formée de vecteurs dans
+		%				$\N^k$ accessibles à partir de $U$ et tels que la suite des $j$-ème
+		%				composantes $\{U_{i,j}\}_{i\in\N}$ tend vers $+\infty$.
+		%				
+		%				\begin{solution}
+		%					Il existe une suite de transitions franchissables à partir de $U$
+		%					et menant à $V$~: $t_1, \dots, t_n$.
+		%					Ainsi, $V = U + W$ avec $W = t_1 + \cdots + t_n$.
+		%					D'après la question précédente, par récurrence sur
+		%					$m$, $U_m = U + mW$ est accessible depuis $U$. Elle convient.
+		%				\end{solution}
+		%				
+		%				\item On ajoute à $\N$ un plus grand élément noté $\omega$ : $\hat{N} =
+		%				\N \sqcup \{\omega\}$.
+		%				On étend l'addition usuelle sur $\N$ à $\hat{N}$ en posant
+		%				$n + \omega = \omega +n = \omega$, $\forall n \in \hat{N}$
+		%				et la multiplication usuelle en posant
+		%				$n \omega = \omega n = \omega$ if $ n \in \hat{N}\setminus\{0\}$
+		%				et $0$ sinon.
+		%				Ceci permet de prolonger l'application partielle $\stackrel{t}{\to}$
+		%				sur $\hat{N}^k $ par~:
+		%				$\stackrel{t}{\to}$~: $V \stackrel{t}{\to} V'$ si $V' = V+t$, pour
+		%				tous $V,V'$ dans $\hat{N}^k$.
+		%				
+		%				On construit un arbre, dit \textit{arbre de couverture}, de la
+		%				fa\c{c}on suivante~:
+		%				
+		%				\begin{itemize}
+		%					\item La racine de l'arbre de couverture est un sommet $s_0$
+		%					étiqueté par le vecteur $V_0$.
+		%					\item Si une branche de l'arbre $(s_0,V_0)\to (s_1,V_1) \to \cdots
+		%					\to (s_n,V_n)$ est construite, et $t\in \mathcal{T}$ vérifie $V_n
+		%					\stackrel{t}{\to} V_{n+1}$, on prolonge éventuellement la branche
+		%					par $V_{n+1}$ selon les règles suivantes~:
+		%					\begin{itemize}
+		%						\item[R1] Si $\exists i \leq n$ tel que $V_{n+1} \leq V_i$, on
+		%						ne prolonge pas la branche par $V_{n+1}$.
+		%						\item[R2] Si $\exists i \leq n$ tel que $V_{n+1} \geq V_i$, on
+		%						définit le vecteur $\bar{V_{n+1}} = V_i + \omega (V_{n+1} -
+		%						V_i)$ (si sur la $j$-ème composante, $V_{n+1}(j)>V_{I}(j)$,
+		%						on la remplace par $\omega$). 
+		%						On ajoute le fils $(s,\bar{V_{n+1}}) $ à $(s_0,V_0)\to
+		%						(s_1,V_1) \to \cdots \to (s_n,V_n)$.
+		%						\item[R3] Si $\forall \leq n$, $V_{n+1}$ et $ V_i$ ne sont pas
+		%						comparables, on ajoute le fils $(s,V_{n+1}) $ à $(s_0,V_0)\to
+		%						(s_1,V_1) \to \cdots \to (s_n,V_n)$.
+		%					\end{itemize}
+		%				\end{itemize}
+		%				Démontrer la terminaison de l'algorithme.
+		%				
+		%				\begin{solution}
+		%					L'arbre ainsi construit est tel qu'un sommet a au plus $\tau$ (avec
+		%					$\tau = |\T|$) fils.
+		%					Les branches sont toutes finies~: en effet, si une branche est
+		%					infinie $(s_0,v_0) \rightarrow \cdots \rightarrow (s_i,v_i)
+		%					\rightarrow \cdots$, on aurait une suite infinie
+		%					$v_{i_0} \leq v_{i_1} \leq \cdots$, or ceci ne peut se produire qu'en
+		%					appliquant la règle $R2$ qui ajoute au moins un $\omega$.
+		%					Ceci ne peut se produire que $k$ fois maximum.
+		%					On démontre qu'un tel arbre est fini (lemme de Koenig~:
+		%					si $Succ(s_0)$ est fini, il existe par le lemme des tiroirs $s_0
+		%					\xrightarrow{t} s_1$ tel que $Succ(s_1)$ est infini...
+		%					On construit ainsi par récurrence une branche infinie).
+		%				\end{solution}
+		%				
+		%				\item Dans le cas $k=3$, on considère le SAV défini par $V_0 = (1,0,1)$
+		%				et $\mathcal{T} = \{a=(1,1,-1), b=(-1,0,1), c=(0,-1,0) \}$.
+		%				Justifier précisément pourquoi dans ce cas l'ensemble des vecteurs
+		%				accessibles à partir de $V_0$ est infini.
+		%				Construire l'arbre de couverture dans le cas particulier.
+		%				
+		%				\begin{solution}
+		%					L'ensemble des vecteurs accessibles est infini car, par exemple~:
+		%					\[
+		%					V_0 \xrightarrow{a}\xrightarrow{b} (1,1,1) 
+		%					\xrightarrow{a}\xrightarrow{b} (1,2,1) \cdots
+		%					\xrightarrow{a}\xrightarrow{b} (1,n,1) \cdots
+		%					\]
+		%					On obtient l'arbre de couverture suivant~:
+		%					
+		%					\begin{tikzpicture}[level 1/.style={sibling distance=4cm}]
+		%					\node {$(1,0,1)$}
+		%					child {
+		%						node {$(2,1,0)$}
+		%						child {
+		%							node {$(1,\omega,1)$}
+		%							child {
+		%								node {$(2,\omega,0)$}
+		%								edge from parent node [left] {$a$}
+		%							}
+		%							child {
+		%								node {$(0,\omega,2)$}
+		%								edge from parent node [right] {$b$}
+		%							}
+		%							edge from parent node [left] {$b$}
+		%						}
+		%						child {
+		%							node {$(2,0,0)$}
+		%							edge from parent node [right] {$c$}
+		%						}
+		%						edge from parent node [left] {$a$}
+		%					}
+		%					child {
+		%						node {$(0,0,2)$}
+		%						child {
+		%							node {$(1,\omega,1)$}
+		%							child {
+		%								node {$(2,\omega,0)$}
+		%								edge from parent node [left] {$a$}
+		%							}
+		%							child {
+		%								node {$(0,\omega,2)$}
+		%								edge from parent node [right] {$b$}
+		%							}
+		%							edge from parent node [right] {$a$}
+		%						}
+		%						edge from parent node [right] {$b$}
+		%					};
+		%					\end{tikzpicture}
+		%				\end{solution}
+		%				
+		%				\item Démontrer que l'arbre de couverture approxime l'ensemble
+		%				d'accessibilité du système d'additions de vecteurs
+		%				$(V_0,\mathcal{T})$ de la fa\c{c}on suivante~:
+		%				\begin{itemize}
+		%					\item $\forall V$ accessible à partir de $V_0$, il existe un sommet
+		%					de l'arbre étiqueté par un vecteur $W$ tel que $V\leq W$.
+		%					
+		%					\begin{solution}
+		%						Faire une récurrence sur la longueur d'un chemin menant de
+		%						$V_0$ à $V$.
+		%					\end{solution}
+		%					
+		%					\item L'ensemble des vecteurs accessibles à partir de $V_0$ est
+		%					fini si et seulement si l'arbre ne contient aucun vecteur
+		%					possédant une composante $\omega$.
+		%					
+		%					\begin{solution}
+		%						L'introduction d'un $\omega$ correspond à une suite d'états
+		%						accessibles infinie (cf.\ question 2b).
+		%						Réciproquement, si l'arbre est fini, l'ensemble des états
+		%						accessibles est contenu dans l'ensemble des minorants d'un
+		%						nombre fini de vecteurs de $\N^k$, donc est fini.
+		%					\end{solution}
+		%				\end{itemize}
+		%			\end{enumerate}
+		%		\end{enumerate}
+		
+		\qformat{\textbf{Exercice \thequestion~(\thequestiontitle):}\\}
+		\titledquestion{Dilworth’s theorem}
+		Let $(E, \leq)$  be a finite ordered set..
+		
+		Let $F$ be a non-empty subset of $ E $. Denote by $\textrm{Max}(F)$ all of its maximal elements.
+		
+		\begin{enumerate}
+			\item if $F$ is a non-empty subset of $E$, show that $\textrm{Max}(F)$
+			is a non-empty subset of $F$.
+			
+			\begin{solution}
+				By recursion on the cardinalty of$F$.
+				Pick $x \in F$. If it is not maximal, we apply
+				the induction to
+				$\{ z \in F \mid z>x \}$.
+			\end{solution}
+			
+			\item If $F$ is a non-empty subset of $E$, show that $\textrm{Max}(F)$ is an antichain and that it is maximal(inclusion-wise) of the antichains in $F$
+			
+			\begin{solution}
+				By recursion of the cardinality of $F$.
+				If $F$ is a singleton of $\{x\}$, $x \in Max(F)$ and $\{x\}$ is
+				maximal.
+				Otherwise, any two elements of $Max(F)$ are incomperable, hence
+				$Max(F)$ is an antichain.
+				any other element in $F$ is comparable to $F$.
+				De plus, un élément de $F$ est majoré par un élément maximal (cf.\ 1)
+				donc il n'existe aucun élément de $F \setminus Max(F)$ non comparable à
+				tous les éléments de $Max(F)$, ce qui assure que l'antichaine $Max(F)$
+				est maximale.
+			\end{solution}
+		\end{enumerate}
+		
+		We now show by induction on $|E|$,  \textbf{Dilworth’s theorem}~: 
+		
+		Let $k$ be the maximal cardinality of an antichain in $E$.
+		Then $E$ is a disjoint union of $k$ chains(a set of comparable elements).
+		\begin{enumerate}[resume]
+			\item Demonstrate the result when $k=1$.
+			
+			\begin{solution}
+				If $k=1$, every two elements of $E$ are comperable, therefore the order is total.
+				A finite total ordered set is a chain.
+			\end{solution}
+			
+			\item Suppose that $k>1$. Let $z\in \textrm{Max}(E)$ and $F =
+			E\setminus\{z\}$. Let $l$ the maximal cardinality of an antichain in $F$ ; by induction assumption $F$ is a disjoint union of chains $C_1,...,C_l$.
+			
+			\begin{enumerate}
+				\item Give a bound on $k$ as a function of $l$.
+				
+				\begin{solution}
+					$k \leq l+1$
+					
+					Une antichaine de $F$ est une antichaine de $E$ donc $l \leq k$.
+					Une antichaine de $E$ est soit une antichaine de $F$, soit la réunion d'une antichaine de $F$ avec $\{z\}$.
+					Donc $k \leq l+1$.
+				\end{solution}
+				
+				\item Let $ \mathcal{C}$ be an antichain of $E$. What can we say about
+				$\mathcal{C}\cap C_i$, for $i\in [l]$~?
+				\newcommand{\CC}{\mathcal{C}}
+				
+				\begin{solution}
+					$|\CC \cap C_i|=1$
+					
+					L'ensemble $\CC \cap C_i$ est au plus de cardinal $1$.
+					En effet, $\CC \cap C_i$ est à la fois une chaine et une
+					antichaine, ce qui n'est possible que pour l'ensemble vide ou un
+					singleton.
+				\end{solution}
+				
+				\item Let $i\in [l]$. We denote by $D_i$
+				the set of elements of $C_i$ that are in an antichain of cardinality $l$ in $F$.
+				\begin{enumerate}
+					\item Show that $D_i$ isn't empty.
+					
+					\begin{solution}
+						Let $\CC$ be an antichain of cardinality $l$. Note that  $l = |\CC| = \sum_i |\CC \cap C_i|$. But in this chain there cant be two elements in the same chain $C_j$.
+						
+						Soit $\CC$ une antichaine de cardinal $l$. 
+						Comme $l = |\CC| = \sum_i |\CC \cap C_i|$, et que les ensembles
+						$\CC \cap C_i$ sont au plus de cardinal $1$, ils faut qu'ils
+						soit tous de cardinal $1$.
+					\end{solution}
+					
+					Denote by $y_i$ the maximal element of $D_i$.
+					\item Show that  $\{y_1,...,y_l\}$ is an antichain of $F$.
+					
+					\begin{solution}
+						Assume for contradiction that there exists $i \neq j$ s.t. $y_i \leq y_j$.
+						Let $\CC$ be the antichain of cardinality $l$ s.t. $y_j\in\CC$. But then $x\in\CC\cap\C_i$ has $x\leq y_i\leq y_j$ contradiction.
+						
+						Supposons qu'il existe $i \neq j$ tels que $y_i \leq y_j$.
+						Soit $\CC$ une antichaine de cardinal $l$ contenant $y_j$.
+						Soit $x \in \CC \cap C_i$ (un tel $x$ existe sinon $|\CC| =
+						\sum_i |\CC \cap C_i| \leq l-1$).
+						Alors par maximalité de $y_i$ dans la chaine $C_i$,
+						$x \leq y_i$ et donc $x \leq y_j$, ce qui contredit le fait que
+						$\CC$ est une antichaine.
+					\end{solution}
+					
+					\item Assume that for every $i$, $z$ is incomparable to 	$y_i$. Conclude Dilworth's theorem for this case.
+					
+					\begin{solution}
+						$E = \cup_{i=1}^l E_i \cup \{z\}$ disjoint union of chains.
+						
+						On décompose $E = \cup_{i=1}^l E_i \cup \{z\}$ et ainsi, $E$
+						est la réunion disjointe de $k$-chaines.
+					\end{solution}
+					
+					\item Assume that there exists an $i$ s.t. $z$ is comperable to $y_i$. Let $C' = \{z\}\cup \{x\in C_i \; | \; x \leq y_i\}$.
+					Show that $C'$ is a chain and that $F \setminus C'$ does not contain an antichain of cardinality $l$.
+					Conclude Dilworth's theorem.
+					
+					\begin{solution}
+						Comme $z$ est comparable avec $y_i$ et $z \in Max(E)$,
+						$y_i \leq z$. 
+						Donc par transitivité,
+						$C' = \{z\} \cup \{ x \in C_i \mid x \leq y_i \}$
+						est une chaine.
+						
+						Si $F \setminus C'$ contient une antichaine de cardinal $l$,
+						alors celle-ci rencontre non trivialement $C_i$ en $x$.
+						Dans la chaine $C_i$, $x$ et $y_i$ sont comparables et comme
+						$x \not\in C'$, $x \geq y_i$.
+						Par maximalité de $y_i$ dans $D_i$, $x=y_i$, ce qui contredit
+						$x \not\in C'$.
+					\end{solution}
+				\end{enumerate}
+			\end{enumerate}
+			%			\item Soit $N$ un entier naturel non nul. 
+			%			\begin{enumerate}
+			%				\item Soit $\mathcal{F}=\{n_i, i\in \llbracket 1,N\rrbracket\}$ une
+			%				suite d'entiers naturels.
+			%				On munit $\mathcal{F}$ de la relation~:
+			%				\[
+			%				n_i \preceq n_j \; \; \textrm{si}\; \left\{ \begin{array}{l} i\leq
+			%				j \\ n_i\leq n_j \end{array} \right.
+			%				\]
+			%				Démontrer que $\preceq$ est une relation d'ordre partiel.
+			%				Décrire pour $\preceq$ les chaines et les antichaines.
+			%				
+			%				\begin{solution}
+			%					Le fait que $\preceq$ et une relation d'ordre partiel se vérifie
+			%					facilement.
+			%					
+			%					Les chaines sont les suites croissantes
+			%					$n_{i_1} \leq n_{i_2} \leq \cdots \leq n_{i_k}$ avec
+			%					${i_1 < i_2 < \cdots < i_k}$.
+			%					
+			%					Les antichaines sont les suites strictement décroissantes
+			%					$n_{i_1} > n_{i_2} > \cdots > n_{i_k}$ avec
+			%					${i_1 < i_2 < \cdots < i_k}$.
+			%				\end{solution}
+			%				
+			%				\item Soit $m$ et $n$ deux entiers naturels tels que $N-1=nm$.
+			%				Démontrer que $\mathcal{F}$ contient une suite croissante de cardinal
+			%				$n+1$ ou une suite décroissante de cardinal $m+1$.
+			%				
+			%				\begin{solution}
+			%					On applique alors le théorème de Dilworth~: soit $k$ le maximum des
+			%					cardinaux des antichaines dans $\mathcal{F}$.
+			%					Alors $\mathcal{F}$ est la réunion disjointe de $k$ chaines.
+			%					
+			%					Si $k \geq m+1$, alors $\mathcal{F}$ a une antichaine de cardinal
+			%					$m+1$ donc une suite strictement décroissante de cardinal $m+1$.
+			%					Sinon, $k \leq m$ et $\mathcal{F}$ est la réunion disjointe de $k$
+			%					chaines.
+			%					Si ces chaines sont toutes de cardinal $\leq n$, alors
+			%					$\mathcal{F}$ est de cardinal au plus $kn \leq mn$.
+			%				\end{solution}
+			%			\end{enumerate}
+			%			
+			%			\item Soit $N$ un entier naturel non nul. Soit $\mathcal{I}$ une famille de $N$ intervalles fermés réels.
+			%			Soit $m$ et $n$ deux entiers naturels tels que $N-1=nm$.
+			%			Démontrer qu'il existe $m+1$ intervalles dans $\mathcal{I}$ disjoints deux à deux ou $n+1$ intervalles dans $\mathcal{I}$ d'intersection non vide.
+			%			\newcommand{\I}{\mathcal{I}}
+			%			
+			%			\begin{solution}
+			%				On munit $\I$ d'une relation d'ordre partiel $\preceq$ en posant~:
+			%				\[
+			%				[a,b] \prec [c,d] \text{ si } b<c
+			%				\]
+			%				Les chaines sont les suites d'intervalles $[a_1,b_1], \dots, [a_k,b_k]$
+			%				avec $a_1 < b_1 < a_2 < b_2 < \cdots < b_{k-1} < a_k < b_k$.
+			%				Les antichaines sont les suites d'intervalles
+			%				$[a_1,b_1], \dots, [a_k,b_k]$ telles que $[a_i,b_i] \cap [a_j,b_j]$
+			%				soit vide pour tous $i,j$.
+			%				S'il n'existe pas $m+1$ intervalles dans $\I$ disjoints deux à deux,
+			%				les chaines sont toutes de cardinal $\leq m$.
+			%				En utilisant le théorème de Dilworth, $\I$ est de cardinal $\leq mk$ où
+			%				$k$ est le maximum des cardinaux des antichaines dans $\I$.
+			%				Donc $k>n$.
+			%				Soit alors $[a_1,b_1], \dots, [a_k,b_k]$ une antichaine de cardinal
+			%				$k$.
+			%				On pose $a = \max(a_1, \dots, a_k)=a_j$ et
+			%				$b = \max(b_1, \dots, b_k)=b_l$.
+			%				Alors pour tout $i$, $[a_i,b_i] \cap [a_j,b_j]$ est non vide, donc
+			%				$a_i < a < b_i$ (en particulier $a < b$), et
+			%				$[a_i,b_i] \cap [a_l,b_l]$ est non vide, donc $a_i < b < b_i$.
+			%				Donc $[a,b]$ est un intervalle non vide contenu dans tous les
+			%				$[a_i,b_i]$.
+			%			\end{solution}
+		\end{enumerate}
+	\end{questions}
+	
+\end{document}

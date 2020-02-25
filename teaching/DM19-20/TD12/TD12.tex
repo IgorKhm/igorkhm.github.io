@@ -1,0 +1,379 @@
+\documentclass[a4paper,11pt]{exam}
+%\printanswers % pour imprimer les réponses (corrigé)
+% \noprintanswers % Pour ne pas imprimer les réponses (nonc)
+% \addpoints % Pour compter les points
+% \noaddpoints % pour ne pas compter les points
+\qformat{\textbf{Exercice \thequestion \,:}\\} % Questions style
+\usepackage{color} % Define new colors
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{exercise}
+\usepackage{mathrsfs,amsmath,amssymb,latexsym,amsfonts,mathtools,stmaryrd}
+\usepackage{enumitem}
+\setitemize{label=\textbullet}
+% Bigger binomial in math mode
+\usepackage{nccmath}
+\renewcommand{\binom}{\mbinom}
+
+\usepackage[francais]{babel}
+
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\newtheorem{theorem}{Theorem}
+\shadedsolutions % définit le style des réponses
+% \framedsolutions % définit le style des réponses 
+\definecolor{SolutionColor}{rgb}{0.8,0.9,1} % bleu ciel
+\renewcommand{\solutiontitle}{
+\noindent\textbf{Solution:}\par\noindent} % Définit le titre des réponses
+\newcommand\eqdef[0]{\stackrel{\text{def}}{=}}
+\newcommand{\binomial}[2]{\small{\left(\begin{array}{c} #1 \\ #2\end{array} \right)}}
+\pagestyle{headandfoot}
+\headrule
+\header{L3 - 2019/2020 - TD11}{Mercredi 11 December}{Mathématiques discrètes}
+\footer{S. Le Roux, I. Khmelnitsky}{\thepage}{E.N.S. Cachan}
+\footrule
+
+\renewcommand{\questionshook}{%
+  \setlength{\labelwidth}{0pt}%
+  \setlength{\itemsep}{0.9\baselineskip}
+}
+
+\definecolor{gris}{gray}{0.95}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\A}{\mathcal{A}}
+\renewcommand{\S}{\mathcal{S}}
+\newcommand{\RR}{\mathbin{\mathcal{R}}}
+\renewcommand{\P}{\mathrm{P}}
+\DeclareMathOperator{\pgcd}{pgcd}
+\DeclareMathOperator{\Fix}{Fix}
+\DeclareMathOperator{\fix}{Fix}
+
+\usepackage{tikz}
+% \usetikzlibrary{trees}
+\usetikzlibrary{automata, positioning, arrows}
+\tikzset{
+	->, % makes the edges directed
+	>=stealth, % makes the arrow heads bold
+	node distance=3cm, % specifies the minimum distance between two nodes.
+	every state/.style={thick, fill=gray!10},
+	% initial text=$ $, % sets the text that appears on the start arrow
+}
+
+\begin{document}
+
+\begin{questions}
+	
+
+\begin{EnvFullwidth}
+	\colorbox{gris}{
+		\begin{minipage}[c]{\textwidth}
+			Markov chains
+		\end{minipage}
+	}
+\end{EnvFullwidth}
+
+
+
+\question
+
+We have a biased coin that returns heads with the probability  $ p\in(0,1)$.
+\begin{enumerate}
+	\item We can simulate an unbiased die with an unbiased coin in the following way:
+	
+	The coin is first thrown: heads denotes $ 1,2,3 $, and tail denotes $ 4,5,6 $. 
+	\\
+	Then we throw the coin twice : if we get heads, heads, then we say $ 1 $ (or $ 4 $), if we get heads, tail we say $ 2 $ (or $ 5 $), if we get tail, heads we say $ 3 $ (or $ 6 $) and if we get tail, tail we start again from the first throw.
+	
+	\begin{enumerate}
+		\item Draw the underlying Markov chain and justify that it simulates a balanced die.
+		\item What is the average number of coin rolls for this simulation of a die?
+	\end{enumerate}
+
+	\begin{solution}
+		Draw the chain.
+		
+		$P(1)=\frac{1}{8}\sum_{n=0}\left(2\cdot\frac{1}{8}\right)^n = \frac{1}{8}\left(\frac{4}{3}\right) = 1/6$
+		
+		The probability of ending a specific round is $3/4$. Therefore we get a geometric RV $X$ with $p=3/4$. Hence $E(X) = \frac{1}{p}=4/3$ is the average number of rounds. and every time we flip 3 coins therefore $ 4 / 3 \cdot 3 = 4 $
+		
+		
+	\end{solution}
+	
+	\item Find in the same spirit an algorithm to simulate an unbiased die by casting the biased coins several times. Present it in the form of a Markov chain.
+	
+	\begin{solution}
+		Denote by $p'=p^3$ and $q'=(1-p)^3$ and we get:
+		\[
+			p^3(1-p)^3\sum_{n\in\N}(1-6p^3(1-p)^3)^n=p'q'\sum_{n\in\N}(1-6p'q')^n=p'q'\frac{1}{6p'q'}=\frac{1}{6}
+		\]
+	\end{solution}
+	
+\end{enumerate}
+
+\question
+
+A rectangular image is formed of $ m \times n $ square pixels, $ m $ representing the number of pixels in
+width and $ n $ in length.
+We consider the following algorithm:
+At each step, a pixel is chosen uniformly, and then an immediate neighbor is chosen
+(if it is not on an edge, it has $ 8 $ immediate neighbors) with a uniform probability
+and it takes his color.
+Demonstrate that with probability $ 1 $, the image becomes monochromatic.
+
+\begin{solution}
+	Model the problem as an absorbing Markov chain, and get that the monochromatic pictures are the absorbing states. 
+\end{solution}
+
+\question
+Two players $A$ and $B$ play heads or tails, where head occurs with probability $0\leq p\leq1$. Each time head(resp. tail) occurs player $A$(resp. $B$) gives 1 coin to player $B$(resp .$A$). They play till one of them runs out of money. Given that $A$ starts with $a$ coins and $B$ with $b$, what is the probability that $A$ wins?
+
+\begin{solution}
+	Let $c=a+b$, and denote by $u(i)=P(X_T=c|X_0=i)$ the probability that $A$ wins given that $A$ had $i$ in the first turn. We get that ($q=1-p$)
+	\[
+		u(i) = pu(i-1)+qu(i+1)
+	\]
+	
+	The characteristic equation associated with this linear recurrences is $qx^2-x+p=0$, with the roots being $x=1$,$x=p/q$. Therefore:
+	\[
+		u(i) = \lambda1^n + \gamma(p/q)^i
+	\]
+	or if $p=q$
+	\[
+		u(i) = \lambda1^n + \gamma i1^n
+	\]
+	Using the fact that $ u(0)=1 $ and $ u(1)=0 $ we get that 
+	\[
+		u(i) = \frac{1-(\frac{q}{p})^i}{1-(\frac{q}{p})^c}
+	\]
+	and if $ p=q $
+	\[
+		u(i) = \frac{i}{c}
+	\]
+\end{solution}
+
+
+
+
+%\question Let $0\leq p,q\leq1$ such that $p=1-q$. A simple random walk on $\Z$ is a Markov chain defined by:
+%\[
+%X_{n+1} =\begin{cases}
+%X_n +1 & \text{with probabilty }p\\
+%X_n -1 & \text{with probabilty }q\\
+%\end{cases}
+%\]
+%For $a,b\in\R $ and $n\in \N$, recall Stirling's approximation :
+%\[
+%a\sqrt n(n/e)^n\leq n! \leq b\sqrt n(n/e)^n
+%\]
+%
+%\begin{enumerate}
+%	\item Is it irreducible?
+%	\begin{solution}
+%		Yes, for any the probability to get from any state to any state is higher then zero.
+%	\end{solution}
+%	\item Is the state $0$ recurrent/transient?
+%	\begin{solution}
+%		Let $p^n_{00}$ be the probability returning to $ 0 $ after $n$ steps. We know that we cannot return after odd number of steps, therefore we will only consider even steps. 
+%		\[
+%		p^{2n}_{00} = \binom{2n}{n}p^nq^n=\frac{2n!}{n!^2}p^nq^n\leq \frac{b\sqrt{2n}(2n/e)^{2n}}{a^2 n(n/e)^{2n}}p^nq^n = c_1\frac{(4pq)^n}{\sqrt{n}}
+%		\] 
+%		in the same way:
+%		\[
+%		p^{2n}_{00} \geq c_2\frac{(4pq)^n}{\sqrt{n}}
+%		\]
+%		If $ p=q $ then
+%		\[
+%		\sum_{n\in\N} p_{00}^{2n} \geq \sum_{n\in\N} c_2\frac{1}{\sqrt{n}}=\infty
+%		\]
+%		on the other hand if $p\neq q$, then $k=4pq<1$:
+%		\[
+%		\sum_{n\in\N} p_{00}^{2n} \leq \sum_{n\in\N} c_1\frac{k}{\sqrt{n}}< \infty
+%		\]
+%	\end{solution}
+%\end{enumerate}
+%The simple {\bf symmetrical} random walk on $\Z^n$ is defined as follows. Given $X_n = (x_1,x_2,\ldots,x_n)\in~\Z^n$ then:
+%\[
+%X_{n+1} =\begin{cases}
+%(x_1+1,x_2,\ldots,x_n) & \text{with probabilty } \frac{1}{2n}\\
+%(x_1-1,x_2,\ldots,x_n) & \text{with probabilty } \frac{1}{2n}\\
+%(x_1,x_2+1,\ldots,x_n) & \text{with probabilty } \frac{1}{2n}\\
+%&\vdots\\
+%(x_1,x_2,\ldots,x_n-1) &\text{with probabilty }\frac{1}{2n}\\
+%\end{cases}
+%\]
+%\begin{enumerate}[resume]
+%	\item Is the chain recurrent for $n=2$?
+%	\begin{solution}
+%		Yes. Let $X_n^-$ and $X_n^+$ the projection of $X_n$ on the diagonal lines $y=\pm x$. $X_n^+$ and $X_n^-$ are independent simple symetric random walks on $\frac{1}{2}\Z$, and $X_n=0$ iff $X^+_n = 0=X_n^-$. Hence we get by the previous question that:
+%		\[
+%		p_{00}^2n=\left(\binom{2n}{n}\left(\frac{1}{2}\right)^{2n}\right)^{2}\geq c_{2}^2\frac{1}{n}
+%		\]
+%		Therefore we get that $\sum p^n_{00}=\infty$.
+%	\end{solution}
+%	\item And for $n=3$?
+%	\begin{solution}
+%		first we get that we need to compute th probability of all the even paths, where we go the total 0 in each of the indeces, i.e.:
+%		\[
+%		p^{2n}_{00}=\sum_{\begin{array}{c}
+%			i,j,k\geq0\\
+%			i+j+k=n
+%			\end{array}}\frac{\left(2n\right)!}{\left(i!j!k!\right)^{2}}\left(\frac{1}{6}\right)^{2n}=\binom{2n}{n}1/2^{2n}\sum_{\begin{array}{c}
+%			i,j,k\geq0\\
+%			i+j+k=n
+%			\end{array}}\binom{n}{i,j,k}^2\left(\frac{1}{3}\right)^{2n}
+%		\]
+%		we note that:
+%		\[
+%		\sum_{\begin{array}{c}
+%			i,j,k\geq0\\
+%			i+j+k=n
+%			\end{array}}\binom{n}{i,j,k}\left(\frac{1}{3}\right)^{n} = 1
+%		\]
+%		as the total probability of punting $n$ balls in 3 containers. Moreover for $n=3m$ we get that:
+%		\[
+%		\binom{n}{i,j,k}\leq \binom{n}{m,m,m}
+%		\]  
+%		summing both of these results and using Stirlings approximation we get : 
+%		\[
+%		p_{00}^{2n}=\binom{2n}{n}1/2^{2n}\binom{n}{m,m,m}\left(\frac{1}{3}\right)^{n}\leq c'\left(\frac{6}{n}\right)^{3/2}
+%		\]
+%		Hence $\sum_{m=0}^\infty p^{6m}_{00} < \infty$. Moreover we know that $p^{6m}_{00}\geq (1/6)^2 p^{6m-2}_{00}$ and $p^{6m}_{00}\geq (1/6)^4 p^{6m-4}_{00}$ hence we get 
+%		\[
+%		\sum_{n=0}^\infty p^{2n}_{00} < \infty
+%		\]
+%	\end{solution}
+%	
+%\end{enumerate}
+
+\question
+Let $\mathcal{C}$ be a Markov chain on $N$ states with a transition matrix $P$.
+We assume that $P$ is \textrm{Doubly stochastic}, i.e.
+$\forall i \in \llbracket 1, N\rrbracket, \sum_j p_{i,j} = \sum_j p_{j,i} =1 $
+(the sum of each column and each row is $1$).
+
+\begin{enumerate}
+	\item We suppose that the chain $ \mathcal{C} $ is irreducible and aperiodic.
+	Given an initial distribution $v$, what is the value of $\lim_{n\rightarrow\infty}v\cdot P^n$
+	\begin{solution}
+		${\bf 1}P={\bf 1}$, therefore $\frac{1}{N}\cdot{\bf 1}P=\frac{1}{N}\cdot{\bf 1}$. Since its irreducible and aperiodic it is unique.
+	\end{solution}
+\end{enumerate}
+%
+\question
+A board game consists of a ring of $ N $ squares numbered from $ 0 $ to $ N-1 $.
+At each stage, the player rolls a balanced die and advances the corresponding number of squares.
+We denote by $ X_n $ the player's position at the $n$th step.
+\begin{enumerate}
+	\item Draw the Markov chain, give $N=7$.
+	\item What are the properties of this chain~? Justify that the chain has a stationary distribution.
+	\begin{solution}
+		irreducible, aperiodic, doubly stochastic.
+	\end{solution}
+	\item Determine without calculation the stationary distribution.
+\end{enumerate}
+
+
+\begin{EnvFullwidth}
+	\colorbox{gris}{
+		\begin{minipage}[c]{\textwidth}
+			Social choice
+		\end{minipage}
+	}
+\end{EnvFullwidth}
+
+Let there be a society with $N$ \emph{voters} and a set  $\mathcal{C}=\{A,B,C,\ldots\}$ of finite \emph{candidates}. Each voter $i\in[N]$ has a \emph{preferences} $\succ_i$ on the candidates (a total order). We call the set of all personal preferences of the voters in our society a \emph{profile} ($N$-tuple of preferences).
+A \emph{Social Choice Correspondence}(SCC) $f$, is a function from every profile to a candidate (or a set of candidates in case of ties).
+
+\question
+Given 2 candidates $A,B\in \mathcal{C}$ Condorcet's majority principle states that if most voters prefer $ A $ to $ B $, then $ B $ should not be elected.
+\begin{enumerate}
+	\item Given 3 candidates $\{A,B,C\}$, can you build a profile in which no candidate can be elected according to Condorcet's majority principle?
+	\begin{solution}
+	\[
+		\begin{array}{c}
+		A\succ_1 B\succ_1 C\\
+		C\succ_2 A\succ_2 B\\
+		B\succ_3 C\succ_3 A
+		\end{array}
+	\]
+	\end{solution}
+	\item Let there be $N$ voters, a profile $P$, and candidates $\mathcal{C}$. We say that a candidate $A\in\mathcal{C}$ \emph{weakly beats} or \emph{weakly dominates} a candidate $B$ if there exists $ H\subset [N] \text{ such that } |H|\geq~N/2$   and  $ \forall i\in H \text{ }  A\succ_i B$. Denote by:
+	\[
+		CW(P)=\{A\in\mathcal{C}\mid \forall B\in \mathcal{C}, A\text{ weakly dominates } B \}
+	\]
+	 the set of \emph{Condorcet winners}. We say that a SCC $f$ is Condorcet if 
+	 \[ 
+	 	CW(P)\neq\emptyset \Rightarrow f(P)\subseteq CW(P)
+	 \]
+	 Build a SCC which is Condorcet.
+	 \begin{solution}
+	 	Denote by $c\left(A,P\right)=$ \# of candidates weakly beaten by $A$. Copeland's method is:
+	 	\[
+	 		Cop\left(P\right)=\left\{ A\in \mathcal{C} \mid c\left(A,P\right)\ge c\left(B,P\right)\ \forall B\in A\right\} 
+	 	\]
+		We will show that for any profile $P$ we have $ CW\left(P\right)\ne\emptyset \Rightarrow Cop\left(P\right)=CW\left(P\right) $, so specifically, Copeland is Condorcet.
+		$ Cop\left(P\right)\ne\emptyset $ because the count for a candidate and the number of candidates are both finite, so a maximum exists.
+	 	
+		Suppose C$ W\left(P\right)\ne\emptyset $ and 
+		$ A\in CW\left(P\right)$ then $ c\left(A,P\right)=N-1 $ 
+		because $A$ is a Condorcet winner $ A$ beats everyone else. 
+		In this case $Cop\left(P\right)=\left\{ A\in \mathcal{C}\vert c\left(A,P\right)\ge N-1\right\} =\left\{ B\in \mathcal{C}\vert c\left(P,B\right)=N-1\right\} =CW\left(R^{N}\right) $
+	 \end{solution}
+\end{enumerate} 
+
+A \emph{social welfare function}(SWF) $f$ is a function from every profile to a preference $\succ_s$ which is called the \emph{social preference}. 
+
+We say that a SWF respects \emph{unanimity} if it puts candidate $A$ above $B$ when every voter puts $A$ above $B$.  
+
+We say that a SWF is \emph{independent of irrelevant alternatives}(IIA) if the position of $A$ compared to $B$ on the social choice depends only on their relative ranking in every voter's preference. I.e $f$ is IIA  if given a profile $P=\{\succ_i\}_{i\in[N]}$, candidates $A,B,C$, and a social preference $ f(P) = \{\succ_s\} $ which ranks $A\succ_s B$, then changing the profile $\succ_i$ to $\succ_i'$ where :
+\[
+	\forall i\in[N],\text{ if } A\succ_i B \Rightarrow A\succ_i' B; \text{ and if }B\succ_i A \Rightarrow B\succ_i' A
+\]
+
+Then for the new profile $P'$ we get that the social choice $ f(P') = \{\succ_s'\} $ has that $A\succ_s' B$.  
+
+\question
+Build a SWF which respects unanimity and is IIA.
+
+\begin{solution}
+	dictatorship :), or just use two candidates.
+\end{solution}  
+
+We call a SWF \emph{dictatorship} if there exists a voter $k\in[N]$ such that for any profile $P$ $f(P)=\{\succ_k\}$ .
+\question
+We will proof the following theorem by Arrow, which was originally proven by him in 1951-1963 and for which (among other works) he received a Nobel prize in economics.
+\begin{theorem}
+	Any SWF on $|A|\geq 3$ that respects unanimity and IIA is a dictatorship.  
+\end{theorem}
+The original proof was very long and complicated, so instead we follow a proof by John Geanakoplos 96 (in his paper he gives 3 different proofs for this theorem):
+\begin{enumerate}
+	\item  For any candidate $A\in\mathcal{C}$ if every voter $i$ ranks $A$ at the top or the bottom of his preferences then $\succ_s$ must  also rank $A$ at either the top or the bottom.  
+	\begin{solution}
+		Assume for contradiction that there exists such a profile $P$ for which the SWF puts $A\succ_s B$ and $B\succ_s C$, and $B$ is ranked in each voter either in the top or bottom. Moving candidate $C$ in each profile above $A$ will keep the the preferences between $A$ and $B$ and between $B$ and $C$, hence by IIA  we would still get that $A\succ_s B$ and $B\succ_s C$. Now by unanimity we get that $C\succ_s A$ but by the transitivity of we get that $A\succ_s C$.     
+	\end{solution}
+\end{enumerate}
+Pick a profile that puts the candidate $D$ in the last place in every voter's preference (which gives us that $D$ is at the bottom of the social choice). Going from voter $1$ till $N$ move $D$ from the bottom to the top of the preference. At some voter $v\in[N]$(for clarity we will call him Vlad) the candidate will also move to the top of the social choice(by unanimity). 
+
+\begin{enumerate}\setcounter{enumi}{1}
+	\item Show that if Vlad prefers the candidate $A$ over $B$($A,B\neq D$) then the social choice will have the same preference (i.e $A\succ_v B\Rightarrow A\succ_s B$).
+	\begin{solution}
+		Denote by $P_1$ the profile just before Vlad changed his placement of $D$ and $P_2$ the profile just after.Construct the profile $\widehat{P}$ from $P_2$ where Vlad moves $A$ above $D$, and we get that $A\succ_vD\succ_vC$, and by letting the of the voters rearrange their ranking of $A,C$ while leaving the extremal position of $D$.  By IIA we'd get that $A>D$ since they keep their relative position as in $P_1$ and $D\succ_sC$  since they keep their relative position as in $P_2$, and therefore $A\succ_sC$. Now by changing the position of $D	$ we get that for any profile if $A\succ_v C\Rightarrow A\succ_c C$ 
+	\end{solution}
+	\item Show that Vlad is a dictator.
+	\begin{solution}
+		We are left showing that for any $A$ if $B\succ_vA\Rightarrow B\succ_sA$. Redo the two steps above for some candidate $C\neq A,B$. By 2. we know that there is a voter $v'$ who is a dictator over $A,B$. But we also know that Vlad's choice between the profile $P_1$ to $P_2$ changes the position of $B$ hence $v=v' $ and Vlad is a dictator.
+	\end{solution} 
+\end{enumerate}
+
+
+
+\end{questions}
+\end{document}
+
+

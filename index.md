@@ -15,7 +15,7 @@ My research is currently mainly focused on verification of infinite state system
 ### Conference
 #### 2020
    +  A. Finkel, S. Haddad, and I. Khmelnitsky. Minimal coverability tree construction made complete and efficient, FoSSaCS'20
-   <a href="/tobeadded"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
+   <a href="https://hal.inria.fr/INRIA/hal-02479879"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
 
 #### 2019
    +  A. Finkel, S. Haddad, and I. Khmelnitsky. Coverability and Termination in Recursive Petri Nets, Petri Nets'19
@@ -38,7 +38,7 @@ My research is currently mainly focused on verification of infinite state system
 
 ###  2019-2020
   * [Architecture and Systems](/tobeadded)
-  * [Discrete mathematics](/tobeadded)
+  * [Discrete mathematics](/teaching/DM19-20)
 
 ### 2018-2019
   * [Combinatorial algorithms(in Hebrew)](/tobeadded)
@@ -47,7 +47,7 @@ My research is currently mainly focused on verification of infinite state system
 <p id="Tools"> </p>
 
 # Tools
- + [MinCov](https://github.com/IgorKhm/MinCov)- Python implementation of an algorithm solving the coverability set problem for Petri nets. Based on the work in <a href="/tobeadded"> "Minimal coverability tree construction made complete and efficient"</a>.
+ + [MinCov](https://github.com/IgorKhm/MinCov)- Python implementation of an algorithm solving the coverability set problem for Petri nets. Based on the work in <a href="https://hal.inria.fr/INRIA/hal-02479879"> "Minimal coverability tree construction made complete and efficient"</a>.
 
 
 <!--
