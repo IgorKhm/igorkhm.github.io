@@ -16,6 +16,9 @@ My research is currently mainly focused on verification of infinite state system
 #### 2020
    +  A. Finkel, S. Haddad, and I. Khmelnitsky. Minimal coverability tree construction made complete and efficient, FoSSaCS'20
    <a href="https://hal.inria.fr/INRIA/hal-02479879"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
+   
+   +  S. Haddad, and I. Khmelnitsky. Dynamic Recursive Petri Nets, Petri Nets'20
+   
 
 #### 2019
    +  A. Finkel, S. Haddad, and I. Khmelnitsky. Coverability and Termination in Recursive Petri Nets, Petri Nets'19
