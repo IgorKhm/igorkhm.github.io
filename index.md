@@ -19,7 +19,7 @@ My research is currently mainly focused on verification of infinite state system
    +  S. Haddad, and I. Khmelnitsky. **Dynamic Recursive Petri Nets**, Petri Nets'20
    
 #### 2019
-   +  A. Finkel, S. Haddad, and I. Khmelnitsky. __Coverability and Termination in Recursive Petri Nets__, Petri Nets'19
+   +  A. Finkel, S. Haddad, and I. Khmelnitsky. _Coverability and Termination in Recursive Petri Nets_, Petri Nets'19
    <a href="https://hal.inria.fr/hal-02081019"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>   
    + Alain Finkel, Serge Haddad et Igor Khmelnitsky. **Réification des accélérations pour la construction de Karp et Miller**,MSR'19, Angers
    <a href="https://hal.archives-ouvertes.fr/hal-02431913"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>(in French)
