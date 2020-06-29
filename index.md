@@ -12,17 +12,24 @@ My research is currently mainly focused on verification of infinite state system
 
 # Research
 ## Publications
-### Conference
+### Journal:
+  + A. Finkel, S. Haddad, and I. Khmelnitsky. *Coverability, Termination, and Finiteness in Recursive Petri Nets*,  in Fundamenta Informaticae, To be published in 2020  
+  + A. Finkel, S. Haddad, and I. Khmelnitsky. *Commodification of Accelerations for the Karp and		Miller Construction*, in Journal of Discrete Event Dynamic Systems, To be published in 2020
+
+### International Conferences:
+
 #### 2020
    +  A. Finkel, S. Haddad, and I. Khmelnitsky. *Minimal coverability tree construction made complete and efficient*, FoSSaCS'20
    <a href="https://hal.inria.fr/INRIA/hal-02479879"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
    +  S. Haddad, and I. Khmelnitsky. *Dynamic Recursive Petri Nets*, Petri Nets'20
-   
+
 #### 2019
    +  A. Finkel, S. Haddad, and I. Khmelnitsky. _Coverability and Termination in Recursive Petri Nets_, Petri Nets'19
    <a href="https://hal.inria.fr/hal-02081019"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>   
-   + Alain Finkel, Serge Haddad et Igor Khmelnitsky. *Réification des accélérations pour la construction de Karp et Miller*,MSR'19, Angers
-   <a href="https://hal.archives-ouvertes.fr/hal-02431913"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>(in French)
+
+### National Conferences(France):
+  + Alain Finkel, Serge Haddad et Igor Khmelnitsky. *Réification des accélérations pour la construction de Karp et Miller*,MSR'19, Angers
+  <a href="https://hal.archives-ouvertes.fr/hal-02431913"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>(in French)
 
 ### Thesis
   + *D-collapsibility and its applications.* Master thesis, under the supervision of professor R. Meshulam. <a href="/papers/thesis.pdf"><img src="pictures/pdf.png" alt="drawing" width="20"/> </a>
