@@ -3,7 +3,7 @@ layout: default
 title: "Igor Khmelnitsky, personal website"
 ---
 
-# <img src="pictures/myphoto3.jpg" style="float: left;" alt="drawing" width="300"/> Igor Khemelnitsky
+# <img src="pictures/myphoto3.jpg" style="float: left;" alt="drawing" width="300"/> Igor Khmelnitsky
 I am a PhD student in the [LSV](https://www.lsv.fr) in ENS Paris Saclay, under the supervision of [Finkel Alain](http://www.lsv.fr/~finkel) and [Haddad Serge](http://www.lsv.fr/~haddad).
 My research is currently mainly focused on verification of infinite state systems, such as Petri nets, recursive Petri nets, well structured transition systems, etc. Since these type of systems can be hard to verify using the classical algorithms, I began trying to introduce machine learning technique to the verification of theses systems.
 
