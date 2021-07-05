@@ -18,7 +18,9 @@ My research is currently mainly focused on verification of infinite state system
 
 ### Inter national Conferences:
 #### 2021
-  + B. Barbot, B. Bollig, A. Finkel, S. Haddad, I. Khmelnitsky, M. Leucker, D. Neider, R. Roy, and L. Ye, *Extracting context-free grammars from recurrent neural networks using tree-automata learning and a* * search, ICGI 21.
+  + B. Barbot, B. Bollig, A. Finkel, S. Haddad, I. Khmelnitsky, M. Leucker, D. Neider, R. Roy, and L. Ye, *Extracting Context-Free
+Grammars from Recurrent Neural Networks using Tree-Automata Learning
+and A-star Search*, ICGI 21.
   + I. Khmelnitsky, D. Neider, R. Roy, B. Barbot, B. Bollig, A. Finkel, S. Haddad, M. Leucker, and L. Ye, *Property-directed verification and robustness certification of recurrent neural networks*, ATVA 21.
 
 #### 2020
