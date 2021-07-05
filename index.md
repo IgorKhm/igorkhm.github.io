@@ -66,7 +66,7 @@ and A-star Search*, ICGI 21.
 
 # Tools
  + [MinCov](https://github.com/IgorKhm/MinCov)- Python implementation of an algorithm solving the coverability set problem for Petri nets. Based on the work in <a href="https://hal.inria.fr/INRIA/hal-02479879"> "Minimal coverability tree construction made complete and efficient"</a>.
- + [Property directed verification](https://github.com/LeaRNNify/Property-directed-verification)- Python implantation of the algorithm developed in "Property-directed verification and robustness certification of recurrent neural networks".
+ + [Property directed verification](https://github.com/LeaRNNify/Property-directed-verification)- Implantation of the algorithm developed in "Property-directed verification and robustness certification of recurrent neural networks".
 
 
 <br/>
