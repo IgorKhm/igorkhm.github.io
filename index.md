@@ -4,7 +4,7 @@ title: "Igor Khmelnitsky, personal website"
 ---
 
 # <img src="pictures/myphoto3.jpg" style="float: left;" alt="drawing" width="300"/> Igor Khmelnitsky
-I am a PhD student in the [LSV](https://www.lsv.fr) in ENS Paris Saclay, under the supervision of [Finkel Alain](http://www.lsv.fr/~finkel) and [Haddad Serge](http://www.lsv.fr/~haddad).
+I am a PhD student in the [LSV](https://www.lsv.fr) in ENS Paris Saclay, under the supervision of [Alain Finkel](http://www.lsv.fr/~finkel) and [Serge Haddad](http://www.lsv.fr/~haddad).
 My research is currently mainly focused on verification of infinite state systems, such as Petri nets, recursive Petri nets, well structured transition systems, etc. Since these type of systems can be hard to verify using the classical algorithms, I began trying to introduce machine learning technique to the verification of theses systems.
 
 
@@ -13,10 +13,13 @@ My research is currently mainly focused on verification of infinite state system
 # Research
 ## Publications
 ### Journal:
-  + A. Finkel, S. Haddad, and I. Khmelnitsky. *Coverability, Termination, and Finiteness in Recursive Petri Nets*,  in Fundamenta Informaticae, To be published in 2020  
-  + A. Finkel, S. Haddad, and I. Khmelnitsky. *Commodification of Accelerations for the Karp and		Miller Construction*, in Journal of Discrete Event Dynamic Systems, To be published in 2020
+  + A. Finkel, S. Haddad, and I. Khmelnitsky. *Coverability, Termination, and Finiteness in Recursive Petri Nets*,  in Fundamenta Informaticae, To be published in 2021  
+  + A. Finkel, S. Haddad, and I. Khmelnitsky. *Commodification of Accelerations for the Karp and		Miller Construction*, , Discrete Event Dynamic Systems, 2020.
 
-### International Conferences:
+### Inter national Conferences:
+#### 2021
+  + B. Barbot, B. Bollig, A. Finkel, S. Haddad, I. Khmelnitsky, M. Leucker, D. Neider, R. Roy, and L. Ye, *Extracting context-free grammars from recurrent neural networks using tree-automata learning and a* * search, ICGI 21.
+  + I. Khmelnitsky, D. Neider, R. Roy, B. Barbot, B. Bollig, A. Finkel, S. Haddad, M. Leucker, and L. Ye, *Property-directed verification and robustness certification of recurrent neural networks*, ATVA 21.
 
 #### 2020
    +  A. Finkel, S. Haddad, and I. Khmelnitsky. *Minimal coverability tree construction made complete and efficient*, FoSSaCS'20
@@ -38,6 +41,8 @@ My research is currently mainly focused on verification of infinite state system
 
 1. *A Tool for the Coverability Problems in Petri Nets* - Tool demonstration in MSR'19, Angers France. <a href="/presentations/msr19.pdf"><img src="pictures/pdf.png" alt="drawing" width="20"/> </a>
 2. *Coverability and Termination in Recursive Petri Nets* - Petri nets 2019.  <a href="/presentations/petrinet19.pdf
+"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
+3. *Coverability and Termination in Recursive Petri Nets* - Petri nets 2019.  <a href="/presentations/petrinet19.pdf
 "><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
 
 <p id="Teaching"> </p>
