@@ -26,7 +26,7 @@ and A-star Search*, ICGI 21.
 #### 2020
    +  A. Finkel, S. Haddad, and I. Khmelnitsky. *Minimal coverability tree construction made complete and efficient*, FoSSaCS'20
    <a href="https://hal.inria.fr/INRIA/hal-02479879"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
-   +  S. Haddad, and I. Khmelnitsky. *Dynamic Recursive Petri Nets*, Petri Nets'20
+   +  S. Haddad, and I. Khmelnitsky. *Dynamic Recursive Petri Nets*, Petri Nets'20 <a href="https://hal.inria.fr/hal-02511321"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
 
 #### 2019
    +  A. Finkel, S. Haddad, and I. Khmelnitsky. _Coverability and Termination in Recursive Petri Nets_, Petri Nets'19
