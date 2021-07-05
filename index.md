@@ -4,7 +4,7 @@ title: "Igor Khmelnitsky, personal website"
 ---
 
 # <img src="pictures/myphoto3.jpg" style="float: left;" alt="drawing" width="300"/> Igor Khmelnitsky
-I am a PhD student in the [LSV](https://www.lsv.fr) in ENS Paris Saclay, under the supervision of [Alain Finkel](http://www.lsv.fr/~finkel) and [Serge Haddad](http://www.lsv.fr/~haddad).
+I am a PhD student in the [LMF](https://lmf.cnrs.fr/) (previously known as th LSV) in ENS Paris-Saclay, under the supervision of [Alain Finkel](http://www.lsv.fr/~finkel) and [Serge Haddad](http://www.lsv.fr/~haddad).
 My research is currently mainly focused on verification of infinite state systems, such as Petri nets, recursive Petri nets, well structured transition systems, etc. Since these type of systems can be hard to verify using the classical algorithms, I began trying to introduce machine learning technique to the verification of theses systems.
 
 
@@ -40,13 +40,14 @@ and A-star Search*, ICGI 21.
   + *D-collapsibility and its applications.* Master thesis, under the supervision of professor R. Meshulam. <a href="/papers/thesis.pdf"><img src="pictures/pdf.png" alt="drawing" width="20"/> </a>
 
 ## Talks
-
-1. *A Tool for the Coverability Problems in Petri Nets* - Tool demonstration in MSR'19, Angers France. <a href="/presentations/msr19.pdf"><img src="pictures/pdf.png" alt="drawing" width="20"/> </a>
-2. *Coverability and Termination in Recursive Petri Nets* - Petri nets 2019.  <a href="/presentations/petrinet19.pdf
-"><img src="pictures/pdf.png"  alt="drawing" width="20"/></a>
-3.  *Dynamic Recursive Petri Nets* - Video teaser for PetriNet20.  <a href="https://www.youtube.com/watch?v=GQ71aHfiUCQ"><img src="pictures/youtube.png" alt="drawing" width="20"/></a>
-4. *Minimal coverability tree construction made complete and efficient* - MTV seminar 21.  <a href="/presentations/mtv.pdf
+1. *Minimal coverability tree construction made complete and efficient* - MTV seminar 21.  <a href="/presentations/mtv.pdf
 "><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
+2.  *Dynamic Recursive Petri Nets* - Video teaser for PetriNet20.  <a href="https://www.youtube.com/watch?v=GQ71aHfiUCQ"><img src="pictures/youtube.png" alt="drawing" width="20"/></a>
+3. *A Tool for the Coverability Problems in Petri Nets* - Tool demonstration in MSR'19, Angers France. <a href="/presentations/msr19.pdf"><img src="pictures/pdf.png" alt="drawing" width="20"/> </a>
+4. *Coverability and Termination in Recursive Petri Nets* - Petri nets 2019.  <a href="/presentations/petrinet19.pdf
+"><img src="pictures/pdf.png"  alt="drawing" width="20"/></a>
+
+
 
 
 <p id="Teaching"> </p>
