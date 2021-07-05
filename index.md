@@ -4,7 +4,7 @@ title: "Igor Khmelnitsky, personal website"
 ---
 
 # <img src="pictures/myphoto3.jpg" style="float: left;" alt="drawing" width="300"/> Igor Khmelnitsky
-I am a PhD student in the [LMF](https://lmf.cnrs.fr/) (previously known as the LSV) in ENS Paris-Saclay, under the supervision of [Alain Finkel](http://www.lsv.fr/~finkel) and [Serge Haddad](http://www.lsv.fr/~haddad).
+I am a PhD student in the [LMF](https://lmf.cnrs.fr/) (previously known as th LSV) in ENS Paris-Saclay, under the supervision of [Alain Finkel](http://www.lsv.fr/~finkel) and [Serge Haddad](http://www.lsv.fr/~haddad).
 My research is currently mainly focused on verification of infinite state systems, such as Petri nets, recursive Petri nets, well structured transition systems, etc. Since these type of systems can be hard to verify using the classical algorithms, I began trying to introduce machine learning technique to the verification of theses systems.
 
 
@@ -20,13 +20,13 @@ My research is currently mainly focused on verification of infinite state system
 #### 2021
   + B. Barbot, B. Bollig, A. Finkel, S. Haddad, I. Khmelnitsky, M. Leucker, D. Neider, R. Roy, and L. Ye, *Extracting Context-Free
 Grammars from Recurrent Neural Networks using Tree-Automata Learning
-and A-star Search*, ICGI 21.
-  + I. Khmelnitsky, D. Neider, R. Roy, B. Barbot, B. Bollig, A. Finkel, S. Haddad, M. Leucker, and L. Ye, *Property-directed verification and robustness certification of recurrent neural networks*, ATVA 21.
+and A-star Search*, ICGI'21.
+  + I. Khmelnitsky, D. Neider, R. Roy, B. Barbot, B. Bollig, A. Finkel, S. Haddad, M. Leucker, and L. Ye, *Property-directed verification and robustness certification of recurrent neural networks*, ATVA'21.
 
 #### 2020
    +  A. Finkel, S. Haddad, and I. Khmelnitsky. *Minimal coverability tree construction made complete and efficient*, FoSSaCS'20
    <a href="https://hal.inria.fr/INRIA/hal-02479879"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
-   +  S. Haddad, and I. Khmelnitsky. *Dynamic Recursive Petri Nets*, Petri Nets'20 <a href="https://hal.inria.fr/hal-02511321"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
+   +  S. Haddad, and I. Khmelnitsky. *Dynamic Recursive Petri Nets*, PetriNets'20 <a href="https://hal.inria.fr/hal-02511321"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
 
 #### 2019
    +  A. Finkel, S. Haddad, and I. Khmelnitsky. _Coverability and Termination in Recursive Petri Nets_, Petri Nets'19
@@ -42,9 +42,9 @@ and A-star Search*, ICGI 21.
 ## Talks
 1. *Minimal coverability tree construction made complete and efficient* - MTV seminar 21.  <a href="/presentations/mtv.pdf
 "><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
-2.  *Dynamic Recursive Petri Nets* - Video teaser for PetriNet20.  <a href="https://www.youtube.com/watch?v=GQ71aHfiUCQ"><img src="pictures/youtube.png" alt="drawing" width="20"/></a>
+2.  *Dynamic Recursive Petri Nets* - Video teaser for PetriNet'20.  <a href="https://www.youtube.com/watch?v=GQ71aHfiUCQ"><img src="pictures/youtube.png" alt="drawing" width="20"/></a>
 3. *A Tool for the Coverability Problems in Petri Nets* - Tool demonstration in MSR'19, Angers France. <a href="/presentations/msr19.pdf"><img src="pictures/pdf.png" alt="drawing" width="20"/> </a>
-4. *Coverability and Termination in Recursive Petri Nets* - Petri nets 2019.  <a href="/presentations/petrinet19.pdf
+4. *Coverability and Termination in Recursive Petri Nets* - PetriNet'19.  <a href="/presentations/petrinet19.pdf
 "><img src="pictures/pdf.png"  alt="drawing" width="20"/></a>
 
 
