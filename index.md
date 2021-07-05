@@ -43,9 +43,11 @@ and A-star Search*, ICGI 21.
 
 1. *A Tool for the Coverability Problems in Petri Nets* - Tool demonstration in MSR'19, Angers France. <a href="/presentations/msr19.pdf"><img src="pictures/pdf.png" alt="drawing" width="20"/> </a>
 2. *Coverability and Termination in Recursive Petri Nets* - Petri nets 2019.  <a href="/presentations/petrinet19.pdf
+"><img src="pictures/pdf.png"  alt="drawing" width="20"/></a>
+3.  *Dynamic Recursive Petri Nets* - Video teaser for PetriNet20.  <a href="https://www.youtube.com/watch?v=GQ71aHfiUCQ"><img src="pictures/youtube.png" alt="drawing" width="20"/></a>
+4. *Minimal coverability tree construction made complete and efficient* - MTV seminar 21.  <a href="/presentations/mtv.pdf
 "><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
-3. *Coverability and Termination in Recursive Petri Nets* - Petri nets 2019.  <a href="/presentations/petrinet19.pdf
-"><img src="pictures/pdf.png" alt="drawing" width="20"/></a>
+
 
 <p id="Teaching"> </p>
 
@@ -63,6 +65,8 @@ and A-star Search*, ICGI 21.
 
 # Tools
  + [MinCov](https://github.com/IgorKhm/MinCov)- Python implementation of an algorithm solving the coverability set problem for Petri nets. Based on the work in <a href="https://hal.inria.fr/INRIA/hal-02479879"> "Minimal coverability tree construction made complete and efficient"</a>.
+ + [Property directed verification](https://github.com/LeaRNNify/Property-directed-verification)- Python implantation of the algorithm developed in "Property-directed verification and robustness certification of recurrent neural networks".
+
 
 <br/>
 <br/>
