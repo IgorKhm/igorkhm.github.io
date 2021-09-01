@@ -22,8 +22,10 @@ A complete CV in PDF form  <a href="/IgorKhmelnitsky.pdf"><img src="pictures/pdf
 #### 2021
   + B. Barbot, B. Bollig, A. Finkel, S. Haddad, I. Khmelnitsky, M. Leucker, D. Neider, R. Roy, and L. Ye, *Extracting Context-Free
 Grammars from Recurrent Neural Networks using Tree-Automata Learning
-and A-star Search*, ICGI'21.
-  + I. Khmelnitsky, D. Neider, R. Roy, B. Barbot, B. Bollig, A. Finkel, S. Haddad, M. Leucker, and L. Ye, *Property-directed verification and robustness certification of recurrent neural networks*, ATVA'21.
+and A-star Search*, ICGI'21. <a href="/papers/vpa.pdf
+"><img src="pictures/pdf.png"  alt="drawing" width="20"/></a>
+  + I. Khmelnitsky, D. Neider, R. Roy, B. Barbot, B. Bollig, A. Finkel, S. Haddad, M. Leucker, and L. Ye, *Property-directed verification and robustness certification of recurrent neural networks*, ATVA'21. <a href="/papers/pdv.pdf
+"><img src="pictures/pdf.png"  alt="drawing" width="20"/></a>
 
 #### 2020
    +  A. Finkel, S. Haddad, and I. Khmelnitsky. *Minimal coverability tree construction made complete and efficient*, FoSSaCS'20
