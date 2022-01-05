@@ -18,10 +18,10 @@ A Petri net can be analyzed by computing and studying its Clover, that is the ca
 Our first contribution is the design of a complete algorithm in such a way that we can theoretically bound the additional memory requirements.
 The key idea of this algorithm is the introduction of a new concept,  called acceleration.
 More precisely using accelerations, we were able:
-1. to simplify the proof of correctness of the Karp-Miller algorithm
-2. to present the first simple modification of the original but incomplete Minimal Coverability Tree algorithm
-3. to prove that the supplementary memory  needed by our algorithm is elementary (2-EXPSPACE)
-4. to implement a prototype MinCov, showing experimentally that it is the most efficient one compared to other tools computing the Clover.
+1) to simplify the proof of correctness of the Karp-Miller algorithm  
+2) to present the first simple modification of the original but incomplete Minimal Coverability Tree algorithm  
+3) to prove that the supplementary memory  needed by our algorithm is elementary (2-EXPSPACE)  
+4) to implement a prototype MinCov, showing experimentally that it is the most efficient one compared to other tools computing the Clover.  
 
 In the early two-thousands, Recursive Petri nets (RPN) have been introduced in order to model distributed planning of multi-agent systems for which counters and recursivity were necessary. Although RPN strictly extend Petri nets and context-free grammars, most of the usual problems (reachability, termination, etc.) were shown to be decidable. For almost all other models extending Petri nets and context-free grammars, the complexity of coverability and termination are unknown or strictly larger than EXPSPACE. In contrast, we establish here that for RPN, the coverability, termination, boundedness and finiteness problems are EXPSPACE-complete as for Petri net. While having a great expressive power, RPN suffer several modeling limitations.
 We introduce Dynamic Recursive Petri nets (DRPN) which address these issues extending the expressiveness of RPN.
