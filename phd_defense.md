@@ -41,8 +41,8 @@ Moreover, we use this algorithm to develop a property-directed approach for veri
 + Javier ESPARZA, Professor, Technische Universität München - Reviewer
 + Ranko LAZIC, Professor, University of Warwick - Reviewer
 + Patricia BOUYER-DECITRE, CNRS Research Director, LMF, ENS Paris-Saclay, Université Paris-Saclay, FRANCE - Examiner
-+ Dana FISMAN, Associated Professor, Ben-Gurion University, ISRAËL - Examiner
++ Dana FISMAN, Associated Professor, Ben-Gurion University, Israel - Examiner
 + Laure PETRUCCI, Professor, LIPN, CNRS UMR 7030, Université Sorbonne Paris Nord, FRANCE - Examiner
 + Pierre-Alain REYNIER, Professor, CNRS, LIS, Aix Marseille Université FRANCE - Examiner
-+ Alain FINKEL, Professor, Université Paris-Saclay, FRANCE - Advisor
-+ Serge HADDAD, Professor, Université Paris-Saclay, FRANCE - Advisor
++ Alain FINKEL, Professor, Université Paris-Saclay, FRANCE - PhD supervisor
++ Serge HADDAD, Professor, Université Paris-Saclay, FRANCE - PhD supervisor 
