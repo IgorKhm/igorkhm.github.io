@@ -11,8 +11,9 @@ title: "Igor Khmelnitsky's PhD defense"
 
 ---
 
-<p style="font-family:verdana">
+
 ## Abstract
+<p style="font-size:0.8em">
 This work consists of three parts. The first one is devoted to the verification of Petri nets, the second one to the verification of recursive Petri nets which extend Petri nets, and the final one aims at combining active learning and verification.
 
 A Petri net can be analyzed by computing and studying its Clover, that is the canonical representation of the downward over approximation of its reachability set. Using the Karp-Miller algorithm one can compute the Clover, but this algorithm is very inefficient and moreover, its original proof of correctness is not satisfying. Many variations of the original Karp-Miller algorithm computing the clover exist, but some are incomplete, others introduced an unknown supplementary memory size (possibly Ackermannian) and proofs are often heavy.
