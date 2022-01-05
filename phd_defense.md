@@ -12,6 +12,7 @@ title: "Igor Khmelnitsky's PhD defense"
 ---
 
 ## Abstract
+<span style="font-size:1em">
 This work consists of three parts. The first one is devoted to the verification of Petri nets, the second one to the verification of recursive Petri nets which extend Petri nets, and the final one aims at combining active learning and verification.
 
 A Petri net can be analyzed by computing and studying its Clover, that is the canonical representation of the downward over approximation of its reachability set. Using the Karp-Miller algorithm one can compute the Clover, but this algorithm is very inefficient and moreover, its original proof of correctness is not satisfying. Many variations of the original Karp-Miller algorithm computing the clover exist, but some are incomplete, others introduced an unknown supplementary memory size (possibly Ackermannian) and proofs are often heavy.
@@ -32,7 +33,7 @@ Thus we establish that the coverability  problem is decidable for DRPN.
 For active learning and formal methods, our work focuses on Angluin's L<sup>*</sup> algorithm.
 Angluin's algorithm learns the minimal deterministic finite automaton (DFA) of a regular language using membership and equivalence queries. Its probabilistic approximately correct (PAC) version substitutes an equivalence query by a set of random membership queries. Thus, it can be applied to any kind of device and may be viewed as synthesizing an automaton from observations of the device. We are interested in how the PAC version behaves for devices which are obtained from a DFA by introducing some noise. More precisely, we study whether the algorithm reduces the noise, producing a DFA closer to the original one than the noisy device. We found that the reduction of the noise strongly depends on the type of noise and its amount.
 Moreover, we use this algorithm to develop a property-directed approach for verification of recurrent neural networks (RNNs). It learns a DFA as a surrogate model from a given RNN, which is then analyzed using model checking as a verification technique. We show that this not only allows us to discover small counterexamples fast, but also to generalize them by pumping towards faulty flows, hinting at the underlying error in the RNN.
-
+</span>
 ---
 
 
@@ -45,4 +46,4 @@ Moreover, we use this algorithm to develop a property-directed approach for veri
 + Laure PETRUCCI, Professor, LIPN, CNRS UMR 7030, Université Sorbonne Paris Nord, FRANCE - Examiner
 + Pierre-Alain REYNIER, Professor, CNRS, LIS, Aix Marseille Université FRANCE - Examiner
 + Alain FINKEL, Professor, Université Paris-Saclay, FRANCE - PhD supervisor
-+ Serge HADDAD, Professor, Université Paris-Saclay, FRANCE - PhD supervisor 
++ Serge HADDAD, Professor, Université Paris-Saclay, FRANCE - PhD supervisor
