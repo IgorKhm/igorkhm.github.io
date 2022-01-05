@@ -3,7 +3,7 @@ layout: post
 title: "Igor Khmelnitsky's PhD defense"
 ---
 
-## Verification of Infinite-State Systems and Machine Learning
+# Verification of Infinite-State Systems and Machine Learning
 + Date : 27.01.2022
 + Location : ENS Paris-Saclay
 + Video link : TBD
