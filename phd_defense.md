@@ -17,7 +17,8 @@ This thesis consists of three parts. The first one is devoted to the verificatio
 A Petri net can be analyzed by computing and studying its Clover, that is the canonical representation of the downward over approximation of its reachability set. Using the Karp-Miller algorithm one can compute the Clover, but this algorithm is very inefficient and moreover, its original proof of correctness is not satisfying. Many variations of the original Karp-Miller algorithm computing the clover exist, but some are incomplete, others introduced an unknown supplementary memory size (possibly Ackermannian) and proofs are often heavy.
 Our first contribution is the design of a complete algorithm in such a way that we can theoretically bound the additional memory requirements.
 The key idea of this algorithm is the introduction of a new concept,  called acceleration.
-More precisely using accelerations, we were able:
+More precisely using accelerations, we were able:  
+
 1) to simplify the proof of correctness of the Karp-Miller algorithm  
 2) to present the first simple modification of the original but incomplete Minimal Coverability Tree algorithm  
 3) to prove that the supplementary memory  needed by our algorithm is elementary (2-EXPSPACE)  
