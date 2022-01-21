@@ -6,7 +6,7 @@ title: "Igor Khmelnitsky's PhD defense"
 ## Verification of Infinite-State Systems and Machine Learning
 + Date      : Thursday 27.01.2022 at 14:00
 + Location  : Room n°1Z25, ENS Paris-Saclay
-+ VoIP link : https://eu.bbcollab.com/guest/2a01787a70b34261ba329eba0641f8cf
++ VoIP link : https://us02web.zoom.us/j/84770861647?pwd=VkprU1lIcHU1VlB4bU54bU4ycFp5UT09
 
 ---
 
